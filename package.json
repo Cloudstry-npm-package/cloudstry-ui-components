@@ -1,0 +1,85 @@
+{
+  "name": "@cloudstrytech/ui-components",
+  "version": "1.0.12",
+  "description": "Reusable Material Web (M3) UI components for React and Next.js",
+  "private": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./styles.css": {
+      "default": "./dist/esm/styles.css"
+    },
+    "./button": {
+      "import": "./dist/esm/components/buttons/index.js",
+      "require": "./dist/cjs/components/buttons/index.js",
+      "types": "./dist/types/button.d.ts"
+    },
+    "./input": {
+      "import": "./dist/esm/components/input/index.js",
+      "require": "./dist/cjs/components/input/index.js",
+      "types": "./dist/types/input.d.ts"
+    },
+    "./otp": {
+      "import": "./dist/esm/components/otp/index.js",
+      "require": "./dist/cjs/components/otp/index.js",
+      "types": "./dist/types/otp.d.ts"
+    },
+    "./footer": {
+      "import": "./dist/esm/components/footer/index.js",
+      "require": "./dist/cjs/components/footer/index.js",
+      "types": "./dist/types/footer.d.ts"
+    },
+    "./table": {
+      "import": "./dist/esm/components/table/index.js",
+      "require": "./dist/cjs/components/table/index.js",
+      "types": "./dist/types/table.d.ts"
+    },
+    "./ssr": {
+      "import": "./dist/esm/ssr.js",
+      "require": "./dist/cjs/ssr.js",
+      "types": "./dist/types/ssr.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css",
+    "src/**/*.css",
+    "@material/web/**"
+  ],
+  "peerDependencies": {
+    "@material/web": ">=1.0.0 <3.0.0",
+    "react": ">=18 <21",
+    "react-dom": ">=18 <21"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist/types",
+    "postbuild:types": "node scripts/flatten-types.js",
+    "build": "npm run clean && rollup -c && npm run build:types && npm run postbuild:types",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

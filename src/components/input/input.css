@@ -1,0 +1,27 @@
+/* Wrapper controls the entire block */
+.cst-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+/* Label always above */
+.cst-input-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #171717;
+}
+
+/* This wrapper forces the web component to behave correctly */
+.cst-input-field-container {
+    width: 100%;
+}
+
+/* Style the host element of md-outlined-text-field */
+.cst-input-field-container md-outlined-text-field {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    --md-outlined-text-field-container-width: 100%;
+}
