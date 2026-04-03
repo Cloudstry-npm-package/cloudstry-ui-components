@@ -7,6 +7,7 @@ function OtpInputBase({
     value,
     onChange = () => { },
     onResend = () => { },
+    onEnter = () => { },
     description = "Didn't get the code?",
     resendLabel = "Click to resend",
     timerPrefix = "Resend in",
@@ -73,9 +74,44 @@ function OtpInputBase({
         }
     };
 
+    const handlePaste = (e, index) => {
+        e.preventDefault();
+        const pastedData = e.clipboardData.getData("text").trim();
+
+        // Only process numeric digits
+        const otpDigits = pastedData.replace(/[^0-9]/g, "").split("");
+
+        if (otpDigits.length === 0) return;
+
+        const next = [...digits];
+        let currentIndex = index;
+
+        // Fill digits starting from current position
+        for (const digit of otpDigits) {
+            if (currentIndex >= length) break;
+            next[currentIndex] = digit;
+            currentIndex++;
+        }
+
+        setDigits(next);
+        emitChange(next);
+
+        // Focus the next empty input or the last one
+        const nextEmptyIndex = next.findIndex((d, i) => i >= index && d === "");
+        if (nextEmptyIndex !== -1) {
+            focusInput(nextEmptyIndex);
+        } else {
+            focusInput(length - 1);
+        }
+    };
+
     const handleKeyDown = (e, index) => {
         if (e.key === "Backspace" && !digits[index] && index > 0) {
             focusInput(index - 1);
+        }
+        if (e.key === "Enter") {
+            e.preventDefault();
+            onEnter(digits.join(""));
         }
     };
 
@@ -101,14 +137,17 @@ function OtpInputBase({
                 {Array.from({ length }).map((_, index) => (
                     <input
                         key={index}
-                        type="text"
-                        inputMode="number"
+                        type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        autoComplete="one-time-code"
                         maxLength={1}
                         value={digits[index]}
                         className={`cst-otp-input ${inputClassName}`}
                         ref={(el) => (inputsRef.current[index] = el)}
                         onInput={(e) => handleInput(e, index)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
+                        onPaste={(e) => handlePaste(e, index)}
                     />
                 ))}
             </div>
