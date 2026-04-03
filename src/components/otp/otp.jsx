@@ -6,5 +6,7 @@ function OtpInput(props) {
     return <OtpInputBase {...props} />;
 }
 
+export { OtpInputBase };
+
 export default OtpInput;
 export { OtpInput };
