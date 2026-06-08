@@ -1,64 +1,340 @@
+/* ============================================================
+   Cloudstry Table — Phase 1 CSS Token System
+   @cloudstrytech/ui-components
+   ============================================================ */
+
+/* ---- Default token definitions (comfortable density) ---- */
 .cst-table-wrapper {
+    /* Surface */
+    --cst-table-bg:                     transparent;
+    --cst-table-border-radius:          0px;
+
+    /* Header */
+    --cst-table-header-bg:              #49d3ee;
+    --cst-table-header-color:           #ffffff;
+    --cst-table-header-font-size:       14px;
+    --cst-table-header-font-weight:     600;
+    --cst-table-header-padding:         12px;
+
+    /* Title */
+    --cst-table-title-color:            #00b7e9;
+    --cst-table-title-font-size:        22px;
+    --cst-table-title-font-weight:      600;
+
+    /* Cells */
+    --cst-table-cell-padding:           10px 12px;
+    --cst-table-cell-font-size:         14px;
+    --cst-table-border-color:           #dcdcdc;
+
+    /* Row states */
+    --cst-table-row-hover-bg:           #f3fcff;
+    --cst-table-row-selected-bg:        #e8f7fb;
+    --cst-table-row-editing-bg:         #fffde7;
+
+    /* Empty state */
+    --cst-table-empty-bg:               #f9f9f9;
+    --cst-table-empty-color:            #555555;
+    --cst-table-empty-font-size:        14px;
+
+    /* Loading state */
+    --cst-table-loading-bg:             #f9f9f9;
+    --cst-table-spinner-color:          #49d3ee;
+
+    /* Row min-height (density-controlled) */
+    --cst-table-row-min-height:         52px;
+
+    /* Dimensions */
+    --cst-table-min-width:              700px;
+
+    /* Zebra */
+    --cst-table-zebra-bg:               #f7fdff;
+
+    /* Sticky: consumers set --cst-table-sticky-max-height to enable scroll */
+    --cst-table-sticky-max-height:      none;
+
     padding: 24px 18px;
+    background: var(--cst-table-bg);
+    border-radius: var(--cst-table-border-radius);
 }
 
+/* ---- Density variants ---- */
+.cst-table-wrapper.cst-density-compact {
+    --cst-table-header-padding:         8px;
+    --cst-table-cell-padding:           4px 8px;
+    --cst-table-row-min-height:         40px;
+}
+
+/* comfortable = default; no overrides needed */
+
+.cst-table-wrapper.cst-density-spacious {
+    --cst-table-header-padding:         16px 20px;
+    --cst-table-cell-padding:           16px 20px;
+    --cst-table-row-min-height:         64px;
+}
+
+/* ---- Title ---- */
 .cst-table-title {
     text-align: center;
-    color: #00b7e9;
-    font-size: 22px;
-    font-weight: 600;
-    margin-top: 0px;
+    color: var(--cst-table-title-color);
+    font-size: var(--cst-table-title-font-size);
+    font-weight: var(--cst-table-title-font-weight);
+    margin: 0 0 12px;
 }
 
-
-/* optional title icon styling */
 .cst-table-title .icon {
     font-size: 20px;
 }
 
+/* ---- Scroll container ---- */
 .cst-table-container {
     overflow-x: auto;
     width: 100%;
 }
 
+/* ---- Table ---- */
 .cst-table {
     border-collapse: collapse;
     width: 100%;
-    min-width: 700px;
-    /* scrollable if smaller screens */
+    min-width: var(--cst-table-min-width);
 }
 
-.cst-table thead {
-    background: #49d3ee;
-    color: #fff;
+/* ---- Header ---- */
+.cst-table-head {
+    background: var(--cst-table-header-bg);
+    color: var(--cst-table-header-color);
 }
 
 .cst-table th {
-    padding: 12px;
-    font-size: 14px;
-    font-weight: 600;
+    padding: var(--cst-table-header-padding);
+    font-size: var(--cst-table-header-font-size);
+    font-weight: var(--cst-table-header-font-weight);
     text-align: left;
     white-space: nowrap;
-    border: 1px solid #dcdcdc;
+    border: 1px solid var(--cst-table-border-color);
 }
 
+/* ---- Cells ---- */
 .cst-table td {
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    font-size: 14px;
+    padding: var(--cst-table-cell-padding);
+    border: 1px solid var(--cst-table-border-color);
+    font-size: var(--cst-table-cell-font-size);
+    vertical-align: middle;
+    min-height: var(--cst-table-row-min-height);
+}
+
+/* ---- Row hover ---- */
+.cst-table tbody tr:hover {
+    background: var(--cst-table-row-hover-bg);
+}
+
+/* ---- Clickable rows ---- */
+.cst-row-clickable {
+    cursor: pointer;
+}
+
+.cst-row-clickable:focus-visible {
+    outline: 2px solid var(--cst-table-header-bg);
+    outline-offset: -2px;
+}
+
+/* ---- Column alignment ---- */
+.cst-align-left   { text-align: left; }
+.cst-align-center { text-align: center; }
+.cst-align-right  { text-align: right; }
+
+/* ---- Empty state ---- */
+.cst-table-empty {
+    text-align: center;
+    padding: 32px 16px;
+    font-size: var(--cst-table-empty-font-size);
+    color: var(--cst-table-empty-color);
+    font-weight: 500;
+    background: var(--cst-table-empty-bg);
+    vertical-align: middle;
+}
+
+/* ---- Loading state ---- */
+.cst-table-loading {
+    padding: 0;
+    background: var(--cst-table-loading-bg);
+    border: 1px solid var(--cst-table-border-color);
+}
+
+.cst-table-loading-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px 16px;
+}
+
+.cst-table-spinner {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(73, 211, 238, 0.25);
+    border-top-color: var(--cst-table-spinner-color);
+    border-radius: 50%;
+    animation: cst-table-spin 0.75s linear infinite;
+}
+
+@keyframes cst-table-spin {
+    to { transform: rotate(360deg); }
+}
+
+.cst-table-loading-text {
+    font-size: 13px;
+    color: var(--cst-table-empty-color);
+    font-weight: 500;
+}
+
+/* ---- Sticky header ---- */
+.cst-sticky-header .cst-table-container {
+    overflow-y: auto;
+    max-height: var(--cst-table-sticky-max-height);
+}
+
+.cst-sticky-header .cst-table-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* ---- Zebra striping ---- */
+.cst-zebra .cst-table tbody tr:nth-child(even) {
+    background-color: var(--cst-table-zebra-bg);
+}
+
+.cst-zebra .cst-table tbody tr:nth-child(even):hover {
+    background: var(--cst-table-row-hover-bg);
+}
+
+
+/* ============================================================
+   Phase 2 — Sorting, Selection, Toolbar
+   ============================================================ */
+
+/* ---- Phase 2 token additions ---- */
+.cst-table-wrapper {
+    --cst-table-sort-btn-focus:         rgba(255, 255, 255, 0.55);
+    --cst-table-selected-count-color:   #0e7490;
+    --cst-table-toolbar-bg:             transparent;
+    --cst-table-toolbar-border-color:   var(--cst-table-border-color);
+    --cst-table-checkbox-accent:        var(--cst-table-header-bg);
+}
+
+/* ---- Toolbar ---- */
+.cst-table-toolbar {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--cst-table-toolbar-border-color);
+    background: var(--cst-table-toolbar-bg);
+}
+
+.cst-toolbar-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cst-toolbar-selection-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--cst-table-row-selected-bg);
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.cst-toolbar-selection-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cst-table-selected-count-color);
     white-space: nowrap;
 }
 
-.cst-table tbody tr:hover {
-    background: #f3fcff;
+.cst-toolbar-bulk-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.cst-table-empty {
+/* ---- Sortable column headers ---- */
+.cst-table th.cst-th-sortable {
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cst-table-sort-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+    padding: var(--cst-table-header-padding);
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: var(--cst-table-header-font-size);
+    font-weight: var(--cst-table-header-font-weight);
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.cst-table-sort-btn:focus-visible {
+    outline: 2px solid var(--cst-table-sort-btn-focus);
+    outline-offset: -2px;
+    border-radius: 2px;
+}
+
+.cst-sort-label {
+    white-space: nowrap;
+    flex: 1;
+}
+
+.cst-sort-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+/* ---- Checkbox column ---- */
+.cst-table-checkbox-col {
+    width: 44px;
     text-align: center;
-    padding: 14px 0;
-    font-size: 14px;
-    color: #555;
-    font-weight: 500;
-    background: #f9f9f9;
+    padding: 0 8px;
+}
+
+.cst-th-checkbox {
+    padding: 0 8px;
+}
+
+.cst-table input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    accent-color: var(--cst-table-checkbox-accent);
     vertical-align: middle;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ---- Selected row ---- */
+.cst-table-row-selected {
+    background: var(--cst-table-row-selected-bg);
+}
+
+.cst-table-row-selected:hover {
+    background: var(--cst-table-row-selected-bg);
+    filter: brightness(0.96);
+}
+
+/* Zebra + selected: selected wins */
+.cst-zebra .cst-table tbody tr.cst-table-row-selected {
+    background: var(--cst-table-row-selected-bg);
 }

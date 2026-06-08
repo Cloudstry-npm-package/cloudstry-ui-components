@@ -1,27 +1,89 @@
-/* Wrapper controls the entire block */
-.cst-input-wrapper {
+/* =============================================================================
+ * Cloudstry Input / TextField — styling + token contract
+ *
+ * Public override surface  ->  the --cst-input-* custom properties below.
+ * Consumers theme inputs by overriding these (globally on :root, scoped to a
+ * className, or per-instance via `style`). They are mapped INTERNALLY onto
+ * Material 3 (`--md-*-text-field-*` / `--md-sys-color-*`) tokens, which remain
+ * an implementation detail and are NOT part of the public API.
+ *
+ * Custom properties inherit across the shadow-DOM boundary, so setting them on
+ * the light-DOM wrapper (`.cst-input`) themes the web-component field inside.
+ *
+ *   Polished out of the box (zero consumer CSS required) + safe to customize
+ *   without specificity wars or shadow-DOM hacks.
+ * ========================================================================== */
+
+.cst-input {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-input-focus: #00b7e9;        /* brand focus/active outline + caret   */
+    --cst-input-error: #d32f2f;        /* error outline/label/text/icon        */
+    --cst-input-label-color: #171717;  /* external <label> color               */
+    --cst-input-icon-color: #5f6368;   /* slot icon + family toggle/clear btns */
+    --cst-input-radius: 4px;           /* field corner radius                  */
+    --cst-input-filled-bg: #f3f3f3;    /* filled variant container color       */
+    --cst-input-gap: 6px;              /* gap between external label and field */
+    --cst-input-width: 100%;           /* wrapper width                        */
+
+    /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */
+    /* Driving the system primary brands the focus outline, caret, and focused
+       label per M3 semantics; the system error drives all error-state colors. */
+    --md-sys-color-primary: var(--cst-input-focus);
+    --md-sys-color-error: var(--cst-input-error);
+
+    /* radius (both variants) */
+    --md-outlined-text-field-container-shape: var(--cst-input-radius);
+    --md-filled-text-field-container-shape: var(--cst-input-radius);
+
+    /* filled container surface */
+    --md-filled-text-field-container-color: var(--cst-input-filled-bg);
+
+    /* ---- Wrapper layout (owns the block; `className` lands here) --------- */
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    width: 100%;
+    gap: var(--cst-input-gap);
+    width: var(--cst-input-width);
 }
 
-/* Label always above */
-.cst-input-label {
-    font-size: 16px;
-    font-weight: 500;
-    color: #171717;
-}
-
-/* This wrapper forces the web component to behave correctly */
-.cst-input-field-container {
-    width: 100%;
-}
-
-/* Style the host element of md-outlined-text-field */
-.cst-input-field-container md-outlined-text-field {
+/* The web-component field fills the wrapper width. */
+.cst-input > md-outlined-text-field,
+.cst-input > md-filled-text-field {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    --md-outlined-text-field-container-width: 100%;
+}
+
+/* ---- External label (default label model) -------------------------------- */
+.cst-input__label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--cst-input-label-color);
+}
+
+/* Mirror the error/disabled state on the external label for a consistent cue. */
+.cst-input--error .cst-input__label {
+    color: var(--cst-input-error);
+}
+.cst-input--disabled .cst-input__label {
+    opacity: 0.6;
+}
+
+/* ---- Icon slots (light-DOM nodes slotted into the field) ----------------- */
+.cst-input__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    color: var(--cst-input-icon-color, #5f6368);
+}
+.cst-input__icon > * {
+    width: 100%;
+    height: 100%;
+}
+.cst-input__icon svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }

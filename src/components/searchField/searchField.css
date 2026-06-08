@@ -1,0 +1,37 @@
+/* =============================================================================
+ * Cloudstry SearchField — clear-button styling only.
+ *
+ * The field surface is the TextField shell (.cst-input + --cst-input-* tokens).
+ * SearchField adds only the trailing clear (×) button slotted into the field's
+ * trailing-icon slot. The leading search glyph reuses the shell's icon styling.
+ * ========================================================================== */
+
+.cst-search__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--cst-input-icon-color, #5f6368);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.cst-search__clear:hover {
+    color: var(--cst-input-focus, #00b7e9);
+}
+
+.cst-search__clear:focus-visible {
+    outline: 2px solid var(--cst-input-focus, #00b7e9);
+    outline-offset: 2px;
+}
+
+.cst-search__clear svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
