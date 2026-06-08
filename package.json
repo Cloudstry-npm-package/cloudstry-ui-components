@@ -25,6 +25,16 @@
       "require": "./dist/cjs/components/input/index.js",
       "types": "./dist/types/input.d.ts"
     },
+    "./passwordField": {
+      "import": "./dist/esm/components/passwordField/index.js",
+      "require": "./dist/cjs/components/passwordField/index.js",
+      "types": "./dist/types/passwordField.d.ts"
+    },
+    "./searchField": {
+      "import": "./dist/esm/components/searchField/index.js",
+      "require": "./dist/cjs/components/searchField/index.js",
+      "types": "./dist/types/searchField.d.ts"
+    },
     "./otp": {
       "import": "./dist/esm/components/otp/index.js",
       "require": "./dist/cjs/components/otp/index.js",

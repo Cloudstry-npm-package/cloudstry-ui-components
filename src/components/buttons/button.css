@@ -1,8 +1,173 @@
-/* src/components/buttons/button.css */
+/* =============================================================================
+ * Cloudstry Button — styling + token contract
+ *
+ * Public override surface  ->  the --cst-button-* custom properties below.
+ * Consumers theme buttons by overriding these (globally on :root, or scoped to
+ * a className). They are mapped INTERNALLY onto Material 3 (`--md-*`) tokens,
+ * which remain an implementation detail and are NOT part of the public API.
+ *
+ *   Polished out of the box (zero consumer CSS required) + safe to customize
+ *   without specificity wars or shadow-DOM hacks.
+ * ========================================================================== */
 
 .cst-btn {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-button-bg: #00b7e9;          /* brand primary (filled bg / accent)  */
+    --cst-button-text: #ffffff;        /* label color on filled               */
+    --cst-button-tonal-bg: #cdeffb;    /* tonal container                     */
+    --cst-button-tonal-text: #00404f;  /* tonal label                         */
+    --cst-button-radius: 9999px;       /* M3 pill default; override e.g. 12px */
+    --cst-button-gap: 8px;             /* spacing between icon and label      */
+    --cst-button-height: 40px;         /* md size container height            */
+    --cst-button-font-size: 0.875rem;  /* md size label size                  */
+    --cst-button-font-weight: 500;
+    --cst-button-icon-size: 18px;      /* md size icon size                   */
+
+    /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */
+    /* Driving the system primary makes every variant pick up the brand per
+       M3 semantics (filled bg, outlined/text/elevated label, state layers). */
+    --md-sys-color-primary: var(--cst-button-bg);
+    --md-sys-color-secondary-container: var(--cst-button-tonal-bg);
+    --md-sys-color-on-secondary-container: var(--cst-button-tonal-text);
+
+    /* filled */
+    --md-filled-button-container-color: var(--cst-button-bg);
+    --md-filled-button-label-text-color: var(--cst-button-text);
+    --md-filled-button-container-shape: var(--cst-button-radius);
+    --md-filled-button-container-height: var(--cst-button-height);
+    --md-filled-button-label-text-size: var(--cst-button-font-size);
+    --md-filled-button-label-text-weight: var(--cst-button-font-weight);
+
+    /* tonal */
+    --md-filled-tonal-button-container-color: var(--cst-button-tonal-bg);
+    --md-filled-tonal-button-label-text-color: var(--cst-button-tonal-text);
+    --md-filled-tonal-button-container-shape: var(--cst-button-radius);
+    --md-filled-tonal-button-container-height: var(--cst-button-height);
+    --md-filled-tonal-button-label-text-size: var(--cst-button-font-size);
+    --md-filled-tonal-button-label-text-weight: var(--cst-button-font-weight);
+
+    /* elevated */
+    --md-elevated-button-label-text-color: var(--cst-button-bg);
+    --md-elevated-button-icon-color: var(--cst-button-bg);
+    --md-elevated-button-container-shape: var(--cst-button-radius);
+    --md-elevated-button-container-height: var(--cst-button-height);
+    --md-elevated-button-label-text-size: var(--cst-button-font-size);
+    --md-elevated-button-label-text-weight: var(--cst-button-font-weight);
+
+    /* outlined (outline color left at M3 default for correct contrast) */
+    --md-outlined-button-label-text-color: var(--cst-button-bg);
+    --md-outlined-button-icon-color: var(--cst-button-bg);
+    --md-outlined-button-container-shape: var(--cst-button-radius);
+    --md-outlined-button-container-height: var(--cst-button-height);
+    --md-outlined-button-label-text-size: var(--cst-button-font-size);
+    --md-outlined-button-label-text-weight: var(--cst-button-font-weight);
+
+    /* text */
+    --md-text-button-label-text-color: var(--cst-button-bg);
+    --md-text-button-icon-color: var(--cst-button-bg);
+    --md-text-button-container-height: var(--cst-button-height);
+    --md-text-button-label-text-size: var(--cst-button-font-size);
+    --md-text-button-label-text-weight: var(--cst-button-font-weight);
+
+    vertical-align: middle;
+}
+
+/* ---- Size system (Cloudstry-owned; NOT Material 3 Expressive XS–XL) ------ */
+.cst-btn--sm {
+    --cst-button-height: 32px;
+    --cst-button-font-size: 0.8125rem;
+    --cst-button-icon-size: 16px;
+    --cst-button-gap: 6px;
+}
+.cst-btn--md {
+    --cst-button-height: 40px;
+    --cst-button-font-size: 0.875rem;
+    --cst-button-icon-size: 18px;
+    --cst-button-gap: 8px;
+}
+.cst-btn--lg {
+    --cst-button-height: 48px;
+    --cst-button-font-size: 1rem;
+    --cst-button-icon-size: 20px;
+    --cst-button-gap: 10px;
+}
+
+/* ---- Full width ---------------------------------------------------------- */
+.cst-btn--full {
+    width: 100%;
+}
+
+/* ---- Content layout (light-DOM, slotted into the element's label) -------- */
+.cst-btn__content {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--cst-button-gap);
+    min-width: 0;
+}
+
+.cst-btn__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cst-btn__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--cst-button-icon-size);
+    height: var(--cst-button-icon-size);
+    font-size: var(--cst-button-icon-size);
+    line-height: 1;
+}
+
+/* Normalize whatever icon node is passed (SVG, md-icon, font glyph). */
+.cst-btn__icon > * {
+    width: 100%;
+    height: 100%;
+    font-size: inherit;
+}
+.cst-btn__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+.cst-btn__icon md-icon {
+    --md-icon-size: var(--cst-button-icon-size);
+    font-size: var(--cst-button-icon-size);
+    width: var(--cst-button-icon-size);
+    height: var(--cst-button-icon-size);
+}
+
+/* ---- Loading state (Cloudstry composition; MWC has no loading) ----------- */
+.cst-btn--loading {
+    pointer-events: none;
+}
+.cst-btn--loading .cst-btn__label {
+    opacity: 0.85;
+}
+
+.cst-btn__spinner {
+    box-sizing: border-box;
+    width: var(--cst-button-icon-size);
+    height: var(--cst-button-icon-size);
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: cst-btn-spin 0.6s linear infinite;
+}
+
+@keyframes cst-btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cst-btn__spinner {
+        animation-duration: 1.4s;
+    }
 }
