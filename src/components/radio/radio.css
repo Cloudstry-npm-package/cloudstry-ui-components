@@ -1,0 +1,146 @@
+/* =============================================================================
+ * Cloudstry Radio — styling + token contract
+ *
+ * Public override surface → the --cst-radio-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-radio-*), which
+ * remain an implementation detail and are NOT part of the public API.
+ *
+ * HOW TO OVERRIDE
+ * ---------------
+ * Set --cst-radio-* on any ancestor or on the Radio/RadioGroup via style prop.
+ * Defaults live only as var() fallbacks — ancestor overrides cascade freely.
+ *
+ *   :root { --cst-radio-selected-color: #6750a4; }
+ *   <Radio style={{ "--cst-radio-size": "24px" }} />
+ *
+ * TOKEN CONTRACT
+ * --------------
+ *   --cst-radio-selected-color         #00b7e9   Filled center + ring when selected
+ *   --cst-radio-unselected-color       #79747e   Ring color when unselected
+ *   --cst-radio-disabled-color         rgba(0,0,0,0.38)   Disabled icon color
+ *   --cst-radio-size                   20px      Icon container diameter
+ *   --cst-radio-gap                    10px      Space between icon and label text
+ *   --cst-radio-label-color            #1a1a2e   Label text color
+ *   --cst-radio-label-size             0.9375rem Label font size
+ *   --cst-radio-label-weight           400       Label font weight
+ *   --cst-radio-disabled-label-color   rgba(0,0,0,0.38)
+ *   --cst-radio-group-gap              8px       Vertical gap between Radio items
+ *   --cst-radio-group-horizontal-gap   24px      Horizontal gap between Radio items
+ * ========================================================================== */
+
+/* ---- Radio element: token contract + MWC mapping ------------------------- */
+md-radio.cst-radio {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+    --cst-radio-selected-color: #00b7e9;
+    --cst-radio-unselected-color: #79747e;
+    --cst-radio-disabled-color: rgba(0, 0, 0, 0.38);
+    --cst-radio-size: 20px;
+
+    /* ---- Map Cloudstry tokens → Material 3 tokens (implementation) ------- */
+    --md-radio-icon-size: var(--cst-radio-size);
+
+    /* Selected state */
+    --md-radio-selected-icon-color: var(--cst-radio-selected-color);
+    --md-radio-selected-hover-icon-color: var(--cst-radio-selected-color);
+    --md-radio-selected-focus-icon-color: var(--cst-radio-selected-color);
+    --md-radio-selected-pressed-icon-color: var(--cst-radio-selected-color);
+
+    /* Unselected state (MWC renamed unselected-icon-color → icon-color) */
+    --md-radio-icon-color: var(--cst-radio-unselected-color);
+    --md-radio-hover-icon-color: var(--cst-radio-unselected-color);
+    --md-radio-focus-icon-color: var(--cst-radio-unselected-color);
+    --md-radio-pressed-icon-color: var(--cst-radio-unselected-color);
+
+    /* Disabled states */
+    --md-radio-disabled-selected-icon-color: var(--cst-radio-disabled-color);
+    --md-radio-disabled-unselected-icon-color: var(--cst-radio-disabled-color);
+
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* ---- Wrapper (label + radio) --------------------------------------------- */
+.cst-radio-wrapper {
+    --cst-radio-gap: 10px;
+    --cst-radio-label-color: #1a1a2e;
+    --cst-radio-label-size: 0.9375rem;
+    --cst-radio-label-weight: 400;
+    --cst-radio-disabled-label-color: rgba(0, 0, 0, 0.38);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cst-radio-gap);
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+
+.cst-radio-wrapper[data-disabled="true"] {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Standalone (no label) */
+.cst-radio-wrapper--standalone {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.cst-radio-label-text {
+    font-size: var(--cst-radio-label-size);
+    font-weight: var(--cst-radio-label-weight);
+    color: var(--cst-radio-label-color);
+    line-height: 1.4;
+}
+
+.cst-radio-wrapper[data-disabled="true"] .cst-radio-label-text {
+    color: var(--cst-radio-disabled-label-color);
+}
+
+/* ---- RadioGroup ---------------------------------------------------------- */
+.cst-radio-group {
+    --cst-radio-group-gap: 8px;
+    --cst-radio-group-horizontal-gap: 24px;
+
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-inline-size: 0; /* override browser fieldset default */
+}
+
+.cst-radio-group-legend {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1d1b20;
+    padding: 0;
+    margin-bottom: 12px;
+    float: left; /* fieldset legend positioning */
+    width: 100%;
+}
+
+/* Clear float after legend so items flow below */
+.cst-radio-group-legend + .cst-radio-group-items {
+    clear: left;
+}
+
+.cst-radio-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cst-radio-group-gap);
+}
+
+.cst-radio-group--horizontal .cst-radio-group-items {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--cst-radio-group-horizontal-gap);
+    align-items: center;
+}
+
+/* fieldset[disabled] visually dims — the browser handles pointer-events:none
+   for form-associated elements, and we add a visual dimming cue. */
+fieldset.cst-radio-group[disabled] {
+    opacity: 0.5;
+}

@@ -1,0 +1,116 @@
+/* =============================================================================
+ * Cloudstry IconButton — styling + token contract
+ *
+ * Public override surface  →  the --cst-icon-btn-* custom properties below.
+ * Consumers theme icon buttons by overriding these (globally on :root, or
+ * scoped to a className / style prop). They are mapped INTERNALLY onto
+ * Material 3 (--md-*) tokens, which remain an implementation detail and are
+ * NOT part of the public API.
+ *
+ * TOKEN CONTRACT
+ * --------------
+ * Shared (all variants):
+ *   --cst-icon-btn-icon-size          24px   Icon size
+ *   --cst-icon-btn-shape              50%    Container border-radius (pill)
+ *
+ * Standard variant:
+ *   --cst-icon-btn-icon-color         #00b7e9  Icon color (unselected)
+ *   --cst-icon-btn-selected-icon-color #1a1a2e Selected icon color
+ *
+ * Filled variant:
+ *   --cst-icon-btn-filled-container-color          #00b7e9  Container fill
+ *   --cst-icon-btn-filled-icon-color               #ffffff  Icon on filled
+ *   --cst-icon-btn-filled-selected-container-color #1a1a2e  Selected container
+ *   --cst-icon-btn-filled-selected-icon-color      #ffffff  Selected icon
+ *
+ * Tonal variant:
+ *   --cst-icon-btn-tonal-container-color           #cdeffb  Tonal container
+ *   --cst-icon-btn-tonal-icon-color                #00404f  Tonal icon
+ *   --cst-icon-btn-tonal-selected-container-color  #00b7e9  Selected container
+ *   --cst-icon-btn-tonal-selected-icon-color       #ffffff  Selected icon
+ *
+ * Outlined variant:
+ *   --cst-icon-btn-outlined-icon-color             #00b7e9  Icon color
+ *   --cst-icon-btn-outlined-outline-color          #c4c7c5  Outline color
+ *   --cst-icon-btn-outlined-selected-container-color #00b7e9  Selected container
+ *   --cst-icon-btn-outlined-selected-icon-color    #ffffff  Selected icon
+ * ========================================================================== */
+
+/* ---- Standard (md-icon-button) ------------------------------------------- */
+md-icon-button.cst-icon-btn {
+    --md-icon-button-icon-size: var(--cst-icon-btn-icon-size, 24px);
+    --md-icon-button-container-shape: var(--cst-icon-btn-shape, 50%);
+
+    /* Unselected state */
+    --md-icon-button-icon-color: var(--cst-icon-btn-icon-color, #00b7e9);
+    --md-icon-button-hover-icon-color: var(--cst-icon-btn-icon-color, #00b7e9);
+    --md-icon-button-focus-icon-color: var(--cst-icon-btn-icon-color, #00b7e9);
+    --md-icon-button-pressed-icon-color: var(--cst-icon-btn-icon-color, #00b7e9);
+
+    /* Selected state (toggle mode) */
+    --md-icon-button-selected-icon-color: var(--cst-icon-btn-selected-icon-color, #1a1a2e);
+    --md-icon-button-selected-hover-icon-color: var(--cst-icon-btn-selected-icon-color, #1a1a2e);
+    --md-icon-button-selected-focus-icon-color: var(--cst-icon-btn-selected-icon-color, #1a1a2e);
+    --md-icon-button-selected-pressed-icon-color: var(--cst-icon-btn-selected-icon-color, #1a1a2e);
+}
+
+/* ---- Filled (md-filled-icon-button) --------------------------------------- */
+md-filled-icon-button.cst-icon-btn {
+    --md-filled-icon-button-icon-size: var(--cst-icon-btn-icon-size, 24px);
+    --md-filled-icon-button-container-shape: var(--cst-icon-btn-shape, 50%);
+
+    /* Unselected state */
+    --md-filled-icon-button-container-color: var(--cst-icon-btn-filled-container-color, #00b7e9);
+    --md-filled-icon-button-icon-color: var(--cst-icon-btn-filled-icon-color, #ffffff);
+    --md-filled-icon-button-hover-icon-color: var(--cst-icon-btn-filled-icon-color, #ffffff);
+    --md-filled-icon-button-focus-icon-color: var(--cst-icon-btn-filled-icon-color, #ffffff);
+    --md-filled-icon-button-pressed-icon-color: var(--cst-icon-btn-filled-icon-color, #ffffff);
+
+    /* Selected state (toggle mode) */
+    --md-filled-icon-button-selected-container-color: var(--cst-icon-btn-filled-selected-container-color, #1a1a2e);
+    --md-filled-icon-button-selected-icon-color: var(--cst-icon-btn-filled-selected-icon-color, #ffffff);
+    --md-filled-icon-button-selected-hover-icon-color: var(--cst-icon-btn-filled-selected-icon-color, #ffffff);
+    --md-filled-icon-button-selected-focus-icon-color: var(--cst-icon-btn-filled-selected-icon-color, #ffffff);
+    --md-filled-icon-button-selected-pressed-icon-color: var(--cst-icon-btn-filled-selected-icon-color, #ffffff);
+}
+
+/* ---- Tonal (md-filled-tonal-icon-button) ---------------------------------- */
+md-filled-tonal-icon-button.cst-icon-btn {
+    --md-filled-tonal-icon-button-icon-size: var(--cst-icon-btn-icon-size, 24px);
+    --md-filled-tonal-icon-button-container-shape: var(--cst-icon-btn-shape, 50%);
+
+    /* Unselected state */
+    --md-filled-tonal-icon-button-container-color: var(--cst-icon-btn-tonal-container-color, #cdeffb);
+    --md-filled-tonal-icon-button-icon-color: var(--cst-icon-btn-tonal-icon-color, #00404f);
+    --md-filled-tonal-icon-button-hover-icon-color: var(--cst-icon-btn-tonal-icon-color, #00404f);
+    --md-filled-tonal-icon-button-focus-icon-color: var(--cst-icon-btn-tonal-icon-color, #00404f);
+    --md-filled-tonal-icon-button-pressed-icon-color: var(--cst-icon-btn-tonal-icon-color, #00404f);
+
+    /* Selected state (toggle mode) */
+    --md-filled-tonal-icon-button-selected-container-color: var(--cst-icon-btn-tonal-selected-container-color, #00b7e9);
+    --md-filled-tonal-icon-button-selected-icon-color: var(--cst-icon-btn-tonal-selected-icon-color, #ffffff);
+    --md-filled-tonal-icon-button-selected-hover-icon-color: var(--cst-icon-btn-tonal-selected-icon-color, #ffffff);
+    --md-filled-tonal-icon-button-selected-focus-icon-color: var(--cst-icon-btn-tonal-selected-icon-color, #ffffff);
+    --md-filled-tonal-icon-button-selected-pressed-icon-color: var(--cst-icon-btn-tonal-selected-icon-color, #ffffff);
+}
+
+/* ---- Outlined (md-outlined-icon-button) ----------------------------------- */
+md-outlined-icon-button.cst-icon-btn {
+    --md-outlined-icon-button-icon-size: var(--cst-icon-btn-icon-size, 24px);
+    --md-outlined-icon-button-container-shape: var(--cst-icon-btn-shape, 50%);
+
+    /* Unselected state */
+    --md-outlined-icon-button-icon-color: var(--cst-icon-btn-outlined-icon-color, #00b7e9);
+    --md-outlined-icon-button-hover-icon-color: var(--cst-icon-btn-outlined-icon-color, #00b7e9);
+    --md-outlined-icon-button-focus-icon-color: var(--cst-icon-btn-outlined-icon-color, #00b7e9);
+    --md-outlined-icon-button-pressed-icon-color: var(--cst-icon-btn-outlined-icon-color, #00b7e9);
+    --md-outlined-icon-button-outline-color: var(--cst-icon-btn-outlined-outline-color, #c4c7c5);
+
+    /* Selected state (toggle mode) */
+    --md-outlined-icon-button-selected-container-color: var(--cst-icon-btn-outlined-selected-container-color, #00b7e9);
+    --md-outlined-icon-button-selected-icon-color: var(--cst-icon-btn-outlined-selected-icon-color, #ffffff);
+    --md-outlined-icon-button-selected-hover-icon-color: var(--cst-icon-btn-outlined-selected-icon-color, #ffffff);
+    --md-outlined-icon-button-selected-focus-icon-color: var(--cst-icon-btn-outlined-selected-icon-color, #ffffff);
+    --md-outlined-icon-button-selected-pressed-icon-color: var(--cst-icon-btn-outlined-selected-icon-color, #ffffff);
+    --md-outlined-icon-button-selected-outline-color: var(--cst-icon-btn-outlined-selected-container-color, #00b7e9);
+}

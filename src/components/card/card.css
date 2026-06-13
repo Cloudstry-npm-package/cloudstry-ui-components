@@ -1,0 +1,135 @@
+/* =============================================================================
+ * Cloudstry Card — styling + token contract
+ *
+ * Public override surface  ->  the --cst-card-* custom properties below.
+ * They are mapped internally onto Material 3 Labs tokens (--md-*), which remain
+ * an implementation detail and are NOT part of the public API.
+ * ========================================================================== */
+
+md-elevated-card.cst-card,
+md-filled-card.cst-card,
+md-outlined-card.cst-card {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-card-radius: 12px;
+    --cst-card-padding: 16px;
+    --cst-card-elevated-bg: #ffffff;
+    --cst-card-filled-bg: #f0f4f8;
+    --cst-card-outlined-bg: #ffffff;
+    --cst-card-outlined-border-color: #c9c9c9;
+    --cst-card-outlined-border-width: 1px;
+    --cst-card-actions-gap: 8px;
+    --cst-card-actions-separator-color: #e8eaed;
+    --cst-card-header-title-size: 1rem;
+    --cst-card-header-title-weight: 600;
+    --cst-card-header-subtitle-size: 0.8125rem;
+    --cst-card-header-subtitle-color: #5f6368;
+
+    /* ---- Map Cloudstry tokens → Material 3 Labs tokens (implementation) -- */
+    --md-elevated-card-container-shape: var(--cst-card-radius);
+    --md-elevated-card-container-color: var(--cst-card-elevated-bg);
+    --md-filled-card-container-shape: var(--cst-card-radius);
+    --md-filled-card-container-color: var(--cst-card-filled-bg);
+    --md-outlined-card-container-shape: var(--cst-card-radius);
+    --md-outlined-card-container-color: var(--cst-card-outlined-bg);
+    --md-outlined-card-outline-color: var(--cst-card-outlined-border-color);
+    --md-outlined-card-outline-width: var(--cst-card-outlined-border-width);
+
+    display: block;
+    overflow: hidden; /* clips media/content to the card's border-radius */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* ---- Media region (full-bleed, no padding) -------------------------------- */
+.cst-card__media {
+    display: block;
+    margin: 0;
+    line-height: 0; /* collapse whitespace below inline-block images */
+}
+
+.cst-card__media img,
+.cst-card__media video {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ---- Header region ------------------------------------------------------- */
+.cst-card__header {
+    padding: var(--cst-card-padding) var(--cst-card-padding) 10px;
+}
+
+.cst-card__header-title {
+    margin: 0 0 2px;
+    font-size: var(--cst-card-header-title-size);
+    font-weight: var(--cst-card-header-title-weight);
+    line-height: 1.4;
+    color: inherit;
+}
+
+.cst-card__header-subtitle {
+    margin: 0;
+    font-size: var(--cst-card-header-subtitle-size);
+    color: var(--cst-card-header-subtitle-color);
+    line-height: 1.4;
+}
+
+/* ---- Body region --------------------------------------------------------- */
+.cst-card__body {
+    padding: 10px var(--cst-card-padding) var(--cst-card-padding);
+}
+
+/* Restore full top padding when body is the first (or only) content region */
+.cst-card__body:first-child,
+.cst-card__media + .cst-card__body {
+    padding-top: var(--cst-card-padding);
+}
+
+.cst-card__header + .cst-card__body {
+    padding-top: 4px;
+}
+
+/* ---- Actions region ------------------------------------------------------ */
+.cst-card__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--cst-card-actions-gap);
+    padding: 8px var(--cst-card-padding) var(--cst-card-padding);
+}
+
+/* Separator only when content precedes actions */
+.cst-card__header + .cst-card__actions,
+.cst-card__body + .cst-card__actions {
+    border-top: 1px solid var(--cst-card-actions-separator-color);
+    padding-top: 10px;
+}
+
+/* ---- Interactive cards --------------------------------------------------- */
+md-elevated-card.cst-card--interactive,
+md-filled-card.cst-card--interactive,
+md-outlined-card.cst-card--interactive {
+    cursor: pointer;
+}
+
+md-elevated-card.cst-card--interactive:focus-visible,
+md-filled-card.cst-card--interactive:focus-visible,
+md-outlined-card.cst-card--interactive:focus-visible {
+    outline: 2px solid #00b7e9;
+    outline-offset: 2px;
+}
+
+/* ---- Link-wrapped card (href interactive mode) --------------------------- */
+.cst-card-link-wrap {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--cst-card-radius, 12px); /* match card radius for focus outline */
+}
+
+.cst-card-link-wrap:focus-visible {
+    outline: 2px solid #00b7e9;
+    outline-offset: 2px;
+    border-radius: inherit;
+}

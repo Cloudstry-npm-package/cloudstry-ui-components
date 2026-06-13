@@ -1,0 +1,30 @@
+/*
+ * Menu — Token contract
+ * Namespace: --cst-menu-* (container) / --cst-menu-item-* (items)
+ * All tokens map to --md-menu-* and --md-menu-item-* counterparts.
+ */
+
+/* ---- Menu container ------------------------------------------------------- */
+md-menu.cst-menu {
+    --md-menu-container-color:              var(--cst-menu-bg, #f3edf7);
+    --md-menu-container-shape:              var(--cst-menu-shape, 4px);
+    --md-menu-container-elevation:          var(--cst-menu-elevation, 2);
+}
+
+/* ---- Menu item ------------------------------------------------------------ */
+md-menu-item.cst-menu-item {
+    --md-menu-item-label-text-color:                    var(--cst-menu-item-headline-color, #1d1b20);
+    --md-menu-item-supporting-text-color:               var(--cst-menu-item-supporting-text-color, #49454f);
+    --md-menu-item-leading-icon-color:                  var(--cst-menu-item-icon-color, #49454f);
+    --md-menu-item-trailing-icon-color:                 var(--cst-menu-item-icon-color, #49454f);
+    --md-menu-item-hover-state-layer-color:             var(--cst-menu-item-hover-color, #1d1b20);
+    --md-menu-item-hover-state-layer-opacity:           var(--cst-menu-item-hover-opacity, 0.08);
+    --md-menu-item-focus-state-layer-color:             var(--cst-menu-item-focus-color, #1d1b20);
+    --md-menu-item-focus-state-layer-opacity:           var(--cst-menu-item-focus-opacity, 0.12);
+    --md-menu-item-pressed-state-layer-color:           var(--cst-menu-item-pressed-color, #1d1b20);
+    --md-menu-item-pressed-state-layer-opacity:         var(--cst-menu-item-pressed-opacity, 0.12);
+    --md-menu-item-one-line-container-height:           var(--cst-menu-item-height, 56px);
+    --md-menu-item-two-line-container-height:           var(--cst-menu-item-two-line-height, 72px);
+    --md-menu-item-disabled-label-text-color:           var(--cst-menu-item-disabled-color, #1d1b20);
+    --md-menu-item-disabled-label-text-opacity:         var(--cst-menu-item-disabled-opacity, 0.3);
+}

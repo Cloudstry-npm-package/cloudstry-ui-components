@@ -1,0 +1,128 @@
+/* =============================================================================
+ * Cloudstry Switch — styling + token contract
+ *
+ * Public override surface → the --cst-switch-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-switch-*), which
+ * remain an implementation detail and are NOT part of the public API.
+ * ========================================================================== */
+
+/* ---- Token contract + MWC mapping on the switch element ------------------ */
+md-switch.cst-switch {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+
+    /* Selected (on) state */
+    --cst-switch-selected-track-color: #00b7e9;
+    --cst-switch-selected-handle-color: #ffffff;
+    --cst-switch-selected-icon-color: #00b7e9;
+
+    /* Unselected (off) state */
+    --cst-switch-track-color: #e0e0e0;
+    --cst-switch-handle-color: #79747e;
+    --cst-switch-icon-color: #ffffff;
+    --cst-switch-track-outline-color: #79747e;
+
+    /* Shape */
+    --cst-switch-track-shape: 9999px;
+    --cst-switch-handle-shape: 9999px;
+
+    /* Size */
+    --cst-switch-track-width: 52px;
+    --cst-switch-track-height: 32px;
+
+    /* ---- Map Cloudstry tokens → Material 3 tokens (implementation) ------- */
+
+    /* Selected track */
+    --md-switch-selected-track-color: var(--cst-switch-selected-track-color);
+    --md-switch-selected-hover-track-color: var(--cst-switch-selected-track-color);
+    --md-switch-selected-focus-track-color: var(--cst-switch-selected-track-color);
+    --md-switch-selected-pressed-track-color: var(--cst-switch-selected-track-color);
+
+    /* Selected handle (thumb) */
+    --md-switch-selected-handle-color: var(--cst-switch-selected-handle-color);
+    --md-switch-selected-hover-handle-color: var(--cst-switch-selected-handle-color);
+    --md-switch-selected-focus-handle-color: var(--cst-switch-selected-handle-color);
+    --md-switch-selected-pressed-handle-color: var(--cst-switch-selected-handle-color);
+
+    /* Selected icon */
+    --md-switch-selected-icon-color: var(--cst-switch-selected-icon-color);
+    --md-switch-selected-hover-icon-color: var(--cst-switch-selected-icon-color);
+    --md-switch-selected-focus-icon-color: var(--cst-switch-selected-icon-color);
+    --md-switch-selected-pressed-icon-color: var(--cst-switch-selected-icon-color);
+
+    /* Unselected track */
+    --md-switch-track-color: var(--cst-switch-track-color);
+    --md-switch-hover-track-color: var(--cst-switch-track-color);
+    --md-switch-focus-track-color: var(--cst-switch-track-color);
+    --md-switch-pressed-track-color: var(--cst-switch-track-color);
+
+    /* Unselected handle (thumb) */
+    --md-switch-handle-color: var(--cst-switch-handle-color);
+    --md-switch-hover-handle-color: var(--cst-switch-handle-color);
+    --md-switch-focus-handle-color: var(--cst-switch-handle-color);
+    --md-switch-pressed-handle-color: var(--cst-switch-handle-color);
+
+    /* Unselected icon */
+    --md-switch-icon-color: var(--cst-switch-icon-color);
+    --md-switch-hover-icon-color: var(--cst-switch-icon-color);
+    --md-switch-focus-icon-color: var(--cst-switch-icon-color);
+    --md-switch-pressed-icon-color: var(--cst-switch-icon-color);
+
+    /* Unselected track outline */
+    --md-switch-track-outline-color: var(--cst-switch-track-outline-color);
+    --md-switch-hover-track-outline-color: var(--cst-switch-track-outline-color);
+    --md-switch-focus-track-outline-color: var(--cst-switch-track-outline-color);
+    --md-switch-pressed-track-outline-color: var(--cst-switch-track-outline-color);
+
+    /* Shape */
+    --md-switch-track-shape: var(--cst-switch-track-shape);
+    --md-switch-handle-shape: var(--cst-switch-handle-shape);
+
+    /* Size */
+    --md-switch-track-width: var(--cst-switch-track-width);
+    --md-switch-track-height: var(--cst-switch-track-height);
+
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* ---- Label wrapper ------------------------------------------------------- */
+.cst-switch-wrapper {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+    --cst-switch-gap: 12px;
+    --cst-switch-label-color: #1a1a2e;
+    --cst-switch-label-size: 0.9375rem;
+    --cst-switch-label-weight: 400;
+    --cst-switch-disabled-label-color: rgba(0, 0, 0, 0.38);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cst-switch-gap);
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+
+.cst-switch-wrapper[data-disabled="true"] {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Standalone wrapper (no label) */
+.cst-switch-wrapper--standalone {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.cst-switch-label-text {
+    font-size: var(--cst-switch-label-size);
+    font-weight: var(--cst-switch-label-weight);
+    color: var(--cst-switch-label-color);
+    line-height: 1.4;
+}
+
+.cst-switch-wrapper[data-disabled="true"] .cst-switch-label-text {
+    color: var(--cst-switch-disabled-label-color);
+}

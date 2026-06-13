@@ -1,0 +1,57 @@
+/* =============================================================================
+ * Cloudstry Dialog — styling + token contract
+ *
+ * Public override surface → the --cst-dialog-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-dialog-*), which
+ * remain an implementation detail and are NOT part of the public API.
+ *
+ * HOW TO OVERRIDE
+ * ---------------
+ * Set --cst-dialog-* on any ancestor element or on the dialog element itself
+ * via className/style. Ancestor values cascade down because no --cst-dialog-*
+ * defaults are declared on the element; defaults live only as var() fallbacks.
+ *
+ *   Global: :root { --cst-dialog-shape: 16px; }
+ *   Per-instance: <Dialog style={{ "--cst-dialog-container-color": "#f9fbe7" }} />
+ *
+ * TOKEN CONTRACT
+ * --------------
+ *   --cst-dialog-shape                  28px   Border-radius
+ *   --cst-dialog-container-color        #fff   Background fill
+ *   --cst-dialog-headline-color      #1a1a2e   Headline text color
+ *   --cst-dialog-content-color       #3c4043   Body / supporting text color
+ *   --cst-dialog-min-width             280px   Minimum width
+ *   --cst-dialog-max-width             560px   Maximum width
+ *   --cst-dialog-actions-gap             8px   Gap between action buttons
+ * ========================================================================== */
+
+/* ---- md-dialog element ---------------------------------------------------- */
+md-dialog.cst-dialog {
+    /* Map Cloudstry tokens → Material 3 tokens.
+       Defaults are var() fallbacks — do NOT declare --cst-dialog-* here or
+       ancestor overrides will be blocked by the element's own declaration. */
+    --md-dialog-container-shape: var(--cst-dialog-shape, 28px);
+    --md-dialog-container-color: var(--cst-dialog-container-color, #ffffff);
+    --md-dialog-headline-color: var(--cst-dialog-headline-color, #1a1a2e);
+    --md-dialog-supporting-text-color: var(--cst-dialog-content-color, #3c4043);
+
+    min-width: var(--cst-dialog-min-width, 280px);
+    max-width: var(--cst-dialog-max-width, 560px);
+}
+
+/* ---- Content region (slot="content" wrapper) ------------------------------ */
+.cst-dialog__content {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: inherit;
+}
+
+/* ---- Actions region (slot="actions" wrapper) ------------------------------ */
+.cst-dialog__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--cst-dialog-actions-gap, 8px);
+    width: 100%;
+}

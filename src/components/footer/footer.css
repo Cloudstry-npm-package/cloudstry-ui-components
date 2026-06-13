@@ -1,18 +1,212 @@
+/* ─── Token Definitions ─────────────────────────────────────────────────── */
+:root {
+    /* Surface */
+    --cst-footer-bg: #ffffff;
+    --cst-footer-border-top-color: #e0e0e0;
+    --cst-footer-border-top-width: 1px;
+
+    /* Spacing */
+    --cst-footer-padding-y: 16px;
+    --cst-footer-padding-x: 24px;
+    --cst-footer-gap: 16px;            /* gap between sections in centered/split */
+    --cst-footer-links-gap: 20px;      /* gap between individual link items */
+    --cst-footer-social-gap: 12px;     /* gap between social icon links */
+    --cst-footer-margin-top: 0;        /* was 18px — spacing is consumer's concern */
+
+    /* Content width */
+    --cst-footer-max-width: none;      /* inner content max-width; bg extends full-width */
+
+    /* Typography */
+    --cst-footer-text-color: #49454f;  /* M3 on-surface-variant */
+    --cst-footer-font-size: 13px;
+    --cst-footer-font-family: inherit;
+    --cst-footer-letter-spacing: 0.2px;
+
+    /* Links */
+    --cst-footer-link-color: #49454f;
+    --cst-footer-link-hover-color: #1c1b1f;
+    --cst-footer-link-font-size: 13px;
+    --cst-footer-link-font-weight: 400;
+    --cst-footer-link-decoration: none;
+    --cst-footer-link-decoration-hover: underline;
+
+    /* Social icons */
+    --cst-footer-social-icon-color: #49454f;
+    --cst-footer-social-icon-hover-color: #1c1b1f;
+    --cst-footer-social-icon-size: 20px;
+}
+
+/* ─── Outer Shell ───────────────────────────────────────────────────────── */
 .cst-footer {
     width: 100%;
-    border-top: 1px solid #e0e0e0;
-    background-color: #ffffff;
-    text-align: center;
-    padding: 12px 0;
-    color: #6c757d;
-    font-size: 14px;
-    letter-spacing: 0.3px;
-    margin-top: 18px;
+    background: var(--cst-footer-bg);
+    border-top: var(--cst-footer-border-top-width) solid var(--cst-footer-border-top-color);
+    margin-top: var(--cst-footer-margin-top);
+    font-family: var(--cst-footer-font-family);
+    font-size: var(--cst-footer-font-size);
+    color: var(--cst-footer-text-color);
+    letter-spacing: var(--cst-footer-letter-spacing);
+}
+
+/* ─── Inner Wrapper — controls max-width + padding ─────────────────────── */
+.cst-footer-inner {
+    max-width: var(--cst-footer-max-width);
+    margin: 0 auto;
+    padding: var(--cst-footer-padding-y) var(--cst-footer-padding-x);
+}
+
+/* ─── Simple variant (default) ──────────────────────────────────────────── */
+.cst-footer[data-variant="simple"] .cst-footer-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cst-footer-text {
     margin: 0;
-    color: #000000;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: var(--cst-footer-font-size);
+    color: var(--cst-footer-text-color);
+    text-align: center;
+}
+
+/* ─── Centered variant ──────────────────────────────────────────────────── */
+.cst-footer[data-variant="centered"] .cst-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--cst-footer-gap);
+    text-align: center;
+}
+
+/* ─── Split variant ─────────────────────────────────────────────────────── */
+.cst-footer[data-variant="split"] .cst-footer-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--cst-footer-gap);
+}
+
+/* Left column: brand + legal stacked */
+.cst-footer-brand-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Right column: links + social stacked */
+.cst-footer-end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+/* ─── Brand slot ────────────────────────────────────────────────────────── */
+.cst-footer-brand {
+    display: flex;
+    align-items: center;
+}
+
+/* ─── Legal text (slot-based variants) ─────────────────────────────────── */
+.cst-footer-legal {
+    margin: 0;
+    font-size: var(--cst-footer-font-size);
+    color: var(--cst-footer-text-color);
+}
+
+/* ─── Links nav ─────────────────────────────────────────────────────────── */
+.cst-footer-links-nav {
+    display: flex;
+}
+
+.cst-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--cst-footer-links-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cst-footer-link {
+    color: var(--cst-footer-link-color);
+    font-size: var(--cst-footer-link-font-size);
+    font-weight: var(--cst-footer-link-font-weight);
+    text-decoration: var(--cst-footer-link-decoration);
+    transition: color 150ms ease;
+}
+
+.cst-footer-link:hover {
+    color: var(--cst-footer-link-hover-color);
+    text-decoration: var(--cst-footer-link-decoration-hover);
+}
+
+.cst-footer-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ─── Social nav ────────────────────────────────────────────────────────── */
+.cst-footer-social-nav {
+    display: flex;
+}
+
+.cst-footer-social {
+    display: flex;
+    gap: var(--cst-footer-social-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cst-footer-social-link {
+    display: flex;
+    align-items: center;
+    color: var(--cst-footer-social-icon-color);
+    transition: color 150ms ease;
+    line-height: 0;
+    text-decoration: none;
+}
+
+.cst-footer-social-link:hover {
+    color: var(--cst-footer-social-icon-hover-color);
+}
+
+.cst-footer-social-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.cst-footer-social-link svg {
+    width: var(--cst-footer-social-icon-size);
+    height: var(--cst-footer-social-icon-size);
+    fill: currentColor;
+}
+
+/* ─── Responsive: split collapses to stacked centered at 600px ─────────── */
+@media (max-width: 600px) {
+    .cst-footer[data-variant="split"] .cst-footer-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cst-footer-brand-legal {
+        align-items: center;
+    }
+
+    .cst-footer-end {
+        align-items: center;
+    }
+}
+
+/* ─── Responsive: tighter horizontal padding on very small screens ──────── */
+@media (max-width: 480px) {
+    .cst-footer-inner {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }

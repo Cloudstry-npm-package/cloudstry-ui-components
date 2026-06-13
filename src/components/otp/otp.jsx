@@ -1,5 +1,4 @@
-import "@material/web/textfield/outlined-text-field.js";
-import "@material/web/button/text-button.js";
+"use client";
 import OtpInputBase from "./otp.base.jsx";
 
 function OtpInput(props) {

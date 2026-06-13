@@ -50,6 +50,91 @@
       "require": "./dist/cjs/components/table/index.js",
       "types": "./dist/types/table.d.ts"
     },
+    "./card": {
+      "import": "./dist/esm/components/card/index.js",
+      "require": "./dist/cjs/components/card/index.js",
+      "types": "./dist/types/card.d.ts"
+    },
+    "./badge": {
+      "import": "./dist/esm/components/badge/index.js",
+      "require": "./dist/cjs/components/badge/index.js",
+      "types": "./dist/types/badge.d.ts"
+    },
+    "./checkbox": {
+      "import": "./dist/esm/components/checkbox/index.js",
+      "require": "./dist/cjs/components/checkbox/index.js",
+      "types": "./dist/types/checkbox.d.ts"
+    },
+    "./chips": {
+      "import": "./dist/esm/components/chips/index.js",
+      "require": "./dist/cjs/components/chips/index.js",
+      "types": "./dist/types/chips.d.ts"
+    },
+    "./dialog": {
+      "import": "./dist/esm/components/dialog/index.js",
+      "require": "./dist/cjs/components/dialog/index.js",
+      "types": "./dist/types/dialog.d.ts"
+    },
+    "./divider": {
+      "import": "./dist/esm/components/divider/index.js",
+      "require": "./dist/cjs/components/divider/index.js",
+      "types": "./dist/types/divider.d.ts"
+    },
+    "./fab": {
+      "import": "./dist/esm/components/fab/index.js",
+      "require": "./dist/cjs/components/fab/index.js",
+      "types": "./dist/types/fab.d.ts"
+    },
+    "./iconbutton": {
+      "import": "./dist/esm/components/iconbutton/index.js",
+      "require": "./dist/cjs/components/iconbutton/index.js",
+      "types": "./dist/types/iconbutton.d.ts"
+    },
+    "./list": {
+      "import": "./dist/esm/components/list/index.js",
+      "require": "./dist/cjs/components/list/index.js",
+      "types": "./dist/types/list.d.ts"
+    },
+    "./menu": {
+      "import": "./dist/esm/components/menu/index.js",
+      "require": "./dist/cjs/components/menu/index.js",
+      "types": "./dist/types/menu.d.ts"
+    },
+    "./progress": {
+      "import": "./dist/esm/components/progress/index.js",
+      "require": "./dist/cjs/components/progress/index.js",
+      "types": "./dist/types/progress.d.ts"
+    },
+    "./radio": {
+      "import": "./dist/esm/components/radio/index.js",
+      "require": "./dist/cjs/components/radio/index.js",
+      "types": "./dist/types/radio.d.ts"
+    },
+    "./slider": {
+      "import": "./dist/esm/components/slider/index.js",
+      "require": "./dist/cjs/components/slider/index.js",
+      "types": "./dist/types/slider.d.ts"
+    },
+    "./snackbar": {
+      "import": "./dist/esm/components/snackbar/index.js",
+      "require": "./dist/cjs/components/snackbar/index.js",
+      "types": "./dist/types/snackbar.d.ts"
+    },
+    "./switch": {
+      "import": "./dist/esm/components/switch/index.js",
+      "require": "./dist/cjs/components/switch/index.js",
+      "types": "./dist/types/switch.d.ts"
+    },
+    "./tabs": {
+      "import": "./dist/esm/components/tabs/index.js",
+      "require": "./dist/cjs/components/tabs/index.js",
+      "types": "./dist/types/tabs.d.ts"
+    },
+    "./tooltip": {
+      "import": "./dist/esm/components/tooltip/index.js",
+      "require": "./dist/cjs/components/tooltip/index.js",
+      "types": "./dist/types/tooltip.d.ts"
+    },
     "./ssr": {
       "import": "./dist/esm/ssr.js",
       "require": "./dist/cjs/ssr.js",
@@ -65,6 +150,7 @@
     "@material/web/**"
   ],
   "peerDependencies": {
+    "@floating-ui/react": ">=0.26.0",
     "@material/web": ">=1.0.0 <3.0.0",
     "react": ">=18 <21",
     "react-dom": ">=18 <21"
@@ -91,5 +177,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@floating-ui/react": "^0.27.19"
+  }
 }

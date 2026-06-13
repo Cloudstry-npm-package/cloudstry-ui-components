@@ -66,6 +66,10 @@ function TableBase({
     toolbar,              // ReactNode — always visible slot above table
     bulkActions,          // ReactNode — replaces toolbar when rows are selected
     toolbarClassName = "",
+
+    /* ---- Phase 3A: internal render slots (injected by Table, not for consumers) ---- */
+    searchNode,     // renders between title and toolbar
+    paginationNode, // renders after table container
 }) {
     const titleId = React.useId();
     const selectAllRef = React.useRef(null);
@@ -208,7 +212,10 @@ function TableBase({
                 </h2>
             )}
 
-            {/* Toolbar — between title and table */}
+            {/* Search — between title and toolbar (injected by Table in Phase 3A) */}
+            {searchNode}
+
+            {/* Toolbar — between search and table */}
             {hasToolbar && (
                 <div className={`cst-table-toolbar ${toolbarClassName}`.trim()}>
                     {showBulkBar ? (
@@ -228,7 +235,7 @@ function TableBase({
                 </div>
             )}
 
-            {/* Table */}
+            {/* Table container */}
             <div className="cst-table-container">
                 <table
                     className={`cst-table ${tableClassName}`}
@@ -364,6 +371,9 @@ function TableBase({
                     </tbody>
                 </table>
             </div>
+
+            {/* Pagination — after table container (injected by Table in Phase 3A) */}
+            {paginationNode}
         </div>
     );
 }
