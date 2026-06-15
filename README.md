@@ -20,35 +20,16 @@ A React component library built on [Material Design 3](https://m3.material.io/) 
 ## Installation
 
 ```bash
-npm install @cloudstrytech/ui-components
+npm install @cloudstrytech/ui-components @material/web
 ```
 
-### Peer dependencies
-
-Install the following peer dependencies alongside the library:
-
-```bash
-npm install @material/web @floating-ui/react react react-dom
-```
-
-| Peer dependency | Required version |
-|---|---|
-| `@material/web` | `>=1.0.0 <3.0.0` |
-| `@floating-ui/react` | `>=0.26.0` |
-| `react` | `>=18 <21` |
-| `react-dom` | `>=18 <21` |
-
-### Styles
-
-Import the compiled stylesheet once at your application root:
+Then import the stylesheet once at your application root:
 
 ```js
 import "@cloudstrytech/ui-components/styles.css";
 ```
 
-### Material Symbols font (icon components)
-
-`IconButton` and any component that renders `<md-icon>` require the Material Symbols Outlined font. Add it to your HTML:
+That's it for most components. If you use `IconButton` or pass icon strings to `Button`, add the Material Symbols font to your HTML:
 
 ```html
 <link
