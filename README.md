@@ -23,20 +23,191 @@ A React component library built on [Material Design 3](https://m3.material.io/) 
 npm install @cloudstrytech/ui-components @material/web
 ```
 
-Then import the stylesheet once at your application root:
+---
+
+### React (Vite / Create React App)
+
+**1. Import the stylesheet**
+
+Open `src/main.jsx` (Vite) or `src/index.jsx` (Create React App) — the entry file that mounts your React tree — and add the import at the top:
 
 ```js
+// src/main.jsx  ← Vite
+// src/index.jsx ← Create React App
 import "@cloudstrytech/ui-components/styles.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 ```
 
-That's it for most components. If you use `IconButton` or pass icon strings to `Button`, add the Material Symbols font to your HTML:
+The stylesheet only needs to be imported once; every component in your app will pick it up automatically.
+
+**2. Add the Material Symbols font (required for `IconButton` and icon strings in `Button`)**
+
+Open `index.html` in the project root (the single HTML file Vite / CRA ships) and add the `<link>` inside `<head>`:
 
 ```html
-<link
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-  rel="stylesheet"
-/>
+<!-- index.html (project root) -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My App</title>
+
+    <!-- Add this line ↓ -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
 ```
+
+> Skip step 2 if you do not use `IconButton` or icon string props on `Button`.
+
+---
+
+### Next.js (App Router — Next.js 13+)
+
+**1. Import the stylesheet**
+
+Open `app/layout.jsx` (or `app/layout.tsx`) — the root layout that wraps every page — and import the stylesheet at the top of that file:
+
+```jsx
+// app/layout.jsx  ← this is your application root in App Router
+import "@cloudstrytech/ui-components/styles.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+This single import covers every page and component in your app.
+
+**2. Add the Material Symbols font (required for `IconButton` and icon strings in `Button`)**
+
+Next.js has no standalone `index.html`. The recommended approach is to use the built-in `next/font` Google Fonts integration, which self-hosts the font and avoids an external network request.
+
+**Option A — `next/font` (recommended):**
+
+```jsx
+// app/layout.jsx
+import "@cloudstrytech/ui-components/styles.css";
+import { Inter } from "next/font/google";
+
+// next/font doesn't support variable fonts from the icons CDN directly,
+// so load Material Symbols via the link tag approach in metadata instead.
+export const metadata = {
+  // other metadata fields …
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+**Option B — Next.js `<head>` metadata (alternative):**
+
+If you prefer to keep `<head>` metadata separate, add it via the `generateMetadata` export or the `metadata` object:
+
+```jsx
+// app/layout.jsx
+import "@cloudstrytech/ui-components/styles.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        {/* Next.js allows extra <link> tags directly inside <head> in layout */}
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+> Skip step 2 if you do not use `IconButton` or icon string props on `Button`.
+
+---
+
+### Next.js (Pages Router — Next.js 12 and below / legacy)
+
+**1. Import the stylesheet**
+
+Open `pages/_app.jsx` (or `pages/_app.tsx`) — the custom App component that wraps all pages — and import the stylesheet at the top:
+
+```jsx
+// pages/_app.jsx
+import "@cloudstrytech/ui-components/styles.css";
+
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+
+**2. Add the Material Symbols font**
+
+Open `pages/_document.jsx` (create it if it doesn't exist) — this is the equivalent of `index.html` in Pages Router and is the correct place to inject global `<head>` tags:
+
+```jsx
+// pages/_document.jsx
+import { Html, Head, Main, NextScript } from "next/document";
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        {/* Add this ↓ */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+          rel="stylesheet"
+        />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+```
+
+> `pages/_document.jsx` only renders on the server; it is the right place for font tags, not `pages/_app.jsx`.
 
 ---
 
