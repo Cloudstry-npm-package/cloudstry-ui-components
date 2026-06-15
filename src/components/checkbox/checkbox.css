@@ -4,12 +4,40 @@
  * Public override surface → the --cst-checkbox-* custom properties below.
  * They are mapped internally onto Material 3 tokens (--md-checkbox-*), which
  * remain an implementation detail and are NOT part of the public API.
+ *
+ * TOKEN CONTRACT
+ * --------------
+ *   On md-checkbox.cst-checkbox:
+ *     --cst-checkbox-size           18px     Box container size (default md)
+ *     --cst-checkbox-shape          2px      Border-radius of the box
+ *     --cst-checkbox-outline-color  #79747e  Unchecked border color
+ *     --cst-checkbox-outline-width  2px
+ *     --cst-checkbox-checked-color  #00b7e9  Checked background color
+ *     --cst-checkbox-checked-icon-color  #ffffff  Checkmark icon color
+ *     --cst-checkbox-error-color    #b3261e  Error/invalid border color
+ *
+ *   On .cst-checkbox-wrapper (outer container):
+ *     --cst-checkbox-gap            10px     Space between box and label text
+ *     --cst-checkbox-label-color    #1a1a2e  Label text color
+ *     --cst-checkbox-label-size     0.9375rem  Label font size
+ *     --cst-checkbox-label-weight   400      Label font weight
+ *     --cst-checkbox-disabled-label-color  rgba(0,0,0,0.38)
+ *
+ *   On .cst-checkbox-group (CheckboxGroup fieldset/div):
+ *     --cst-checkbox-group-gap      8px      Vertical gap between items
+ *     --cst-checkbox-group-horizontal-gap  16px  Horizontal gap in horizontal mode
+ *
+ * className vs checkboxClassName:
+ *   className        → outer wrapper (<label> when label prop is set, <div> otherwise)
+ *   checkboxClassName → md-checkbox element itself
+ *   CSS tokens set on className cascade into md-checkbox (descendant), so
+ *   --cst-checkbox-* overrides work on either prop.
  * ========================================================================== */
 
 /* ---- Token contract + MWC mapping on the checkbox element ---------------- */
 md-checkbox.cst-checkbox {
     /* ---- Public Cloudstry token contract (override these) ---------------- */
-    --cst-checkbox-size: 18px;                       /* box container size      */
+    --cst-checkbox-size: 18px;                       /* box container size (md default) */
     --cst-checkbox-shape: 2px;                        /* border-radius of box    */
     --cst-checkbox-outline-color: #79747e;            /* unchecked border color  */
     --cst-checkbox-outline-width: 2px;
@@ -31,6 +59,23 @@ md-checkbox.cst-checkbox {
 
     vertical-align: middle;
     flex-shrink: 0;
+}
+
+/* ---- Size system ---------------------------------------------------------- */
+/* Higher specificity (2 classes) overrides the 18px default above (1 class). */
+md-checkbox.cst-checkbox.cst-checkbox--sm {
+    --cst-checkbox-size: 14px;
+    --md-checkbox-state-layer-size: 36px;
+}
+
+md-checkbox.cst-checkbox.cst-checkbox--md {
+    --cst-checkbox-size: 18px;
+    /* state-layer: 40px — MWC default, no override needed */
+}
+
+md-checkbox.cst-checkbox.cst-checkbox--lg {
+    --cst-checkbox-size: 22px;
+    --md-checkbox-state-layer-size: 48px;
 }
 
 /* ---- Label wrapper ------------------------------------------------------- */
@@ -73,4 +118,43 @@ md-checkbox.cst-checkbox {
 
 .cst-checkbox-wrapper[data-disabled="true"] .cst-checkbox-label-text {
     color: var(--cst-checkbox-disabled-label-color);
+}
+
+/* ---- CheckboxGroup ------------------------------------------------------- */
+.cst-checkbox-group {
+    --cst-checkbox-group-gap: 8px;
+    --cst-checkbox-group-horizontal-gap: 16px;
+
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-inline-size: 0; /* override browser fieldset default */
+}
+
+.cst-checkbox-group-legend {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1d1b20;
+    padding: 0;
+    margin-bottom: 12px;
+    float: left;
+    width: 100%;
+}
+
+/* Clear float after legend so items flow below */
+.cst-checkbox-group-legend + .cst-checkbox-group-items {
+    clear: left;
+}
+
+.cst-checkbox-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cst-checkbox-group-gap);
+}
+
+.cst-checkbox-group--horizontal .cst-checkbox-group-items {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--cst-checkbox-group-horizontal-gap);
+    align-items: center;
 }

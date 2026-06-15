@@ -7,7 +7,7 @@ export { FooterSSR as Footer } from "./components/footer";
 export { TableSSR as Table } from "./components/table";
 export { CardSSR as Card } from "./components/card";
 export { BadgeSSR as Badge } from "./components/badge";
-export { CheckboxSSR as Checkbox } from "./components/checkbox";
+export { CheckboxSSR as Checkbox, CheckboxGroupSSR as CheckboxGroup } from "./components/checkbox";
 export { AssistChipSSR as AssistChip, FilterChipSSR as FilterChip, InputChipSSR as InputChip, SuggestionChipSSR as SuggestionChip, ChipSetSSR as ChipSet } from "./components/chips";
 export { DialogSSR as Dialog } from "./components/dialog";
 export { DividerSSR as Divider } from "./components/divider";

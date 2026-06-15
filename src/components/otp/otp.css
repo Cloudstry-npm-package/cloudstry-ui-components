@@ -48,6 +48,24 @@
     gap: 8px;
 }
 
+/* ─── Responsive sizing ─────────────────────────────────────────────────── */
+/* On mobile, reduce input size and font to prevent overflow with ≥ 6 digits */
+@media (max-width: 399px) {
+    .cst-otp-container {
+        --cst-otp-input-size: 40px;
+        --cst-otp-gap:        6px;
+        --cst-otp-font-size:  16px;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 599px) {
+    .cst-otp-container {
+        --cst-otp-input-size: 46px;
+        --cst-otp-gap:        8px;
+        --cst-otp-font-size:  18px;
+    }
+}
+
 /* Disabled state — pointer-events handled by native disabled on each input */
 .cst-otp-container[data-disabled] {
     opacity: var(--cst-otp-disabled-opacity);

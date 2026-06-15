@@ -47,6 +47,7 @@ const InputChipBase = forwardRef(function InputChipBase(
         target,
         rel,
         disabled = false,
+        size = "md",    // "sm" | "md"
         onRemove,       // () => void
         onClick,
         className = "",
@@ -68,7 +69,7 @@ const InputChipBase = forwardRef(function InputChipBase(
         return () => el.removeEventListener("remove", handler);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const classes = ["cst-chip", "cst-chip--input", className].filter(Boolean).join(" ");
+    const classes = ["cst-chip", "cst-chip--input", `cst-chip--${size}`, className].filter(Boolean).join(" ");
 
     const attrs = {};
     if (disabled) attrs.disabled = true;

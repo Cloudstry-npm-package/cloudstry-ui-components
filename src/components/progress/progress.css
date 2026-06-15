@@ -52,3 +52,12 @@ md-linear-progress.cst-linear-progress {
     --md-linear-progress-track-height: var(--cst-linear-progress-track-height);
     --md-linear-progress-buffer-color: var(--cst-linear-progress-buffer-color);
 }
+/* ---- Reduced motion: stop indeterminate animation ---- */
+@media (prefers-reduced-motion: reduce) {
+    md-circular-progress.cst-circular-progress,
+    md-linear-progress.cst-linear-progress {
+        /* MWC respects animation-duration: 0s to stop the loop */
+        animation-duration: 0.001ms;
+        animation-iteration-count: 1;
+    }
+}

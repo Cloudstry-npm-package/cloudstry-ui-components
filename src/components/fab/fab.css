@@ -16,15 +16,26 @@
  * TOKEN CONTRACT
  * --------------
  *   --cst-fab-shape              16px   Border-radius (standard and small FAB)
- *   --cst-fab-container-color  #f0f4f8  Surface variant container fill
- *   --cst-fab-icon-color       #00b7e9  Surface variant icon color
+ *   --cst-fab-bg               (unset)  Shorthand background alias. When set,
+ *                                       drives container-color for surface +
+ *                                       branded FABs (before the #f0f4f8 default).
+ *                                       --cst-fab-container-color takes precedence
+ *                                       if also set.
+ *   --cst-fab-container-color  #f0f4f8  Surface variant container fill (explicit
+ *                                       control; takes precedence over --cst-fab-bg)
+ *   --cst-fab-icon-color       #00b7e9  Surface variant icon + extended label color
+ *   --cst-fab-label-color      #00b7e9  Extended FAB label text color
  *   --cst-fab-primary-container-color   #00b7e9  Primary variant container
  *   --cst-fab-primary-icon-color        #ffffff  Primary variant icon
  *   --cst-fab-secondary-container-color #e8f4f9  Secondary variant container
  *   --cst-fab-secondary-icon-color      #00b7e9  Secondary variant icon
  *   --cst-fab-tertiary-container-color  #1a1a2e  Tertiary variant container
  *   --cst-fab-tertiary-icon-color       #ffffff  Tertiary variant icon
- *   --cst-fab-label-color       #00b7e9  Extended FAB label text color
+ *   --cst-fab-offset-x           16px   Horizontal offset used when position
+ *                                       convenience prop is set (bottom-right /
+ *                                       bottom-left). Override via style prop.
+ *   --cst-fab-offset-y           16px   Vertical offset from the bottom of the
+ *                                       viewport when position prop is set.
  * ========================================================================== */
 
 /* ---- md-fab (standard) ---------------------------------------------------- */
@@ -32,8 +43,9 @@ md-fab.cst-fab {
     /* Shape */
     --md-fab-container-shape: var(--cst-fab-shape, 16px);
 
-    /* Surface variant (default) */
-    --md-fab-container-color: var(--cst-fab-container-color, #f0f4f8);
+    /* Surface variant (default).
+       Chain: --cst-fab-container-color (explicit) → --cst-fab-bg (shorthand) → #f0f4f8 */
+    --md-fab-container-color: var(--cst-fab-container-color, var(--cst-fab-bg, #f0f4f8));
     --md-fab-icon-color: var(--cst-fab-icon-color, #00b7e9);
     --md-fab-hover-icon-color: var(--cst-fab-icon-color, #00b7e9);
     --md-fab-focus-icon-color: var(--cst-fab-icon-color, #00b7e9);
@@ -80,7 +92,8 @@ md-fab.cst-fab {
 /* ---- md-branded-fab -------------------------------------------------------- */
 md-branded-fab.cst-fab {
     --md-fab-branded-container-shape: var(--cst-fab-shape, 16px);
-    --md-fab-branded-container-color: var(--cst-fab-container-color, #f0f4f8);
+    /* Same chain as md-fab: container-color → bg → default */
+    --md-fab-branded-container-color: var(--cst-fab-container-color, var(--cst-fab-bg, #f0f4f8));
     --md-fab-branded-label-text-color: var(--cst-fab-label-color, #1a1a2e);
     --md-fab-branded-hover-label-text-color: var(--cst-fab-label-color, #1a1a2e);
     --md-fab-branded-focus-label-text-color: var(--cst-fab-label-color, #1a1a2e);

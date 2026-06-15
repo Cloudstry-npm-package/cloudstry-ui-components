@@ -1,2 +1,2 @@
-export { default, Checkbox } from "./checkbox.jsx";
-export { CheckboxSSR } from "./checkboxSSR.jsx";
+export { default, Checkbox, CheckboxGroup } from "./checkbox.jsx";
+export { CheckboxSSR, CheckboxGroupSSR } from "./checkboxSSR.jsx";

@@ -22,13 +22,18 @@ import "./list.css";
 const ListBase = forwardRef(function ListBase(
     {
         children,
+        dense = false,   // Reduces item heights and vertical padding (M3 density system)
         className = "",
         style,
         ...rest
     },
     ref
 ) {
-    const classes = ["cst-list", className].filter(Boolean).join(" ");
+    const classes = [
+        "cst-list",
+        dense && "cst-list--dense",
+        className,
+    ].filter(Boolean).join(" ");
 
     return (
         <md-list ref={ref} className={classes} style={style} {...rest}>

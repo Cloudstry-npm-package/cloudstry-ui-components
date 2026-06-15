@@ -13,6 +13,13 @@ import "./button.css";
  * `startIcon` AND `endIcon` coexist (the underlying element exposes only one
  * native icon slot), makes `loading` a trivial swap, and keeps the layout
  * identical if the renderer is ever decoupled from `@material/web`.
+ *
+ * V2 additions (2026-06-13):
+ *   - `href` / `target` / `rel` — link button support (MWC renders <a> natively)
+ *   - Loading spinner: role="status" + aria-label + visually-hidden text
+ *   - `--cst-button-outlined-border` token (see button.css)
+ *   - `pointer: coarse` touch-target fix for sm (see button.css)
+ *   - `xs` and `xl` added to the size scale
  */
 
 const VARIANT_TAGS = {
@@ -29,25 +36,32 @@ const ButtonBase = forwardRef(function ButtonBase(
         label,                  // back-compat: used when `children` is absent
         icon = null,            // back-compat: string -> leading <md-icon>
         variant = "filled",     // filled | tonal | elevated | outlined | text
-        size = "md",            // sm | md | lg  (Cloudstry-owned, not M3 XS–XL)
+        size = "md",            // xs | sm | md | lg | xl  (Cloudstry-owned, not M3 XS–XL)
         startIcon = null,       // ReactNode leading icon
         endIcon = null,         // ReactNode trailing icon
         loading = false,        // Cloudstry composition (not an MWC feature)
         fullWidth = false,
         disabled = false,
         type = "button",        // intentionally "button" (not the element's "submit")
+        // Link button props — MWC renders <a> internally when href is set
+        href,                   // navigation target; renders button as anchor link
+        target,                 // anchor target, e.g. "_blank" (only used with href)
+        rel,                    // anchor rel, e.g. "noopener noreferrer" (only used with href)
         onClick,
         className = "",
         style,
-        ...rest                 // aria-*, data-*, id, name, href, ... forwarded
+        ...rest                 // aria-*, data-*, id, name, ... forwarded
     },
     ref
 ) {
     const Tag = VARIANT_TAGS[variant] || VARIANT_TAGS.filled;
     const content = children ?? label;
 
+    // V2: spinner uses role="status" + aria-label so it is announced by AT.
+    // The visually-hidden "Loading" text in the content area provides an
+    // additional accessible label for focus-reading without duplication.
     const leadingNode = loading
-        ? <span className="cst-btn__spinner" aria-hidden="true" />
+        ? <span className="cst-btn__spinner" role="status" aria-label="Loading" />
         : (startIcon ?? (icon ? <md-icon>{icon}</md-icon> : null));
     const trailingNode = loading ? null : endIcon;
 
@@ -97,6 +111,9 @@ const ButtonBase = forwardRef(function ButtonBase(
             aria-busy={loading || undefined}
             aria-disabled={loading || undefined}
             onClick={handleClick}
+            href={href}
+            target={target}
+            rel={rel}
         >
             <span className="cst-btn__content">
                 {leadingNode && (
@@ -111,6 +128,10 @@ const ButtonBase = forwardRef(function ButtonBase(
                     <span className="cst-btn__icon cst-btn__icon--end">
                         {trailingNode}
                     </span>
+                )}
+                {/* V2: visually hidden loading text — read on focus while spinner is visible */}
+                {loading && (
+                    <span className="cst-visually-hidden">Loading</span>
                 )}
             </span>
         </Tag>

@@ -18,14 +18,18 @@
  * TOKEN CONTRACT
  * --------------
  *   --cst-chip-shape                     8px    Border-radius (all types)
- *   --cst-chip-height                   32px    Container height (all types)
+ *   --cst-chip-height                   32px    Container height (all types, size="md")
+ *   --cst-chip-height-sm                24px    Container height (size="sm")
  *   --cst-chip-label-color          #1a1a2e    Label text (all types, unselected)
  *   --cst-chip-outline-color        #c4c7c5    Border color (all types)
  *   --cst-chip-icon-color           #00b7e9    Leading icon (all types, unselected)
  *   --cst-chip-filter-selected-color  #00b7e9  FilterChip selected fill
  *   --cst-chip-filter-selected-label-color #fff FilterChip selected label
  *   --cst-chip-filter-selected-icon-color  #fff FilterChip selected icon/checkmark
- *   --cst-chip-set-gap                   8px   Gap between chips in ChipSet
+ *   --cst-chip-avatar-size              24px    Avatar slot size for InputChip avatar mode
+ *   --cst-chip-elevated-shadow          #000    Shadow color for elevated chips (AssistChip, SuggestionChip)
+ *   --cst-chip-set-gap                   8px    Gap between chips in ChipSet
+ *   --cst-chip-set-wrap                 wrap    flex-wrap for ChipSet (set "nowrap" for horizontal scroll)
  * ========================================================================== */
 
 /* ---- AssistChip ------------------------------------------------------------ */
@@ -44,6 +48,7 @@ md-assist-chip.cst-chip--assist {
     --md-assist-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
     --md-assist-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
     --md-assist-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-assist-chip-elevated-container-shadow-color: var(--cst-chip-elevated-shadow, var(--md-sys-color-shadow, #000));
 }
 
 /* ---- FilterChip ------------------------------------------------------------ */
@@ -90,6 +95,7 @@ md-input-chip.cst-chip--input {
     --md-input-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
     --md-input-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
     --md-input-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-input-chip-avatar-size: var(--cst-chip-avatar-size, 24px);
 }
 
 /* ---- SuggestionChip ------------------------------------------------------- */
@@ -105,9 +111,25 @@ md-suggestion-chip.cst-chip--suggestion {
     --md-suggestion-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
     --md-suggestion-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
     --md-suggestion-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-suggestion-chip-elevated-container-shadow-color: var(--cst-chip-elevated-shadow, var(--md-sys-color-shadow, #000));
 }
 
 /* ---- ChipSet --------------------------------------------------------------- */
 md-chip-set.cst-chip-set {
     gap: var(--cst-chip-set-gap, 8px);
+    flex-wrap: var(--cst-chip-set-wrap, wrap);
+}
+
+/* ---- Size system — sm overrides height (md = 32px handled by base var() fallbacks) ---- */
+md-assist-chip.cst-chip--assist.cst-chip--sm {
+    --md-assist-chip-container-height: var(--cst-chip-height-sm, 24px);
+}
+md-filter-chip.cst-chip--filter.cst-chip--sm {
+    --md-filter-chip-container-height: var(--cst-chip-height-sm, 24px);
+}
+md-input-chip.cst-chip--input.cst-chip--sm {
+    --md-input-chip-container-height: var(--cst-chip-height-sm, 24px);
+}
+md-suggestion-chip.cst-chip--suggestion.cst-chip--sm {
+    --md-suggestion-chip-container-height: var(--cst-chip-height-sm, 24px);
 }

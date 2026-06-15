@@ -55,7 +55,7 @@
 
 /* ---- External label (default label model) -------------------------------- */
 .cst-input__label {
-    font-size: 16px;
+    font-size: var(--cst-input-label-font-size, 0.9375rem);
     font-weight: 500;
     line-height: 1.4;
     color: var(--cst-input-label-color);

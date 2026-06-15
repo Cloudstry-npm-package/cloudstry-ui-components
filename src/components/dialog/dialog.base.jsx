@@ -34,6 +34,15 @@ function useMergedRef(externalRef) {
  * onClose(returnValue) fires after the close animation completes.
  * onCancel(event) fires on Escape or scrim click; call event.preventDefault()
  * to block the close (unsaved-changes guard).
+ *
+ * size="basic" (default) — standard dialog with max-width 560px.
+ * size="full-screen"     — occupies full viewport; suited for mobile workflows.
+ *
+ * closeOnBackdrop=false (default) — current behavior: onCancel fires on scrim
+ *   click; MWC closes unless consumer calls event.preventDefault().
+ * closeOnBackdrop=true  — explicitly calls el.close() on backdrop cancel if the
+ *   event was not prevented, providing an explicit close guarantee independent
+ *   of MWC's internal cancel handling.
  */
 const DialogBase = forwardRef(function DialogBase(
     {
@@ -41,11 +50,13 @@ const DialogBase = forwardRef(function DialogBase(
         headline,
         actions,
         children,
-        type,               // "alert" → role="alertdialog"
-        quick = false,      // skip open/close animations
-        onOpen,             // () => void — after open animation completes
-        onClose,            // (returnValue: string) => void — after close animation
-        onCancel,           // (event: Event) => void — Escape / scrim click
+        type,                   // "alert" → role="alertdialog"
+        quick = false,          // skip open/close animations
+        size = "basic",         // "basic" | "full-screen"
+        closeOnBackdrop = false, // explicit backdrop-close guarantee
+        onOpen,                 // () => void — after open animation completes
+        onClose,                // (returnValue: string) => void — after close animation
+        onCancel,               // (event: Event) => void — Escape / scrim click
         className = "",
         dialogClassName = "",
         style,
@@ -61,6 +72,8 @@ const DialogBase = forwardRef(function DialogBase(
     onCloseRef.current = onClose;
     const onCancelRef = useRef(onCancel);
     onCancelRef.current = onCancel;
+    const closeOnBackdropRef = useRef(closeOnBackdrop);
+    closeOnBackdropRef.current = closeOnBackdrop;
 
     // Sync open state → show()/close() imperative calls.
     // md-dialog.open is a getter/setter; calling show()/close() is the only
@@ -84,8 +97,15 @@ const DialogBase = forwardRef(function DialogBase(
         const handleOpened = () => onOpenRef.current?.();
         // "closed" fires after close animation; el.returnValue carries the value
         const handleClosed = () => onCloseRef.current?.(el.returnValue);
-        // "cancel" fires on Escape or scrim click; preventDefault() blocks close
-        const handleCancel = (event) => onCancelRef.current?.(event);
+        // "cancel" fires on Escape or scrim click; preventDefault() blocks close.
+        // When closeOnBackdrop=true and the event was not prevented, we explicitly
+        // call el.close() to guarantee close regardless of MWC's internal handling.
+        const handleCancel = (event) => {
+            onCancelRef.current?.(event);
+            if (closeOnBackdropRef.current && !event.defaultPrevented) {
+                el.close();
+            }
+        };
 
         el.addEventListener("opened", handleOpened);
         el.addEventListener("closed", handleClosed);
@@ -102,7 +122,12 @@ const DialogBase = forwardRef(function DialogBase(
     if (quick) mdAttrs.quick = true;
     if (type) mdAttrs.type = type;
 
-    const classes = ["cst-dialog", dialogClassName, className].filter(Boolean).join(" ");
+    const classes = [
+        "cst-dialog",
+        size === "full-screen" && "cst-dialog--full-screen",
+        dialogClassName,
+        className,
+    ].filter(Boolean).join(" ");
 
     return (
         <md-dialog

@@ -8,7 +8,7 @@ const VARIANT_TAGS = {
 };
 
 /**
- * Cloudstry Card — presentational layer.
+ * Cloudstry Card — V2 — presentational layer.
  *
  * Provides a Cloudstry-owned content structure convention on top of the MWC
  * Labs card surface. Consumers get header/media/body/actions slots without
@@ -27,6 +27,12 @@ const VARIANT_TAGS = {
  *
  * Interactive card (href / link):
  *   <Card href="/detail/1">...</Card>
+ *
+ * Loading skeleton:
+ *   <Card loading header={<CardHeader ... />} actions={<>...</>} />
+ *
+ * Horizontal layout (media left, content right at ≥600px):
+ *   <Card horizontal media={<img ... />} header={...}>...</Card>
  */
 const CardBase = forwardRef(function CardBase(
     {
@@ -41,6 +47,9 @@ const CardBase = forwardRef(function CardBase(
         href,                   // Makes card a link (wraps in <a>)
         target,                 // anchor target (only used with href)
         rel,                    // anchor rel (only used with href)
+        // V2 layout / state props
+        loading = false,        // Renders animated skeleton placeholder when true
+        horizontal = false,     // At ≥600px: media left, content right (opt-in)
         // a11y
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledBy,
@@ -58,27 +67,67 @@ const CardBase = forwardRef(function CardBase(
         "cst-card",
         `cst-card--${variant}`,
         isInteractive ? "cst-card--interactive" : "",
+        loading    ? "cst-card--loading"     : "",
+        horizontal ? "cst-card--horizontal"  : "",
         className,
     ]
         .filter(Boolean)
         .join(" ");
 
-    // Structured layout: rendered when at least one slot prop is provided
+    // Structured layout: activated when at least one slot prop is provided
     const hasStructure = header !== undefined || media !== undefined || actions !== undefined;
 
-    const inner = hasStructure ? (
+    // Skeleton: shown when loading=true; skeleton shape reflects provided slot props
+    const skeleton = (
         <>
-            {media && <div className="cst-card__media">{media}</div>}
-            {header && <div className="cst-card__header">{header}</div>}
-            {children && <div className="cst-card__body">{children}</div>}
-            {actions && <div className="cst-card__actions">{actions}</div>}
+            {media !== undefined && (
+                <div className="cst-card__skeleton-media" aria-hidden="true" />
+            )}
+            <div className="cst-card__skeleton-content" aria-hidden="true">
+                <div className="cst-card__skeleton-line cst-card__skeleton-line--title" />
+                <div className="cst-card__skeleton-line cst-card__skeleton-line--subtitle" />
+                <div className="cst-card__skeleton-line" />
+                <div className="cst-card__skeleton-line" />
+                <div className="cst-card__skeleton-line cst-card__skeleton-line--short" />
+                {actions !== undefined && (
+                    <div className="cst-card__skeleton-actions">
+                        <div className="cst-card__skeleton-btn" />
+                        <div className="cst-card__skeleton-btn cst-card__skeleton-btn--secondary" />
+                    </div>
+                )}
+            </div>
         </>
-    ) : (
-        children
     );
 
+    // Structured content (when hasStructure and not loading)
+    const structuredContent = (
+        <>
+            {media && <div className="cst-card__media">{media}</div>}
+            {horizontal ? (
+                // Horizontal mode: wrap text content in a column so media sits beside it
+                <div className="cst-card__col">
+                    {header  && <div className="cst-card__header">{header}</div>}
+                    {children && <div className="cst-card__body">{children}</div>}
+                    {actions && <div className="cst-card__actions">{actions}</div>}
+                </div>
+            ) : (
+                <>
+                    {header  && <div className="cst-card__header">{header}</div>}
+                    {children && <div className="cst-card__body">{children}</div>}
+                    {actions && <div className="cst-card__actions">{actions}</div>}
+                </>
+            )}
+        </>
+    );
+
+    const inner = loading
+        ? skeleton
+        : hasStructure
+            ? structuredContent
+            : children;
+
     if (href) {
-        // Link-interactive card: entire card is an anchor
+        // Link-interactive card: entire card surface is an anchor
         return (
             <a
                 href={href}
@@ -87,6 +136,7 @@ const CardBase = forwardRef(function CardBase(
                 className="cst-card-link-wrap"
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}
+                aria-busy={loading || undefined}
             >
                 <Tag ref={ref} className={classes} style={style} {...rest}>
                     {inner}
@@ -109,6 +159,7 @@ const CardBase = forwardRef(function CardBase(
             ref={ref}
             className={classes}
             style={style}
+            aria-busy={loading || undefined}
             {...(onClick
                 ? {
                       role: "button",
@@ -128,22 +179,21 @@ const CardBase = forwardRef(function CardBase(
 
 export default CardBase;
 
-/* ---- CardHeader convenience component ------------------------------------ */
+/* ---- CardHeader convenience component (V2: layout moved to CSS) ----------- */
 export function CardHeader({ title, subtitle, avatar, action, className = "" }) {
     return (
-        <div className={`cst-card__header-inner${className ? ` ${className}` : ""}`}
-             style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+        <div className={`cst-card__header-inner${className ? ` ${className}` : ""}`}>
             {avatar && (
-                <div className="cst-card__header-avatar" style={{ flexShrink: 0 }}>
+                <div className="cst-card__header-avatar">
                     {avatar}
                 </div>
             )}
-            <div style={{ flex: 1, minWidth: 0 }}>
-                {title != null && <p className="cst-card__header-title">{title}</p>}
+            <div className="cst-card__header-text">
+                {title    != null && <p className="cst-card__header-title">{title}</p>}
                 {subtitle != null && <p className="cst-card__header-subtitle">{subtitle}</p>}
             </div>
             {action && (
-                <div className="cst-card__header-action" style={{ flexShrink: 0 }}>
+                <div className="cst-card__header-action">
                     {action}
                 </div>
             )}

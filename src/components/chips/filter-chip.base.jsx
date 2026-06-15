@@ -44,6 +44,7 @@ const FilterChipBase = forwardRef(function FilterChipBase(
         removable = false,
         disabled = false,
         icon,               // ReactElement — leading icon
+        size = "md",        // "sm" | "md"
         onChange,           // (selected: boolean) => void
         onRemove,           // () => void — only relevant when removable=true
         className = "",
@@ -101,7 +102,7 @@ const FilterChipBase = forwardRef(function FilterChipBase(
         el.selected = !!defaultSelected;
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const classes = ["cst-chip", "cst-chip--filter", className].filter(Boolean).join(" ");
+    const classes = ["cst-chip", "cst-chip--filter", `cst-chip--${size}`, className].filter(Boolean).join(" ");
 
     const attrs = {};
     if (elevated) attrs.elevated = true;
