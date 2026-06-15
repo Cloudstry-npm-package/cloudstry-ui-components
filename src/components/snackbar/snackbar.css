@@ -152,6 +152,38 @@
 .cst-snackbar-dismiss:hover { background: rgba(255,255,255,0.08); color: var(--cst-snackbar-text); }
 .cst-snackbar-dismiss:focus-visible { outline: 2px solid var(--cst-snackbar-dismiss-color); outline-offset: 2px; }
 
+/* ── Mobile: prevent overflow on narrow screens ────────────────────────── */
+/* On small screens (≤ 599px) the default min-width: 320px + side offsets can
+   cause horizontal overflow. Collapse to full-width with small margins. */
+@media (max-width: 599px) {
+    .cst-snackbar-positioner--bottom-center,
+    .cst-snackbar-positioner--bottom-start,
+    .cst-snackbar-positioner--bottom-end {
+        left: var(--cst-snackbar-side, 16px);
+        right: var(--cst-snackbar-side, 16px);
+        transform: none;
+        --cst-snackbar-side: 16px;
+    }
+
+    .cst-snackbar {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* ── Reduced motion: skip slide animation, use fade only ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .cst-snackbar {
+        animation: cst-snackbar-enter-fade var(--cst-snackbar-anim-duration) linear both;
+    }
+
+    .cst-snackbar--exiting {
+        animation: cst-snackbar-exit-fade var(--cst-snackbar-anim-duration) linear both;
+    }
+}
+
 /* ── Keyframes ─────────────────────────────────────────────────────────── */
 @keyframes cst-snackbar-enter {
     from {
@@ -173,4 +205,14 @@
         transform: translateY(calc(100% + var(--cst-snackbar-bottom)));
         opacity: 0;
     }
+}
+
+@keyframes cst-snackbar-enter-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes cst-snackbar-exit-fade {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }

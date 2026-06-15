@@ -1,3 +1,4 @@
+import "./styles/responsive.css";
 export { default as Button } from "./components/buttons";
 export { default as Input } from "./components/input";
 export { default as PasswordField } from "./components/passwordField";
@@ -7,7 +8,7 @@ export { default as Footer } from "./components/footer";
 export { default as Table } from "./components/table";
 export { Card, CardHeader } from "./components/card";
 export { Badge } from "./components/badge";
-export { Checkbox } from "./components/checkbox";
+export { Checkbox, CheckboxGroup } from "./components/checkbox";
 export { AssistChip, FilterChip, InputChip, SuggestionChip, ChipSet } from "./components/chips";
 export { Dialog } from "./components/dialog";
 export { Divider } from "./components/divider";

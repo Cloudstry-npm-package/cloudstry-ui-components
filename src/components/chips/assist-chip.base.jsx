@@ -21,6 +21,7 @@ const AssistChipBase = forwardRef(function AssistChipBase(
         rel,
         disabled = false,
         icon,
+        size = "md",    // "sm" | "md"
         onClick,
         className = "",
         style,
@@ -28,7 +29,7 @@ const AssistChipBase = forwardRef(function AssistChipBase(
     },
     ref
 ) {
-    const classes = ["cst-chip", "cst-chip--assist", className].filter(Boolean).join(" ");
+    const classes = ["cst-chip", "cst-chip--assist", `cst-chip--${size}`, className].filter(Boolean).join(" ");
 
     const attrs = {};
     if (elevated) attrs.elevated = true;

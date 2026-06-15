@@ -56,8 +56,14 @@ const CheckboxBase = forwardRef(function CheckboxBase(
         value = "on",             // matches native checkbox default
         // Presentation
         label,                    // optional; renders an associated <label>
-        className = "",           // outer wrapper or md-checkbox class (when no label)
-        checkboxClassName = "",   // always targets md-checkbox
+        size = "md",              // "sm" | "md" | "lg" — maps to --cst-checkbox-size
+        // className/checkboxClassName target:
+        //   className        → outer wrapper (<label> when label is set, <div> otherwise)
+        //   checkboxClassName → md-checkbox element (for element-level token overrides)
+        // CSS tokens set on className cascade to md-checkbox (descendant), so most
+        // --cst-checkbox-* overrides work equally well on either prop.
+        className = "",           // outer wrapper
+        checkboxClassName = "",   // md-checkbox element
         style,
         id: customId,
         // Callbacks
@@ -131,6 +137,7 @@ const CheckboxBase = forwardRef(function CheckboxBase(
     // ---- Build md-checkbox element ----------------------------------------
     const checkboxClasses = [
         "cst-checkbox",
+        `cst-checkbox--${size}`,
         checkboxClassName,
     ]
         .filter(Boolean)

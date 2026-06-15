@@ -8,6 +8,28 @@ const isDev =
     process.env &&
     process.env.NODE_ENV !== "production";
 
+// Position styles injected when the `position` convenience prop is set.
+// Offsets use CSS tokens (--cst-fab-offset-x / --cst-fab-offset-y) so
+// consumers can override via style prop without changing these mappings.
+const POSITION_STYLES = {
+    "bottom-right": {
+        position: "fixed",
+        bottom: "var(--cst-fab-offset-y, 16px)",
+        right: "var(--cst-fab-offset-x, 16px)",
+    },
+    "bottom-left": {
+        position: "fixed",
+        bottom: "var(--cst-fab-offset-y, 16px)",
+        left: "var(--cst-fab-offset-x, 16px)",
+    },
+    "bottom-center": {
+        position: "fixed",
+        bottom: "var(--cst-fab-offset-y, 16px)",
+        left: "50%",
+        transform: "translateX(-50%)",
+    },
+};
+
 /**
  * Cloudstry FAB — presentational layer.
  *
@@ -30,12 +52,16 @@ const isDev =
  * Link (programmatic — md-fab renders a <button>, not <a>):
  *   <FAB icon={<PlusIcon />} href="/compose" aria-label="Compose" />
  *
+ * Fixed position (V2):
+ *   <FAB icon={<PlusIcon />} position="bottom-right" aria-label="Create" />
+ *
  * ICON SLOT: MWC FAB uses a named slot "icon" (not the default slot). The
  * `icon` prop automatically wraps content with slot="icon". Children are also
  * wrapped with slot="icon" when no icon prop is provided.
  *
  * ACCESSIBILITY: Icon-only FABs must have aria-label. A dev warning fires when
- * neither label nor aria-label is provided.
+ * neither label nor aria-label is provided. When disabled, tabIndex=-1 prevents
+ * keyboard focus in addition to pointer-events:none and aria-disabled.
  */
 const FABBase = forwardRef(function FABBase(
     {
@@ -46,6 +72,7 @@ const FABBase = forwardRef(function FABBase(
         size = "md",            // sm | md | lg → small | medium | large
         lowered = false,
         disabled = false,
+        position = null,        // "bottom-right" | "bottom-left" | "bottom-center" | null
         onClick,
         href,                   // programmatic navigation; MWC does not natively support href
         target,
@@ -53,6 +80,7 @@ const FABBase = forwardRef(function FABBase(
         fabClassName = "",
         children,               // escape hatch: wrapped in slot="icon" when no icon prop
         "aria-label": ariaLabel,
+        tabIndex: externalTabIndex,
         style,
         ...rest
     },
@@ -107,6 +135,20 @@ const FABBase = forwardRef(function FABBase(
 
     const classes = ["cst-fab", fabClassName, className].filter(Boolean).join(" ");
 
+    // ---- Resolved tabIndex --------------------------------------------------
+    // When disabled: always -1 (removes from tab order; MWC FAB has no native
+    // disabled, so CSS pointer-events:none alone is insufficient for keyboard).
+    // When enabled: pass through the consumer's tabIndex (or undefined).
+    const resolvedTabIndex = disabled ? -1 : externalTabIndex;
+
+    // ---- Position convenience style ----------------------------------------
+    // When position is set, inject fixed-placement inline styles. Consumer's
+    // style prop is merged last so token overrides (--cst-fab-offset-*) win.
+    const positionStyle = position ? POSITION_STYLES[position] : null;
+    const mergedStyle = (positionStyle || style)
+        ? { ...positionStyle, ...style }
+        : undefined;
+
     // ---- Click handler (handles disabled + href) ----------------------------
     const handleClick = (e) => {
         if (disabled) {
@@ -127,8 +169,9 @@ const FABBase = forwardRef(function FABBase(
         <Tag
             ref={ref}
             className={classes}
-            style={style}
+            style={mergedStyle}
             aria-label={ariaLabel || undefined}
+            tabIndex={resolvedTabIndex}
             onClick={handleClick}
             {...mdAttrs}
             {...rest}

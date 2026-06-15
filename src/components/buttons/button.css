@@ -8,20 +8,27 @@
  *
  *   Polished out of the box (zero consumer CSS required) + safe to customize
  *   without specificity wars or shadow-DOM hacks.
+ *
+ * V2 additions (2026-06-13):
+ *   --cst-button-outlined-border  — independent outline color for outlined variant
+ *   .cst-btn--xs / .cst-btn--xl   — two new sizes extending the Cloudstry scale
+ *   @media (pointer: coarse)      — min-height touch fix for sm on coarse devices
+ *   .cst-visually-hidden          — utility for screen-reader-only text
  * ========================================================================== */
 
 .cst-btn {
     /* ---- Public Cloudstry token contract (override these) ---------------- */
-    --cst-button-bg: #00b7e9;          /* brand primary (filled bg / accent)  */
-    --cst-button-text: #ffffff;        /* label color on filled               */
-    --cst-button-tonal-bg: #cdeffb;    /* tonal container                     */
-    --cst-button-tonal-text: #00404f;  /* tonal label                         */
-    --cst-button-radius: 9999px;       /* M3 pill default; override e.g. 12px */
-    --cst-button-gap: 8px;             /* spacing between icon and label      */
-    --cst-button-height: 40px;         /* md size container height            */
-    --cst-button-font-size: 0.875rem;  /* md size label size                  */
+    --cst-button-bg: #00b7e9;                      /* brand primary (filled bg / accent)  */
+    --cst-button-text: #ffffff;                    /* label color on filled               */
+    --cst-button-tonal-bg: #cdeffb;               /* tonal container                     */
+    --cst-button-tonal-text: #00404f;             /* tonal label                         */
+    --cst-button-outlined-border: var(--cst-button-bg); /* outlined variant border color */
+    --cst-button-radius: 9999px;                  /* M3 pill default; override e.g. 12px */
+    --cst-button-gap: 8px;                        /* spacing between icon and label      */
+    --cst-button-height: 40px;                    /* md size container height            */
+    --cst-button-font-size: 0.875rem;             /* md size label size                  */
     --cst-button-font-weight: 500;
-    --cst-button-icon-size: 18px;      /* md size icon size                   */
+    --cst-button-icon-size: 18px;                 /* md size icon size                   */
 
     /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */
     /* Driving the system primary makes every variant pick up the brand per
@@ -54,9 +61,10 @@
     --md-elevated-button-label-text-size: var(--cst-button-font-size);
     --md-elevated-button-label-text-weight: var(--cst-button-font-weight);
 
-    /* outlined (outline color left at M3 default for correct contrast) */
+    /* outlined — V2: border color now driven by --cst-button-outlined-border */
     --md-outlined-button-label-text-color: var(--cst-button-bg);
     --md-outlined-button-icon-color: var(--cst-button-bg);
+    --md-outlined-button-outline-color: var(--cst-button-outlined-border);
     --md-outlined-button-container-shape: var(--cst-button-radius);
     --md-outlined-button-container-height: var(--cst-button-height);
     --md-outlined-button-label-text-size: var(--cst-button-font-size);
@@ -73,6 +81,13 @@
 }
 
 /* ---- Size system (Cloudstry-owned; NOT Material 3 Expressive XS–XL) ------ */
+/* V2: xs (24px) and xl (56px) extend the scale on both ends.                 */
+.cst-btn--xs {
+    --cst-button-height: 24px;
+    --cst-button-font-size: 0.75rem;
+    --cst-button-icon-size: 14px;
+    --cst-button-gap: 4px;
+}
 .cst-btn--sm {
     --cst-button-height: 32px;
     --cst-button-font-size: 0.8125rem;
@@ -90,6 +105,24 @@
     --cst-button-font-size: 1rem;
     --cst-button-icon-size: 20px;
     --cst-button-gap: 10px;
+}
+.cst-btn--xl {
+    --cst-button-height: 56px;
+    --cst-button-font-size: 1.125rem;
+    --cst-button-icon-size: 22px;
+    --cst-button-gap: 12px;
+}
+
+/* ---- Responsive touch target (V2) ---------------------------------------- */
+/* M3 recommends a minimum 48dp touch target on coarse-pointer (touch) devices.
+   The sm size is 32px which falls short; raise min-height to 40px on touch
+   devices while preserving the visual height via the token. The extra tap area
+   is absorbed by the button's padding. Affects sm only — all other sizes
+   already meet or exceed 40px. */
+@media (pointer: coarse) {
+    .cst-btn--sm {
+        min-height: 40px;
+    }
 }
 
 /* ---- Full width ---------------------------------------------------------- */
@@ -150,6 +183,8 @@
     opacity: 0.85;
 }
 
+/* V2: spinner no longer uses aria-hidden; role="status" + aria-label handle
+   AT announcements. The visual appearance is unchanged. */
 .cst-btn__spinner {
     box-sizing: border-box;
     width: var(--cst-button-icon-size);
@@ -170,4 +205,19 @@
     .cst-btn__spinner {
         animation-duration: 1.4s;
     }
+}
+
+/* ---- Visually hidden utility (V2) ---------------------------------------- */
+/* Used to provide screen-reader-only text, e.g. the "Loading" announcement
+   paired with the spinner. Follows the standard clip-pattern. */
+.cst-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }

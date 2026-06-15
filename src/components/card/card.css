@@ -1,5 +1,5 @@
 /* =============================================================================
- * Cloudstry Card — styling + token contract
+ * Cloudstry Card — V2 — styling + token contract
  *
  * Public override surface  ->  the --cst-card-* custom properties below.
  * They are mapped internally onto Material 3 Labs tokens (--md-*), which remain
@@ -12,6 +12,7 @@ md-outlined-card.cst-card {
     /* ---- Public Cloudstry token contract (override these) ---------------- */
     --cst-card-radius: 12px;
     --cst-card-padding: 16px;
+    --cst-card-width: 100%;                       /* V2: was hardcoded */
     --cst-card-elevated-bg: #ffffff;
     --cst-card-filled-bg: #f0f4f8;
     --cst-card-outlined-bg: #ffffff;
@@ -23,6 +24,9 @@ md-outlined-card.cst-card {
     --cst-card-header-title-weight: 600;
     --cst-card-header-subtitle-size: 0.8125rem;
     --cst-card-header-subtitle-color: #5f6368;
+    --cst-card-focus-ring-color: #00b7e9;         /* V2: focus ring token */
+    --cst-card-media-aspect-ratio: 16 / 9;        /* V2: media aspect ratio */
+    --cst-card-horizontal-media-width: 200px;     /* V2: horizontal layout media width */
 
     /* ---- Map Cloudstry tokens → Material 3 Labs tokens (implementation) -- */
     --md-elevated-card-container-shape: var(--cst-card-radius);
@@ -35,16 +39,16 @@ md-outlined-card.cst-card {
     --md-outlined-card-outline-width: var(--cst-card-outlined-border-width);
 
     display: block;
-    overflow: hidden; /* clips media/content to the card's border-radius */
+    overflow: hidden;
     box-sizing: border-box;
-    width: 100%;
+    width: var(--cst-card-width);                 /* V2: was hardcoded 100% */
 }
 
 /* ---- Media region (full-bleed, no padding) -------------------------------- */
 .cst-card__media {
     display: block;
     margin: 0;
-    line-height: 0; /* collapse whitespace below inline-block images */
+    line-height: 0;
 }
 
 .cst-card__media img,
@@ -53,6 +57,27 @@ md-outlined-card.cst-card {
     width: 100%;
     height: auto;
     object-fit: cover;
+    aspect-ratio: var(--cst-card-media-aspect-ratio); /* V2: consistent aspect ratio */
+}
+
+/* ---- CardHeader inner layout (V2: moved from inline styles) --------------- */
+.cst-card__header-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.cst-card__header-avatar {
+    flex-shrink: 0;
+}
+
+.cst-card__header-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.cst-card__header-action {
+    flex-shrink: 0;
 }
 
 /* ---- Header region ------------------------------------------------------- */
@@ -80,7 +105,6 @@ md-outlined-card.cst-card {
     padding: 10px var(--cst-card-padding) var(--cst-card-padding);
 }
 
-/* Restore full top padding when body is the first (or only) content region */
 .cst-card__body:first-child,
 .cst-card__media + .cst-card__body {
     padding-top: var(--cst-card-padding);
@@ -99,7 +123,6 @@ md-outlined-card.cst-card {
     padding: 8px var(--cst-card-padding) var(--cst-card-padding);
 }
 
-/* Separator only when content precedes actions */
 .cst-card__header + .cst-card__actions,
 .cst-card__body + .cst-card__actions {
     border-top: 1px solid var(--cst-card-actions-separator-color);
@@ -116,7 +139,7 @@ md-outlined-card.cst-card--interactive {
 md-elevated-card.cst-card--interactive:focus-visible,
 md-filled-card.cst-card--interactive:focus-visible,
 md-outlined-card.cst-card--interactive:focus-visible {
-    outline: 2px solid #00b7e9;
+    outline: 2px solid var(--cst-card-focus-ring-color); /* V2: tokenized */
     outline-offset: 2px;
 }
 
@@ -125,11 +148,134 @@ md-outlined-card.cst-card--interactive:focus-visible {
     display: block;
     text-decoration: none;
     color: inherit;
-    border-radius: var(--cst-card-radius, 12px); /* match card radius for focus outline */
+    border-radius: var(--cst-card-radius, 12px);
 }
 
 .cst-card-link-wrap:focus-visible {
-    outline: 2px solid #00b7e9;
+    outline: 2px solid var(--cst-card-focus-ring-color); /* V2: tokenized */
     outline-offset: 2px;
     border-radius: inherit;
+}
+
+/* ---- Horizontal card layout (V2) ----------------------------------------- */
+@media (min-width: 600px) {
+    .cst-card--horizontal {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        overflow: hidden;
+    }
+
+    .cst-card--horizontal .cst-card__media {
+        width: var(--cst-card-horizontal-media-width);
+        flex-shrink: 0;
+    }
+
+    .cst-card--horizontal .cst-card__media img,
+    .cst-card--horizontal .cst-card__media video {
+        height: 100%;
+        aspect-ratio: unset; /* fill media column height in horizontal mode */
+    }
+
+    .cst-card--horizontal .cst-card__col {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cst-card--horizontal .cst-card__col .cst-card__actions {
+        margin-top: auto; /* push actions to the bottom of the content column */
+    }
+}
+
+/* ---- Loading skeleton (V2) ----------------------------------------------- */
+@keyframes cst-skeleton-shimmer {
+    0%   { background-position: 100% 50%; }
+    100% { background-position: 0%   50%; }
+}
+
+.cst-card__skeleton-media,
+.cst-card__skeleton-line,
+.cst-card__skeleton-btn {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 37%,
+        #f0f0f0 63%
+    );
+    background-size: 400% 100%;
+    animation: cst-skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+.cst-card__skeleton-media {
+    width: 100%;
+    height: 160px;
+    border-radius: 0;   /* full-bleed, no radius */
+    flex-shrink: 0;
+}
+
+.cst-card__skeleton-content {
+    padding: var(--cst-card-padding);
+}
+
+.cst-card__skeleton-line {
+    height: 14px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.cst-card__skeleton-line--title {
+    height: 18px;
+    width: 55%;
+    margin-bottom: 8px;
+}
+
+.cst-card__skeleton-line--subtitle {
+    width: 80%;
+    margin-bottom: 16px;
+    opacity: 0.75;
+}
+
+.cst-card__skeleton-line--short {
+    width: 42%;
+}
+
+.cst-card__skeleton-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+    margin-top: 4px;
+}
+
+.cst-card__skeleton-btn {
+    height: 36px;
+    width: 80px;
+    border-radius: 6px;
+}
+
+.cst-card__skeleton-btn--secondary {
+    width: 64px;
+    opacity: 0.75;
+}
+
+/* Horizontal skeleton (desktop) */
+@media (min-width: 600px) {
+    .cst-card--horizontal.cst-card--loading {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .cst-card--horizontal.cst-card--loading .cst-card__skeleton-media {
+        width: var(--cst-card-horizontal-media-width);
+        height: auto;
+        min-height: 140px;
+        aspect-ratio: unset;
+    }
+
+    .cst-card--horizontal.cst-card--loading .cst-card__skeleton-content {
+        flex: 1;
+    }
 }

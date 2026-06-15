@@ -15,6 +15,22 @@
 .cst-tabs-wrapper {
     display: block;
     width: 100%;
+    /* Clip so the scrollable tabs don't bleed out of the wrapper */
+    overflow: hidden;
+}
+
+/* ---- Responsive scroll container ----------------------------------------- */
+/* When the total tab width exceeds the wrapper, enable smooth horizontal
+   scrolling instead of clipping or wrapping. MWC md-tabs scrolls internally,
+   but the wrapper clips by default. This ensures the host element scrolls. */
+.cst-tabs-wrapper--scrollable {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;              /* Firefox */
+}
+
+.cst-tabs-wrapper--scrollable::-webkit-scrollbar {
+    display: none;                      /* Chrome / Safari */
 }
 
 /* ---- md-tabs container --------------------------------------------------- */
@@ -25,6 +41,27 @@ md-tabs.cst-tabs {
     /* ---- Map to MWC tabs tokens ----------------------------------------- */
     width: 100%;
     display: block;
+}
+
+/* ---- Mobile tab behavior ------------------------------------------------- */
+/* On very small screens, allow the tab bar itself to scroll horizontally.
+   MWC md-tabs exposes its internal scroll via overflow. */
+@media (max-width: 599px) {
+    md-tabs.cst-tabs {
+        /* Allow MWC tab container to scroll without clipping */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    md-tabs.cst-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cst-tabpanel {
+        /* Tighter panel padding on mobile */
+        --cst-tabpanel-padding: 12px 0;
+    }
 }
 
 /* ============================================================================

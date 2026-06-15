@@ -12,7 +12,7 @@
  * defaults are declared on the element; defaults live only as var() fallbacks.
  *
  *   Global: :root { --cst-dialog-shape: 16px; }
- *   Per-instance: <Dialog style={{ "--cst-dialog-container-color": "#f9fbe7" }} />
+ *   Per-instance: <Dialog style={{ "--cst-dialog-width": "720px" }} />
  *
  * TOKEN CONTRACT
  * --------------
@@ -21,7 +21,11 @@
  *   --cst-dialog-headline-color      #1a1a2e   Headline text color
  *   --cst-dialog-content-color       #3c4043   Body / supporting text color
  *   --cst-dialog-min-width             280px   Minimum width
- *   --cst-dialog-max-width             560px   Maximum width
+ *   --cst-dialog-width                 560px   Base width (sets max-width when
+ *                                              --cst-dialog-max-width is unset)
+ *   --cst-dialog-max-width  var(--cst-dialog-width, 560px)
+ *                                             Maximum width — defaults to
+ *                                             --cst-dialog-width, then 560px
  *   --cst-dialog-actions-gap             8px   Gap between action buttons
  * ========================================================================== */
 
@@ -36,7 +40,40 @@ md-dialog.cst-dialog {
     --md-dialog-supporting-text-color: var(--cst-dialog-content-color, #3c4043);
 
     min-width: var(--cst-dialog-min-width, 280px);
-    max-width: var(--cst-dialog-max-width, 560px);
+    /* --cst-dialog-max-width is checked first; if unset, falls back to
+       --cst-dialog-width (new V2 token); if also unset, 560px is the final default. */
+    max-width: var(--cst-dialog-max-width, var(--cst-dialog-width, 560px));
+}
+
+/* ---- Mobile-first: shrink to viewport on small screens -------------------- */
+/* On screens ≤ 599px, allow the dialog to use nearly the full viewport width.
+   Keeps 16px margin on each side so dialog never bleeds to screen edge.
+   Consumers can override --cst-dialog-min-width / --cst-dialog-max-width
+   on the dialog instance via style prop to opt out per-dialog. */
+@media (max-width: 599px) {
+    md-dialog.cst-dialog {
+        min-width: var(--cst-dialog-min-width, min(calc(100vw - 32px), 560px));
+        max-width: var(--cst-dialog-max-width, calc(100vw - 32px));
+    }
+}
+
+/* ---- Full-screen size variant --------------------------------------------- */
+/* Applied via size="full-screen" prop. Designed for mobile/compact workflows.
+   Uses 0 border-radius by default; override via --cst-dialog-shape on instance. */
+md-dialog.cst-dialog--full-screen {
+    min-width: 100vw;
+    max-width: 100vw;
+    min-height: 100dvh;
+    /* Override shape to square corners; consumers may override with
+       style={{ "--cst-dialog-shape": "12px" }} on the instance. */
+    --md-dialog-container-shape: var(--cst-dialog-shape, 0px);
+}
+
+@media (max-width: 600px) {
+    md-dialog.cst-dialog--full-screen {
+        min-width: 100vw;
+        max-width: 100vw;
+    }
 }
 
 /* ---- Content region (slot="content" wrapper) ------------------------------ */

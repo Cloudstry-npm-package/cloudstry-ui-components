@@ -52,7 +52,7 @@
     /* Sticky: consumers set --cst-table-sticky-max-height to enable scroll */
     --cst-table-sticky-max-height:      none;
 
-    padding: 24px 18px;
+    padding: var(--cst-table-pad-y, 16px) var(--cst-table-pad-x, 16px);
     background: var(--cst-table-bg);
     border-radius: var(--cst-table-border-radius);
 }
@@ -542,4 +542,77 @@
 .cst-pagination-size:focus-visible {
     border-color: var(--cst-table-search-focus-border);
     box-shadow: 0 0 0 2px rgba(73, 211, 238, 0.18);
+}
+
+
+/* ============================================================
+   Responsive Overrides
+   ============================================================ */
+
+/* ---- Mobile (≤ 599px) ---- */
+@media (max-width: 599px) {
+    /* Reduce wrapper padding on small screens */
+    .cst-table-wrapper {
+        --cst-table-header-padding:    8px;
+        --cst-table-cell-padding:      6px 8px;
+        --cst-table-title-font-size:   18px;
+        padding: 12px 10px;
+    }
+
+    /* Compact density becomes even tighter on mobile */
+    .cst-table-wrapper.cst-density-compact {
+        --cst-table-header-padding:  6px;
+        --cst-table-cell-padding:    3px 6px;
+    }
+
+    /* Search: full width on mobile */
+    .cst-table-search-inner {
+        max-width: 100%;
+    }
+
+    /* Pagination: stack info and controls */
+    .cst-table-pagination {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .cst-pagination-info {
+        flex: none;
+    }
+
+    /* Size selector label: hide verbose text on mobile */
+    .cst-pagination-size-label > span {
+        display: none;
+    }
+
+    /* Touch-friendly pagination buttons */
+    .cst-pagination-btn {
+        min-width: 40px;
+        height: 40px;
+    }
+
+    /* Toolbar: wrap content on mobile */
+    .cst-toolbar-content {
+        gap: 8px;
+    }
+}
+
+/* ---- Tablet (600px – 904px) ---- */
+@media (min-width: 600px) and (max-width: 904px) {
+    .cst-table-wrapper {
+        padding: 16px 16px;
+    }
+
+    /* Search: slightly wider on tablet */
+    .cst-table-search-inner {
+        max-width: 100%;
+    }
+}
+
+/* ---- Desktop (≥ 905px) ---- */
+@media (min-width: 905px) {
+    .cst-table-wrapper {
+        padding: 24px 24px;
+    }
 }
