@@ -1,6 +1,6 @@
 {
   "name": "@cloudstrytech/ui-components",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Reusable Material Web (M3) UI components for React and Next.js",
   "private": false,
   "main": "./dist/cjs/index.js",
