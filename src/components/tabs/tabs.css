@@ -1,0 +1,168 @@
+/* =============================================================================
+ * Cloudstry Tabs — styling + token contract
+ *
+ * Public override surface → the --cst-tabs-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-primary-tab-*,
+ * --md-secondary-tab-*), which remain an implementation detail and are NOT
+ * part of the public API.
+ *
+ * Primary tab tokens live on md-primary-tab.cst-tab elements.
+ * Secondary tab tokens live on md-secondary-tab.cst-tab elements.
+ * Shared tokens (background, wrapper sizing) live on the wrapper/md-tabs.
+ * ========================================================================== */
+
+/* ---- Outer wrapper ------------------------------------------------------- */
+.cst-tabs-wrapper {
+    display: block;
+    width: 100%;
+}
+
+/* ---- md-tabs container --------------------------------------------------- */
+md-tabs.cst-tabs {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+    --cst-tabs-background: transparent;
+
+    /* ---- Map to MWC tabs tokens ----------------------------------------- */
+    width: 100%;
+    display: block;
+}
+
+/* ============================================================================
+ * Primary Tab tokens
+ * ========================================================================== */
+md-primary-tab.cst-tab {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+
+    /* Active indicator */
+    --cst-tabs-primary-active-indicator-color: #00b7e9;
+    --cst-tabs-primary-active-indicator-height: 3px;
+
+    /* Text colors */
+    --cst-tabs-primary-active-text-color: #00b7e9;
+    --cst-tabs-primary-inactive-text-color: #5f6368;
+
+    /* Icon colors */
+    --cst-tabs-primary-active-icon-color: #00b7e9;
+    --cst-tabs-primary-inactive-icon-color: #5f6368;
+
+    /* Container */
+    --cst-tabs-primary-background: transparent;
+
+    /* ---- Map Cloudstry tokens → Material 3 tokens (implementation) ------- */
+
+    /* Active indicator */
+    --md-primary-tab-active-indicator-color: var(--cst-tabs-primary-active-indicator-color);
+    --md-primary-tab-active-indicator-height: var(--cst-tabs-primary-active-indicator-height);
+
+    /* Active label */
+    --md-primary-tab-active-label-text-color: var(--cst-tabs-primary-active-text-color);
+    --md-primary-tab-active-hover-label-text-color: var(--cst-tabs-primary-active-text-color);
+    --md-primary-tab-active-focus-label-text-color: var(--cst-tabs-primary-active-text-color);
+    --md-primary-tab-active-pressed-label-text-color: var(--cst-tabs-primary-active-text-color);
+
+    /* Inactive label */
+    --md-primary-tab-label-text-color: var(--cst-tabs-primary-inactive-text-color);
+    --md-primary-tab-hover-label-text-color: var(--cst-tabs-primary-inactive-text-color);
+    --md-primary-tab-focus-label-text-color: var(--cst-tabs-primary-inactive-text-color);
+    --md-primary-tab-pressed-label-text-color: var(--cst-tabs-primary-inactive-text-color);
+
+    /* Active icon */
+    --md-primary-tab-active-icon-color: var(--cst-tabs-primary-active-icon-color);
+    --md-primary-tab-active-hover-icon-color: var(--cst-tabs-primary-active-icon-color);
+    --md-primary-tab-active-focus-icon-color: var(--cst-tabs-primary-active-icon-color);
+    --md-primary-tab-active-pressed-icon-color: var(--cst-tabs-primary-active-icon-color);
+
+    /* Inactive icon */
+    --md-primary-tab-icon-color: var(--cst-tabs-primary-inactive-icon-color);
+    --md-primary-tab-hover-icon-color: var(--cst-tabs-primary-inactive-icon-color);
+    --md-primary-tab-focus-icon-color: var(--cst-tabs-primary-inactive-icon-color);
+    --md-primary-tab-pressed-icon-color: var(--cst-tabs-primary-inactive-icon-color);
+
+    /* Container */
+    --md-primary-tab-container-color: var(--cst-tabs-primary-background);
+}
+
+/* ---- Disabled primary tab ------------------------------------------------ */
+md-primary-tab.cst-tab--disabled,
+md-primary-tab.cst-tab[data-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.38;
+}
+
+/* ============================================================================
+ * Secondary Tab tokens
+ * ========================================================================== */
+md-secondary-tab.cst-tab {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+
+    /* Active indicator */
+    --cst-tabs-secondary-active-indicator-color: #00b7e9;
+    --cst-tabs-secondary-active-indicator-height: 2px;
+
+    /* Text colors */
+    --cst-tabs-secondary-active-text-color: #00b7e9;
+    --cst-tabs-secondary-inactive-text-color: #5f6368;
+
+    /* Icon colors */
+    --cst-tabs-secondary-active-icon-color: #00b7e9;
+    --cst-tabs-secondary-inactive-icon-color: #5f6368;
+
+    /* Container */
+    --cst-tabs-secondary-background: transparent;
+
+    /* ---- Map Cloudstry tokens → Material 3 tokens (implementation) ------- */
+
+    /* Active indicator */
+    --md-secondary-tab-active-indicator-color: var(--cst-tabs-secondary-active-indicator-color);
+    --md-secondary-tab-active-indicator-height: var(--cst-tabs-secondary-active-indicator-height);
+
+    /* Active label */
+    --md-secondary-tab-active-label-text-color: var(--cst-tabs-secondary-active-text-color);
+    --md-secondary-tab-active-hover-label-text-color: var(--cst-tabs-secondary-active-text-color);
+    --md-secondary-tab-active-focus-label-text-color: var(--cst-tabs-secondary-active-text-color);
+    --md-secondary-tab-active-pressed-label-text-color: var(--cst-tabs-secondary-active-text-color);
+
+    /* Inactive label */
+    --md-secondary-tab-label-text-color: var(--cst-tabs-secondary-inactive-text-color);
+    --md-secondary-tab-hover-label-text-color: var(--cst-tabs-secondary-inactive-text-color);
+    --md-secondary-tab-focus-label-text-color: var(--cst-tabs-secondary-inactive-text-color);
+    --md-secondary-tab-pressed-label-text-color: var(--cst-tabs-secondary-inactive-text-color);
+
+    /* Active icon */
+    --md-secondary-tab-active-icon-color: var(--cst-tabs-secondary-active-icon-color);
+    --md-secondary-tab-active-hover-icon-color: var(--cst-tabs-secondary-active-icon-color);
+    --md-secondary-tab-active-focus-icon-color: var(--cst-tabs-secondary-active-icon-color);
+    --md-secondary-tab-active-pressed-icon-color: var(--cst-tabs-secondary-active-icon-color);
+
+    /* Inactive icon */
+    --md-secondary-tab-icon-color: var(--cst-tabs-secondary-inactive-icon-color);
+    --md-secondary-tab-hover-icon-color: var(--cst-tabs-secondary-inactive-icon-color);
+    --md-secondary-tab-focus-icon-color: var(--cst-tabs-secondary-inactive-icon-color);
+    --md-secondary-tab-pressed-icon-color: var(--cst-tabs-secondary-inactive-icon-color);
+
+    /* Container */
+    --md-secondary-tab-container-color: var(--cst-tabs-secondary-background);
+}
+
+/* ---- Disabled secondary tab ---------------------------------------------- */
+md-secondary-tab.cst-tab--disabled,
+md-secondary-tab.cst-tab[data-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.38;
+}
+
+/* ============================================================================
+ * TabPanel
+ * ========================================================================== */
+.cst-tabpanel {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+    --cst-tabpanel-padding: 16px 0;
+
+    outline: none;
+    padding: var(--cst-tabpanel-padding);
+}
+
+/* hidden attribute removes the panel from visual layout and accessibility tree */
+.cst-tabpanel[hidden] {
+    display: none;
+}

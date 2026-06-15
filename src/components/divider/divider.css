@@ -1,0 +1,78 @@
+/* =============================================================================
+ * Cloudstry Divider — styling + token contract
+ *
+ * Pure CSS implementation — no MWC dependency.
+ *
+ * Public override surface → --cst-divider-* custom properties.
+ * These tokens are the entire public API for divider theming.
+ *
+ * HOW TO OVERRIDE
+ * ---------------
+ * Set --cst-divider-* on any ancestor element or on the divider itself
+ * via className/style. Ancestor values cascade freely because defaults
+ * live only as var() fallbacks, not as declared properties on the element.
+ *
+ *   Global: :root { --cst-divider-color: #bdbdbd; }
+ *   Scoped: .dark-panel { --cst-divider-color: rgba(255,255,255,0.12); }
+ *   Per-instance: <Divider style={{ "--cst-divider-thickness": "2px" }} />
+ *
+ * TOKEN CONTRACT
+ * --------------
+ *   --cst-divider-color        #e0e0e0   Line color
+ *   --cst-divider-thickness       1px   Line weight
+ *   --cst-divider-inset          16px   Indent amount (inset variants)
+ * ========================================================================== */
+
+/* ---- Base reset (overrides browser <hr> defaults) ------------------------- */
+hr.cst-divider {
+    border: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    flex-shrink: 0; /* do not shrink in flex containers */
+}
+
+/* ---- Horizontal ----------------------------------------------------------- */
+hr.cst-divider--horizontal {
+    display: block;
+    width: 100%;
+    height: var(--cst-divider-thickness, 1px);
+    background-color: var(--cst-divider-color, #e0e0e0);
+}
+
+hr.cst-divider--horizontal.cst-divider--inset {
+    margin-inline: var(--cst-divider-inset, 16px);
+    width: auto;
+}
+
+hr.cst-divider--horizontal.cst-divider--inset-start {
+    margin-inline-start: var(--cst-divider-inset, 16px);
+    width: auto;
+}
+
+hr.cst-divider--horizontal.cst-divider--inset-end {
+    margin-inline-end: var(--cst-divider-inset, 16px);
+    width: auto;
+}
+
+/* ---- Vertical ------------------------------------------------------------- */
+hr.cst-divider--vertical {
+    display: inline-block;
+    width: var(--cst-divider-thickness, 1px);
+    height: auto;
+    align-self: stretch; /* stretches to container height in flex rows */
+    background-color: var(--cst-divider-color, #e0e0e0);
+}
+
+hr.cst-divider--vertical.cst-divider--inset {
+    margin-block: var(--cst-divider-inset, 16px);
+    height: auto;
+}
+
+hr.cst-divider--vertical.cst-divider--inset-start {
+    margin-block-start: var(--cst-divider-inset, 16px);
+}
+
+hr.cst-divider--vertical.cst-divider--inset-end {
+    margin-block-end: var(--cst-divider-inset, 16px);
+}

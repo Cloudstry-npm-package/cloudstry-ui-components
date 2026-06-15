@@ -1,0 +1,113 @@
+/* =============================================================================
+ * Cloudstry Chips — styling + token contract
+ *
+ * Public override surface → the --cst-chip-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-*-chip-*), which
+ * remain an implementation detail and are NOT part of the public API.
+ *
+ * HOW TO OVERRIDE
+ * ---------------
+ * Set --cst-chip-* on any ancestor element — including a wrapping div,
+ * ChipSet, or the chip element itself via className/style. Ancestor values
+ * cascade down because no --cst-chip-* defaults are declared on the chip
+ * elements themselves; defaults live only as var() fallbacks.
+ *
+ *   Ancestor: .my-panel { --cst-chip-filter-selected-color: #7c3aed; }
+ *   Per-chip: style={{ "--cst-chip-filter-selected-color": "#e91e63" }}
+ *
+ * TOKEN CONTRACT
+ * --------------
+ *   --cst-chip-shape                     8px    Border-radius (all types)
+ *   --cst-chip-height                   32px    Container height (all types)
+ *   --cst-chip-label-color          #1a1a2e    Label text (all types, unselected)
+ *   --cst-chip-outline-color        #c4c7c5    Border color (all types)
+ *   --cst-chip-icon-color           #00b7e9    Leading icon (all types, unselected)
+ *   --cst-chip-filter-selected-color  #00b7e9  FilterChip selected fill
+ *   --cst-chip-filter-selected-label-color #fff FilterChip selected label
+ *   --cst-chip-filter-selected-icon-color  #fff FilterChip selected icon/checkmark
+ *   --cst-chip-set-gap                   8px   Gap between chips in ChipSet
+ * ========================================================================== */
+
+/* ---- AssistChip ------------------------------------------------------------ */
+md-assist-chip.cst-chip--assist {
+    /* Map Cloudstry tokens → Material 3 tokens.
+       Defaults are var() fallbacks — do NOT declare --cst-chip-* here,
+       or ancestor overrides will be blocked by the element's own declaration. */
+    --md-assist-chip-container-shape: var(--cst-chip-shape, 8px);
+    --md-assist-chip-container-height: var(--cst-chip-height, 32px);
+    --md-assist-chip-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-assist-chip-hover-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-assist-chip-focus-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-assist-chip-pressed-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-assist-chip-outline-color: var(--cst-chip-outline-color, #c4c7c5);
+    --md-assist-chip-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-assist-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-assist-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-assist-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+}
+
+/* ---- FilterChip ------------------------------------------------------------ */
+md-filter-chip.cst-chip--filter {
+    --md-filter-chip-container-shape: var(--cst-chip-shape, 8px);
+    --md-filter-chip-container-height: var(--cst-chip-height, 32px);
+    --md-filter-chip-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-filter-chip-hover-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-filter-chip-focus-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-filter-chip-pressed-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-filter-chip-outline-color: var(--cst-chip-outline-color, #c4c7c5);
+    --md-filter-chip-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-filter-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-filter-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-filter-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    /* Selected state */
+    --md-filter-chip-selected-container-color: var(--cst-chip-filter-selected-color, #00b7e9);
+    --md-filter-chip-elevated-selected-container-color: var(--cst-chip-filter-selected-color, #00b7e9);
+    --md-filter-chip-selected-label-text-color: var(--cst-chip-filter-selected-label-color, #ffffff);
+    --md-filter-chip-selected-hover-label-text-color: var(--cst-chip-filter-selected-label-color, #ffffff);
+    --md-filter-chip-selected-focus-label-text-color: var(--cst-chip-filter-selected-label-color, #ffffff);
+    --md-filter-chip-selected-pressed-label-text-color: var(--cst-chip-filter-selected-label-color, #ffffff);
+    --md-filter-chip-selected-leading-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    --md-filter-chip-selected-hover-leading-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    --md-filter-chip-selected-focus-leading-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    --md-filter-chip-selected-pressed-leading-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    /* Remove button (trailing) when selected */
+    --md-filter-chip-selected-trailing-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    --md-filter-chip-selected-hover-trailing-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    --md-filter-chip-selected-focus-trailing-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+    --md-filter-chip-selected-pressed-trailing-icon-color: var(--cst-chip-filter-selected-icon-color, #ffffff);
+}
+
+/* ---- InputChip ------------------------------------------------------------- */
+md-input-chip.cst-chip--input {
+    --md-input-chip-container-shape: var(--cst-chip-shape, 8px);
+    --md-input-chip-container-height: var(--cst-chip-height, 32px);
+    --md-input-chip-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-input-chip-hover-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-input-chip-focus-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-input-chip-pressed-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-input-chip-outline-color: var(--cst-chip-outline-color, #c4c7c5);
+    --md-input-chip-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-input-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-input-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-input-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+}
+
+/* ---- SuggestionChip ------------------------------------------------------- */
+md-suggestion-chip.cst-chip--suggestion {
+    --md-suggestion-chip-container-shape: var(--cst-chip-shape, 8px);
+    --md-suggestion-chip-container-height: var(--cst-chip-height, 32px);
+    --md-suggestion-chip-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-suggestion-chip-hover-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-suggestion-chip-focus-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-suggestion-chip-pressed-label-text-color: var(--cst-chip-label-color, #1a1a2e);
+    --md-suggestion-chip-outline-color: var(--cst-chip-outline-color, #c4c7c5);
+    --md-suggestion-chip-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-suggestion-chip-hover-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-suggestion-chip-focus-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+    --md-suggestion-chip-pressed-leading-icon-color: var(--cst-chip-icon-color, #00b7e9);
+}
+
+/* ---- ChipSet --------------------------------------------------------------- */
+md-chip-set.cst-chip-set {
+    gap: var(--cst-chip-set-gap, 8px);
+}

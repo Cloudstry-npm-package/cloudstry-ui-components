@@ -1,0 +1,64 @@
+/* =============================================================================
+ * Cloudstry List — styling + token contract
+ *
+ * Public override surface  →  the --cst-list-* custom properties below.
+ * Consumers theme the list by overriding these (globally on :root, or scoped
+ * to a className / style prop). They are mapped INTERNALLY onto Material 3
+ * (--md-*) tokens, which remain an implementation detail.
+ *
+ * TOKEN CONTRACT
+ * --------------
+ * List container:
+ *   --cst-list-bg             transparent   Container background
+ *   --cst-list-padding        8px 0         Block padding (top/bottom)
+ *   --cst-list-shape          0px           Container border-radius
+ *
+ * List item:
+ *   --cst-list-item-bg              transparent   Item background
+ *   --cst-list-item-shape           0px           Item border-radius
+ *   --cst-list-item-headline-color  #1d1b20       Primary text color
+ *   --cst-list-item-supporting-text-color  #49454f  Secondary text color
+ *   --cst-list-item-trailing-text-color    #49454f  Trailing metadata color
+ *   --cst-list-item-icon-color      #49454f       Leading/trailing icon color
+ *   --cst-list-item-hover-color     #1d1b20       Hover state layer color
+ *   --cst-list-item-hover-opacity   0.08          Hover state layer opacity
+ *   --cst-list-item-leading-space   16px          Inline start padding
+ *   --cst-list-item-trailing-space  16px          Inline end padding
+ * ========================================================================== */
+
+/* ---- md-list container ---------------------------------------------------- */
+md-list.cst-list {
+    --md-list-container-color: var(--cst-list-bg, transparent);
+    padding: var(--cst-list-padding, 8px 0);
+    border-radius: var(--cst-list-shape, 0px);
+}
+
+/* ---- md-list-item --------------------------------------------------------- */
+md-list-item.cst-list-item {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-list-item-bg: transparent;
+    --cst-list-item-shape: 0px;
+    --cst-list-item-headline-color: #1d1b20;
+    --cst-list-item-supporting-text-color: #49454f;
+    --cst-list-item-trailing-text-color: #49454f;
+    --cst-list-item-icon-color: #49454f;
+    --cst-list-item-hover-color: #1d1b20;
+    --cst-list-item-hover-opacity: 0.08;
+    --cst-list-item-leading-space: 16px;
+    --cst-list-item-trailing-space: 16px;
+
+    /* ---- Map Cloudstry tokens → Material 3 tokens (implementation) ------- */
+    --md-list-item-label-text-color: var(--cst-list-item-headline-color, #1d1b20);
+    --md-list-item-supporting-text-color: var(--cst-list-item-supporting-text-color, #49454f);
+    --md-list-item-trailing-supporting-text-color: var(--cst-list-item-trailing-text-color, #49454f);
+    --md-list-item-leading-icon-color: var(--cst-list-item-icon-color, #49454f);
+    --md-list-item-trailing-icon-color: var(--cst-list-item-icon-color, #49454f);
+    --md-list-item-hover-state-layer-color: var(--cst-list-item-hover-color, #1d1b20);
+    --md-list-item-hover-state-layer-opacity: var(--cst-list-item-hover-opacity, 0.08);
+    --md-list-item-leading-space: var(--cst-list-item-leading-space, 16px);
+    --md-list-item-trailing-space: var(--cst-list-item-trailing-space, 16px);
+    border-radius: var(--cst-list-item-shape, 0px);
+
+    /* Container color — MWC inherits background from the list container;
+       override here only if per-item background is needed. */
+}

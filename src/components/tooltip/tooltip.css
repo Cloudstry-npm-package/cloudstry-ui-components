@@ -1,0 +1,50 @@
+/* ── Tooltip token definitions ──────────────────────────────────────────── */
+/*
+    --cst-tooltip-container-color   Background (M3 inverse-surface)
+    --cst-tooltip-text-color        Text (M3 on-inverse-surface)
+    --cst-tooltip-shape             Border radius
+    --cst-tooltip-max-width         Max width of tooltip bubble
+    --cst-tooltip-padding-block     Vertical padding
+    --cst-tooltip-padding-inline    Horizontal padding
+    --cst-tooltip-font-size         Label font size (M3 body-small = 12px)
+    --cst-tooltip-line-height       Label line height
+    --cst-tooltip-shadow            Box shadow / elevation
+    --cst-tooltip-z-index           Stacking order
+*/
+
+.cst-tooltip {
+    --cst-tooltip-container-color: #313033;
+    --cst-tooltip-text-color: #f4eff4;
+    --cst-tooltip-shape: 4px;
+    --cst-tooltip-max-width: 200px;
+    --cst-tooltip-padding-block: 4px;
+    --cst-tooltip-padding-inline: 8px;
+    --cst-tooltip-font-size: 0.75rem;
+    --cst-tooltip-line-height: 1.33;
+    --cst-tooltip-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3),
+        0 4px 8px 3px rgba(0, 0, 0, 0.15);
+    --cst-tooltip-z-index: 9000;
+}
+
+/* ── Base styles ──────────────────────────────────────────────────────────── */
+.cst-tooltip {
+    background-color: var(--cst-tooltip-container-color);
+    color: var(--cst-tooltip-text-color);
+    border-radius: var(--cst-tooltip-shape);
+    max-width: var(--cst-tooltip-max-width);
+    padding: var(--cst-tooltip-padding-block) var(--cst-tooltip-padding-inline);
+    font-size: var(--cst-tooltip-font-size);
+    line-height: var(--cst-tooltip-line-height);
+    box-shadow: var(--cst-tooltip-shadow);
+    z-index: var(--cst-tooltip-z-index);
+    word-wrap: break-word;
+    pointer-events: none;
+
+    /* Typography */
+    font-family: inherit;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+
+    /* Prevent text selection */
+    user-select: none;
+}

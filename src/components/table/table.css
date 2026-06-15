@@ -338,3 +338,208 @@
 .cst-zebra .cst-table tbody tr.cst-table-row-selected {
     background: var(--cst-table-row-selected-bg);
 }
+
+
+/* ============================================================
+   Phase 3A — Search & Pagination
+   ============================================================ */
+
+/* ---- Phase 3A token additions ---- */
+.cst-table-wrapper {
+    --cst-table-search-border:              #d1d5db;
+    --cst-table-search-focus-border:        var(--cst-table-header-bg);
+    --cst-table-search-bg:                  #ffffff;
+    --cst-table-search-icon-color:          #9ca3af;
+    --cst-table-search-placeholder-color:   #9ca3af;
+
+    --cst-table-pagination-border-color:    var(--cst-table-border-color);
+    --cst-table-pagination-btn-bg:          #ffffff;
+    --cst-table-pagination-btn-border:      #d1d5db;
+    --cst-table-pagination-btn-color:       #374151;
+    --cst-table-pagination-btn-hover-bg:    #f3f4f6;
+    --cst-table-pagination-active-bg:       var(--cst-table-header-bg);
+    --cst-table-pagination-active-color:    #ffffff;
+    --cst-table-pagination-info-color:      #6b7280;
+}
+
+/* ---- Search ---- */
+.cst-table-search {
+    margin-bottom: 10px;
+}
+
+.cst-table-search-inner {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+}
+
+.cst-table-search-icon {
+    position: absolute;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    color: var(--cst-table-search-icon-color);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cst-table-search-input {
+    width: 100%;
+    padding: 7px 32px 7px 34px;
+    border: 1.5px solid var(--cst-table-search-border);
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-family: inherit;
+    background: var(--cst-table-search-bg);
+    color: inherit;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Remove native browser clear button — we provide our own */
+.cst-table-search-input::-webkit-search-cancel-button { display: none; }
+.cst-table-search-input::-webkit-search-decoration    { display: none; }
+
+.cst-table-search-input::placeholder {
+    color: var(--cst-table-search-placeholder-color);
+}
+
+.cst-table-search-input:focus {
+    border-color: var(--cst-table-search-focus-border);
+    box-shadow: 0 0 0 3px rgba(73, 211, 238, 0.18);
+}
+
+.cst-table-search-clear {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #e5e7eb;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #4b5563;
+    padding: 0;
+    line-height: 1;
+    transition: background 0.12s;
+    flex-shrink: 0;
+}
+
+.cst-table-search-clear:hover { background: #d1d5db; }
+
+/* ---- Pagination ---- */
+.cst-table-pagination {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--cst-table-pagination-border-color);
+    flex-wrap: wrap;
+}
+
+.cst-pagination-info {
+    font-size: 12.5px;
+    color: var(--cst-table-pagination-info-color);
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.cst-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.cst-pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    border: 1.5px solid var(--cst-table-pagination-btn-border);
+    border-radius: 6px;
+    background: var(--cst-table-pagination-btn-bg);
+    color: var(--cst-table-pagination-btn-color);
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    line-height: 1;
+}
+
+.cst-pagination-btn:hover:not(:disabled) {
+    background: var(--cst-table-pagination-btn-hover-bg);
+}
+
+.cst-pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.cst-pagination-btn:focus-visible {
+    outline: 2px solid var(--cst-table-search-focus-border);
+    outline-offset: 2px;
+}
+
+.cst-pagination-prev,
+.cst-pagination-next {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 4px;
+}
+
+.cst-pagination-page-active {
+    background: var(--cst-table-pagination-active-bg);
+    border-color: var(--cst-table-pagination-active-bg);
+    color: var(--cst-table-pagination-active-color);
+    font-weight: 600;
+}
+
+.cst-pagination-page-active:hover:not(:disabled) {
+    background: var(--cst-table-pagination-active-bg);
+    filter: brightness(0.92);
+}
+
+.cst-pagination-ellipsis {
+    min-width: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--cst-table-pagination-info-color);
+    user-select: none;
+}
+
+.cst-pagination-size-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--cst-table-pagination-info-color);
+    white-space: nowrap;
+    cursor: default;
+}
+
+.cst-pagination-size {
+    padding: 4px 6px;
+    border: 1.5px solid var(--cst-table-pagination-btn-border);
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-family: inherit;
+    background: var(--cst-table-pagination-btn-bg);
+    color: var(--cst-table-pagination-btn-color);
+    cursor: pointer;
+    outline: none;
+}
+
+.cst-pagination-size:focus-visible {
+    border-color: var(--cst-table-search-focus-border);
+    box-shadow: 0 0 0 2px rgba(73, 211, 238, 0.18);
+}

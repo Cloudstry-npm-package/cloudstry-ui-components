@@ -1,0 +1,54 @@
+/* =============================================================================
+ * Cloudstry Progress — styling + token contract
+ *
+ * Public override surface → the --cst-progress-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-circular-progress-*
+ * and --md-linear-progress-*), which remain an implementation detail.
+ *
+ * HOW TO OVERRIDE
+ * ---------------
+ * Set --cst-progress-* on any ancestor or on the element directly via style prop.
+ * Defaults live only as var() fallbacks — ancestor overrides cascade freely.
+ *
+ *   :root { --cst-progress-active-indicator-color: #7c3aed; }
+ *   <CircularProgress style={{ "--cst-progress-size": "48px" }} />
+ *
+ * TOKEN CONTRACT
+ * --------------
+ * Shared (both circular and linear):
+ *   --cst-progress-active-indicator-color  #00b7e9   Animated indicator color
+ *   --cst-progress-track-color            #e0f5fc   Track / background bar color
+ *
+ * Circular-specific:
+ *   --cst-circular-progress-size           48px      Overall diameter
+ *   --cst-circular-progress-thickness       4px      Stroke width
+ *
+ * Linear-specific:
+ *   --cst-linear-progress-track-height      4px      Bar height
+ *   --cst-linear-progress-buffer-color     #b3e6f7   Buffer (secondary) bar color
+ * ========================================================================== */
+
+/* ---- Circular ------------------------------------------------------------- */
+md-circular-progress.cst-circular-progress {
+    --cst-progress-active-indicator-color: #00b7e9;
+    --cst-progress-track-color: #e0f5fc;
+    --cst-circular-progress-size: 48px;
+    --cst-circular-progress-thickness: 4px;
+
+    --md-circular-progress-active-indicator-color: var(--cst-progress-active-indicator-color);
+    --md-circular-progress-size: var(--cst-circular-progress-size);
+    --md-circular-progress-active-indicator-width: var(--cst-circular-progress-thickness);
+}
+
+/* ---- Linear -------------------------------------------------------------- */
+md-linear-progress.cst-linear-progress {
+    --cst-progress-active-indicator-color: #00b7e9;
+    --cst-progress-track-color: #e0f5fc;
+    --cst-linear-progress-track-height: 4px;
+    --cst-linear-progress-buffer-color: #b3e6f7;
+
+    --md-linear-progress-active-indicator-color: var(--cst-progress-active-indicator-color);
+    --md-linear-progress-track-color: var(--cst-progress-track-color);
+    --md-linear-progress-track-height: var(--cst-linear-progress-track-height);
+    --md-linear-progress-buffer-color: var(--cst-linear-progress-buffer-color);
+}

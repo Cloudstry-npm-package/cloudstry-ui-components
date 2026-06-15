@@ -1,0 +1,49 @@
+/* Cloudstry Slider token contract.
+ * Consumers override --cst-slider-* tokens; we map them to --md-slider-*.
+ * Override at any ancestor selector scope for local theming.
+ */
+
+:root {
+    --cst-slider-active-track-color:    #00b7e9;
+    --cst-slider-inactive-track-color:  #e0f5fc;
+    --cst-slider-handle-color:          #00b7e9;
+    --cst-slider-handle-size:           20px;
+    --cst-slider-active-track-height:   4px;
+    --cst-slider-inactive-track-height: 4px;
+    --cst-slider-label-bg:              #00b7e9;
+    --cst-slider-label-text-color:      #fff;
+    --cst-slider-tick-color:            #00b7e9;
+    --cst-slider-disabled-color:        rgba(0, 0, 0, 0.38);
+}
+
+md-slider {
+    --md-slider-active-track-color:               var(--cst-slider-active-track-color);
+    --md-slider-inactive-track-color:             var(--cst-slider-inactive-track-color);
+    --md-slider-handle-color:                     var(--cst-slider-handle-color);
+    --md-slider-handle-height:                    var(--cst-slider-handle-size);
+    --md-slider-handle-width:                     var(--cst-slider-handle-size);
+    --md-slider-active-track-height:              var(--cst-slider-active-track-height);
+    --md-slider-inactive-track-height:            var(--cst-slider-inactive-track-height);
+    --md-slider-label-container-color:            var(--cst-slider-label-bg);
+    --md-slider-label-text-color:                 var(--cst-slider-label-text-color);
+    --md-slider-with-tick-marks-active-container-color:   var(--cst-slider-tick-color);
+    --md-slider-with-tick-marks-inactive-container-color: var(--cst-slider-inactive-track-color);
+    --md-slider-disabled-active-track-color:      var(--cst-slider-disabled-color);
+    --md-slider-disabled-inactive-track-color:    var(--cst-slider-disabled-color);
+    --md-slider-disabled-handle-color:            var(--cst-slider-disabled-color);
+    /* Hover / focus / pressed states inherit from handle-color via MWC */
+    --md-slider-hover-handle-color:               var(--cst-slider-handle-color);
+    --md-slider-focus-handle-color:               var(--cst-slider-handle-color);
+    --md-slider-pressed-handle-color:             var(--cst-slider-handle-color);
+    --md-slider-hover-state-layer-color:          var(--cst-slider-handle-color);
+    --md-slider-pressed-state-layer-color:        var(--cst-slider-handle-color);
+}
+
+.cst-slider-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.cst-slider {
+    width: 100%;
+}

@@ -15,6 +15,24 @@ const CLIENT_ENTRY_SUFFIXES = [
     "components/input/input.jsx",
     "components/passwordField/passwordField.jsx",
     "components/searchField/searchField.jsx",
+    "components/otp/otp.jsx",
+    "components/table/table.jsx",  // Phase 3A: Table gains "use client" + internal state
+    "components/card/card.jsx",
+    "components/badge/badge.jsx",
+    "components/checkbox/checkbox.jsx",
+    "components/chips/chips.jsx",
+    "components/dialog/dialog.jsx",
+    "components/fab/fab.jsx",
+    "components/iconbutton/iconbutton.jsx",
+    "components/list/list.jsx",
+    "components/menu/menu.jsx",
+    "components/progress/progress.jsx",
+    "components/radio/radio.jsx",
+    "components/slider/slider.jsx",
+    "components/snackbar/snackbar.jsx",
+    "components/switch/switch.jsx",
+    "components/tabs/tabs.jsx",
+    "components/tooltip/tooltip.jsx",
 ];
 
 const useClientBanner = (chunk) => {
@@ -34,6 +52,23 @@ export default defineConfig({
         otp: "src/components/otp/index.js",
         footer: "src/components/footer/index.js",
         table: "src/components/table/index.js",
+        card: "src/components/card/index.js",
+        badge: "src/components/badge/index.js",
+        checkbox: "src/components/checkbox/index.js",
+        chips: "src/components/chips/index.js",
+        dialog: "src/components/dialog/index.js",
+        divider: "src/components/divider/index.js",
+        fab: "src/components/fab/index.js",
+        iconbutton: "src/components/iconbutton/index.js",
+        list: "src/components/list/index.js",
+        menu: "src/components/menu/index.js",
+        progress: "src/components/progress/index.js",
+        radio: "src/components/radio/index.js",
+        slider: "src/components/slider/index.js",
+        snackbar: "src/components/snackbar/index.js",
+        switch: "src/components/switch/index.js",
+        tabs: "src/components/tabs/index.js",
+        tooltip: "src/components/tooltip/index.js",
         ssr: "src/ssr.js"
     },
 
@@ -95,6 +130,11 @@ export default defineConfig({
 
         // Exclude EVERYTHING inside @material/web
         if (id.startsWith("@material/web")) {
+            return true;
+        }
+
+        // Floating-ui is a peer dependency — consumers provide it
+        if (id.startsWith("@floating-ui/")) {
             return true;
         }
 

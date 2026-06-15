@@ -1,0 +1,96 @@
+/* =============================================================================
+ * Cloudstry FAB — styling + token contract
+ *
+ * Public override surface → --cst-fab-* custom properties.
+ * They are mapped internally onto Material 3 tokens (--md-fab-* /
+ * --md-fab-branded-*), which remain an implementation detail.
+ *
+ * HOW TO OVERRIDE
+ * ---------------
+ * Set --cst-fab-* on any ancestor element or on the FAB itself via style prop.
+ * Defaults live only as var() fallbacks — ancestor overrides cascade freely.
+ *
+ *   :root { --cst-fab-primary-container-color: #7c3aed; }
+ *   <FAB style={{ "--cst-fab-shape": "50%" }} />
+ *
+ * TOKEN CONTRACT
+ * --------------
+ *   --cst-fab-shape              16px   Border-radius (standard and small FAB)
+ *   --cst-fab-container-color  #f0f4f8  Surface variant container fill
+ *   --cst-fab-icon-color       #00b7e9  Surface variant icon color
+ *   --cst-fab-primary-container-color   #00b7e9  Primary variant container
+ *   --cst-fab-primary-icon-color        #ffffff  Primary variant icon
+ *   --cst-fab-secondary-container-color #e8f4f9  Secondary variant container
+ *   --cst-fab-secondary-icon-color      #00b7e9  Secondary variant icon
+ *   --cst-fab-tertiary-container-color  #1a1a2e  Tertiary variant container
+ *   --cst-fab-tertiary-icon-color       #ffffff  Tertiary variant icon
+ *   --cst-fab-label-color       #00b7e9  Extended FAB label text color
+ * ========================================================================== */
+
+/* ---- md-fab (standard) ---------------------------------------------------- */
+md-fab.cst-fab {
+    /* Shape */
+    --md-fab-container-shape: var(--cst-fab-shape, 16px);
+
+    /* Surface variant (default) */
+    --md-fab-container-color: var(--cst-fab-container-color, #f0f4f8);
+    --md-fab-icon-color: var(--cst-fab-icon-color, #00b7e9);
+    --md-fab-hover-icon-color: var(--cst-fab-icon-color, #00b7e9);
+    --md-fab-focus-icon-color: var(--cst-fab-icon-color, #00b7e9);
+    --md-fab-pressed-icon-color: var(--cst-fab-icon-color, #00b7e9);
+    --md-fab-label-text-color: var(--cst-fab-label-color, #00b7e9);
+    --md-fab-hover-label-text-color: var(--cst-fab-label-color, #00b7e9);
+    --md-fab-focus-label-text-color: var(--cst-fab-label-color, #00b7e9);
+    --md-fab-pressed-label-text-color: var(--cst-fab-label-color, #00b7e9);
+
+    /* Primary variant */
+    --md-fab-primary-container-color: var(--cst-fab-primary-container-color, #00b7e9);
+    --md-fab-primary-icon-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-hover-icon-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-focus-icon-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-pressed-icon-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-label-text-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-hover-label-text-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-focus-label-text-color: var(--cst-fab-primary-icon-color, #ffffff);
+    --md-fab-primary-pressed-label-text-color: var(--cst-fab-primary-icon-color, #ffffff);
+
+    /* Secondary variant */
+    --md-fab-secondary-container-color: var(--cst-fab-secondary-container-color, #e8f4f9);
+    --md-fab-secondary-icon-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-hover-icon-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-focus-icon-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-pressed-icon-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-label-text-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-hover-label-text-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-focus-label-text-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+    --md-fab-secondary-pressed-label-text-color: var(--cst-fab-secondary-icon-color, #00b7e9);
+
+    /* Tertiary variant */
+    --md-fab-tertiary-container-color: var(--cst-fab-tertiary-container-color, #1a1a2e);
+    --md-fab-tertiary-icon-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-hover-icon-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-focus-icon-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-pressed-icon-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-label-text-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-hover-label-text-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-focus-label-text-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+    --md-fab-tertiary-pressed-label-text-color: var(--cst-fab-tertiary-icon-color, #ffffff);
+}
+
+/* ---- md-branded-fab -------------------------------------------------------- */
+md-branded-fab.cst-fab {
+    --md-fab-branded-container-shape: var(--cst-fab-shape, 16px);
+    --md-fab-branded-container-color: var(--cst-fab-container-color, #f0f4f8);
+    --md-fab-branded-label-text-color: var(--cst-fab-label-color, #1a1a2e);
+    --md-fab-branded-hover-label-text-color: var(--cst-fab-label-color, #1a1a2e);
+    --md-fab-branded-focus-label-text-color: var(--cst-fab-label-color, #1a1a2e);
+    --md-fab-branded-pressed-label-text-color: var(--cst-fab-label-color, #1a1a2e);
+}
+
+/* ---- Disabled state (MWC FAB has no native disabled; CSS + aria-disabled) - */
+md-fab.cst-fab[disabled],
+md-branded-fab.cst-fab[disabled] {
+    pointer-events: none;
+    opacity: 0.38;
+    cursor: not-allowed;
+}

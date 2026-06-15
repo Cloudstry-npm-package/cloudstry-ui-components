@@ -1,0 +1,69 @@
+/* =============================================================================
+ * Cloudstry Badge — styling + token contract
+ *
+ * Public override surface → the --cst-badge-* custom properties below.
+ * They are mapped internally onto Material 3 Labs tokens (--md-badge-*),
+ * which remain an implementation detail and are NOT part of the public API.
+ *
+ * Positioning: md-badge renders position:absolute. The wrapper div (.cst-badge-wrapper)
+ * provides position:relative so consumers never need to write positioning CSS.
+ * ========================================================================== */
+
+/* ---- Wrapper: positioning context ---------------------------------------- */
+.cst-badge-wrapper {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* ---- Badge: token contract + MWC mapping --------------------------------- */
+md-badge.cst-badge {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-badge-color: #00b7e9;                   /* small dot background     */
+    --cst-badge-large-color: #00b7e9;             /* large badge background   */
+    --cst-badge-large-label-text-color: #ffffff;  /* large badge text color   */
+    --cst-badge-size: 6px;                        /* small dot diameter       */
+    --cst-badge-large-size: 16px;                 /* large badge height       */
+    --cst-badge-shape: 9999px;                    /* dot border-radius        */
+    --cst-badge-large-shape: 9999px;              /* large badge border-radius*/
+    --cst-badge-offset-x: 0px;                    /* horizontal position nudge*/
+    --cst-badge-offset-y: 0px;                    /* vertical position nudge  */
+
+    /* ---- Map Cloudstry tokens → Material 3 Labs tokens (implementation) -- */
+    --md-badge-color: var(--cst-badge-color);
+    --md-badge-large-color: var(--cst-badge-large-color);
+    --md-badge-large-label-text-color: var(--cst-badge-large-label-text-color);
+    --md-badge-size: var(--cst-badge-size);
+    --md-badge-large-size: var(--cst-badge-large-size);
+    --md-badge-shape: var(--cst-badge-shape);
+    --md-badge-large-shape: var(--cst-badge-large-shape);
+
+    /* Offset nudge — applied on top of MWC's own absolute positioning */
+    translate: var(--cst-badge-offset-x) var(--cst-badge-offset-y);
+}
+
+/* ---- Color variants ------------------------------------------------------ */
+md-badge.cst-badge--brand {
+    --cst-badge-color: #00b7e9;
+    --cst-badge-large-color: #00b7e9;
+    --cst-badge-large-label-text-color: #ffffff;
+}
+
+md-badge.cst-badge--error {
+    --cst-badge-color: #b3261e;
+    --cst-badge-large-color: #b3261e;
+    --cst-badge-large-label-text-color: #ffffff;
+}
+
+md-badge.cst-badge--success {
+    --cst-badge-color: #137333;
+    --cst-badge-large-color: #137333;
+    --cst-badge-large-label-text-color: #ffffff;
+}
+
+md-badge.cst-badge--warning {
+    --cst-badge-color: #e37400;
+    --cst-badge-large-color: #e37400;
+    --cst-badge-large-label-text-color: #ffffff;
+}

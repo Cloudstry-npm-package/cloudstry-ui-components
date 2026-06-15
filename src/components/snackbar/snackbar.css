@@ -1,0 +1,176 @@
+/* Cloudstry Snackbar token contract.
+ * 100% custom — no MWC tokens to map from.
+ * Override --cst-snackbar-* tokens at any ancestor for local theming.
+ */
+
+:root {
+    /* Container */
+    --cst-snackbar-bg:              #1e293b;
+    --cst-snackbar-text:            #f1f5f9;
+    --cst-snackbar-radius:          6px;
+    --cst-snackbar-shadow:          0 4px 6px -1px rgba(0,0,0,.35), 0 2px 4px -1px rgba(0,0,0,.2);
+    --cst-snackbar-min-width:       320px;
+    --cst-snackbar-max-width:       600px;
+    --cst-snackbar-padding-x:       16px;
+    --cst-snackbar-padding-y:       12px;
+    --cst-snackbar-gap:             12px;
+    /* Position offsets from screen edges */
+    --cst-snackbar-bottom:          24px;
+    --cst-snackbar-side:            24px;
+    /* Stack */
+    --cst-snackbar-z-index:         1400;
+    /* Animation */
+    --cst-snackbar-anim-duration:   250ms;
+    --cst-snackbar-anim-easing:     cubic-bezier(0.2, 0, 0, 1);
+    /* Type accent (left border + icon/action tint) */
+    --cst-snackbar-info-color:      #00b7e9;
+    --cst-snackbar-success-color:   #22c55e;
+    --cst-snackbar-warning-color:   #f59e0b;
+    --cst-snackbar-error-color:     #ef4444;
+    /* Action button */
+    --cst-snackbar-action-color:    #00b7e9;
+    --cst-snackbar-action-weight:   600;
+    /* Dismiss button */
+    --cst-snackbar-dismiss-color:   #94a3b8;
+}
+
+/* ── Visually hidden live-region container ─────────────────────────────── */
+.cst-snackbar-sr-region {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Fixed positioner ──────────────────────────────────────────────────── */
+.cst-snackbar-positioner {
+    position: fixed;
+    bottom: var(--cst-snackbar-bottom);
+    z-index: var(--cst-snackbar-z-index);
+    display: flex;
+    pointer-events: none;      /* passthrough when empty */
+}
+
+.cst-snackbar-positioner--bottom-center {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cst-snackbar-positioner--bottom-start {
+    left: var(--cst-snackbar-side);
+}
+
+.cst-snackbar-positioner--bottom-end {
+    right: var(--cst-snackbar-side);
+}
+
+/* ── Snackbar box ──────────────────────────────────────────────────────── */
+.cst-snackbar {
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    gap: var(--cst-snackbar-gap);
+    padding: var(--cst-snackbar-padding-y) var(--cst-snackbar-padding-x);
+    background: var(--cst-snackbar-bg);
+    color: var(--cst-snackbar-text);
+    border-radius: var(--cst-snackbar-radius);
+    box-shadow: var(--cst-snackbar-shadow);
+    min-width: var(--cst-snackbar-min-width);
+    max-width: var(--cst-snackbar-max-width);
+    border-left: 4px solid transparent;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    animation: cst-snackbar-enter var(--cst-snackbar-anim-duration) var(--cst-snackbar-anim-easing) both;
+}
+
+/* Type accent border */
+.cst-snackbar--info    { border-left-color: var(--cst-snackbar-info-color); }
+.cst-snackbar--success { border-left-color: var(--cst-snackbar-success-color); }
+.cst-snackbar--warning { border-left-color: var(--cst-snackbar-warning-color); }
+.cst-snackbar--error   { border-left-color: var(--cst-snackbar-error-color); }
+
+/* Type-specific action color */
+.cst-snackbar--info    .cst-snackbar-action { color: var(--cst-snackbar-info-color); }
+.cst-snackbar--success .cst-snackbar-action { color: var(--cst-snackbar-success-color); }
+.cst-snackbar--warning .cst-snackbar-action { color: var(--cst-snackbar-warning-color); }
+.cst-snackbar--error   .cst-snackbar-action { color: var(--cst-snackbar-error-color); }
+
+/* Exit animation */
+.cst-snackbar--exiting {
+    animation: cst-snackbar-exit var(--cst-snackbar-anim-duration) var(--cst-snackbar-anim-easing) both;
+}
+
+/* ── Snackbar message ──────────────────────────────────────────────────── */
+.cst-snackbar-message {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ── Action button ─────────────────────────────────────────────────────── */
+.cst-snackbar-action {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: var(--cst-snackbar-action-weight);
+    color: var(--cst-snackbar-action-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transition: background 150ms;
+}
+
+.cst-snackbar-action:hover { background: rgba(255,255,255,0.08); }
+.cst-snackbar-action:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+/* ── Dismiss button ────────────────────────────────────────────────────── */
+.cst-snackbar-dismiss {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--cst-snackbar-dismiss-color);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 4px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 150ms, color 150ms;
+}
+
+.cst-snackbar-dismiss:hover { background: rgba(255,255,255,0.08); color: var(--cst-snackbar-text); }
+.cst-snackbar-dismiss:focus-visible { outline: 2px solid var(--cst-snackbar-dismiss-color); outline-offset: 2px; }
+
+/* ── Keyframes ─────────────────────────────────────────────────────────── */
+@keyframes cst-snackbar-enter {
+    from {
+        transform: translateY(calc(100% + var(--cst-snackbar-bottom)));
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes cst-snackbar-exit {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(calc(100% + var(--cst-snackbar-bottom)));
+        opacity: 0;
+    }
+}

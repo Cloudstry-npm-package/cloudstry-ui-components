@@ -1,0 +1,76 @@
+/* =============================================================================
+ * Cloudstry Checkbox — styling + token contract
+ *
+ * Public override surface → the --cst-checkbox-* custom properties below.
+ * They are mapped internally onto Material 3 tokens (--md-checkbox-*), which
+ * remain an implementation detail and are NOT part of the public API.
+ * ========================================================================== */
+
+/* ---- Token contract + MWC mapping on the checkbox element ---------------- */
+md-checkbox.cst-checkbox {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-checkbox-size: 18px;                       /* box container size      */
+    --cst-checkbox-shape: 2px;                        /* border-radius of box    */
+    --cst-checkbox-outline-color: #79747e;            /* unchecked border color  */
+    --cst-checkbox-outline-width: 2px;
+    --cst-checkbox-checked-color: #00b7e9;            /* checked background      */
+    --cst-checkbox-checked-icon-color: #ffffff;       /* checkmark color         */
+    --cst-checkbox-error-color: #b3261e;              /* error/invalid border    */
+
+    /* ---- Map Cloudstry tokens → Material 3 tokens (implementation) ------- */
+    --md-checkbox-container-size: var(--cst-checkbox-size);
+    --md-checkbox-container-shape: var(--cst-checkbox-shape);
+    --md-checkbox-outline-color: var(--cst-checkbox-outline-color);
+    --md-checkbox-outline-width: var(--cst-checkbox-outline-width);
+    --md-checkbox-selected-container-color: var(--cst-checkbox-checked-color);
+    --md-checkbox-selected-icon-color: var(--cst-checkbox-checked-icon-color);
+    --md-checkbox-selected-hover-container-color: var(--cst-checkbox-checked-color);
+    --md-checkbox-selected-hover-icon-color: var(--cst-checkbox-checked-icon-color);
+    --md-checkbox-selected-focus-container-color: var(--cst-checkbox-checked-color);
+    --md-checkbox-selected-pressed-container-color: var(--cst-checkbox-checked-color);
+
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* ---- Label wrapper ------------------------------------------------------- */
+.cst-checkbox-wrapper {
+    /* ---- Public Cloudstry token contract --------------------------------- */
+    --cst-checkbox-gap: 10px;                         /* space between box and label text */
+    --cst-checkbox-label-color: #1a1a2e;
+    --cst-checkbox-label-size: 0.9375rem;
+    --cst-checkbox-label-weight: 400;
+    --cst-checkbox-disabled-label-color: rgba(0, 0, 0, 0.38);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cst-checkbox-gap);
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+
+.cst-checkbox-wrapper[data-disabled="true"] {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Standalone wrapper (no label) */
+.cst-checkbox-wrapper--standalone {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.cst-checkbox-label-text {
+    font-size: var(--cst-checkbox-label-size);
+    font-weight: var(--cst-checkbox-label-weight);
+    color: var(--cst-checkbox-label-color);
+    line-height: 1.4;
+}
+
+.cst-checkbox-wrapper[data-disabled="true"] .cst-checkbox-label-text {
+    color: var(--cst-checkbox-disabled-label-color);
+}
