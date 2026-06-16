@@ -1,4 +1,5 @@
-import { forwardRef, isValidElement, cloneElement } from "react";
+import { forwardRef, cloneElement } from "react";
+import { resolveIcon } from "../../icons/index.jsx";
 
 /**
  * Cloudstry ListItem — presentational layer.
@@ -75,8 +76,9 @@ const ListItemBase = forwardRef(function ListItemBase(
     // ---- Slot assignment for start content --------------------------------
     let startNode = null;
     if (start != null) {
-        if (isValidElement(start)) {
-            startNode = cloneElement(start, { slot: "start" });
+        const resolvedStart = resolveIcon(start);
+        if (resolvedStart) {
+            startNode = cloneElement(resolvedStart, { slot: "start" });
         } else {
             startNode = <span slot="start">{start}</span>;
         }
@@ -85,8 +87,9 @@ const ListItemBase = forwardRef(function ListItemBase(
     // ---- Slot assignment for end content ----------------------------------
     let endNode = null;
     if (end != null) {
-        if (isValidElement(end)) {
-            endNode = cloneElement(end, { slot: "end" });
+        const resolvedEnd = resolveIcon(end);
+        if (resolvedEnd) {
+            endNode = cloneElement(resolvedEnd, { slot: "end" });
         } else {
             endNode = <span slot="end">{end}</span>;
         }

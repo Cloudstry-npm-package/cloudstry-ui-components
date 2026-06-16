@@ -1,4 +1,5 @@
-import { forwardRef, isValidElement, cloneElement } from "react";
+import { forwardRef, cloneElement } from "react";
+import { resolveIcon } from "../../icons/index.jsx";
 import "./chips.css";
 
 /**
@@ -39,7 +40,8 @@ const AssistChipBase = forwardRef(function AssistChipBase(
     if (rel) attrs.rel = rel;
     if (onClick) attrs.onClick = onClick;
 
-    const iconNode = isValidElement(icon) ? cloneElement(icon, { slot: "icon" }) : null;
+    const resolved = resolveIcon(icon);
+    const iconNode = resolved ? cloneElement(resolved, { slot: "icon" }) : null;
 
     return (
         <md-assist-chip

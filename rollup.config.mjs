@@ -45,6 +45,7 @@ const useClientBanner = (chunk) => {
 export default defineConfig({
     input: {
         index: "src/index.js",
+        icons: "src/icons/index.jsx",
         button: "src/components/buttons/index.js",
         input: "src/components/input/index.js",
         passwordField: "src/components/passwordField/index.js",

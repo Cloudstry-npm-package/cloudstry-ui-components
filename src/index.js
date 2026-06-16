@@ -1,4 +1,5 @@
 import "./styles/responsive.css";
+export * from "./icons/index.jsx";
 export { default as Button } from "./components/buttons";
 export { default as Input } from "./components/input";
 export { default as PasswordField } from "./components/passwordField";
