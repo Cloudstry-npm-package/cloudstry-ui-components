@@ -15,6 +15,7 @@ const CLIENT_ENTRY_SUFFIXES = [
     "components/input/input.jsx",
     "components/passwordField/passwordField.jsx",
     "components/searchField/searchField.jsx",
+    "components/select/select.jsx",
     "components/otp/otp.jsx",
     "components/table/table.jsx",  // Phase 3A: Table gains "use client" + internal state
     "components/card/card.jsx",
@@ -50,6 +51,7 @@ export default defineConfig({
         input: "src/components/input/index.js",
         passwordField: "src/components/passwordField/index.js",
         searchField: "src/components/searchField/index.js",
+        select: "src/components/select/index.js",
         otp: "src/components/otp/index.js",
         footer: "src/components/footer/index.js",
         table: "src/components/table/index.js",

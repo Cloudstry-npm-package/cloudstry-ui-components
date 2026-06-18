@@ -264,6 +264,7 @@ export default function Example() {
 | Input / TextField | `Input` | Outlined and filled variants; controlled + uncontrolled; error state; icons; prefix/suffix; multiline/textarea; character counter |
 | PasswordField | `PasswordField` | Input composition with show/hide toggle |
 | SearchField | `SearchField` | Input composition with search semantics |
+| Select | `Select` | Input composition + `Menu`/`MenuItem` popup (`md-menu`); data-driven `options`; combobox/listbox ARIA pattern; controlled-only |
 | OTP Input | `OtpInput` | Numeric OTP with auto-focus management, paste handling, WebOTP (Android Chrome), and resend timer |
 
 ### Selection
@@ -307,6 +308,83 @@ export default function Example() {
 |---|---|---|
 | Footer | `Footer` | Slot-based (`brand`/`links`/`social`/`legal`/`children`); `simple`/`centered`/`split` variants; SSR-safe |
 | Table | `Table` | Custom data table; sortable columns; single/multi row selection; search; pagination; density modes; sticky header; zebra striping; bulk actions toolbar |
+
+### Select
+
+`Select` composes the same `Input` shell used by `PasswordField`/`SearchField` with a `Menu`/`MenuItem` popup (`md-menu` composition): a read-only trigger styled identically to `TextField`, opening a `role="listbox"` popup of options anchored to it. Data-driven via an `options` array; value-first `onChange`; inherits `label`/`floatingLabel`/`error`/`supportingText`/`required`/`disabled`/`ref` from the shared field shell. Multi-select is not supported.
+
+**Import**
+
+```js
+import { Select } from "@cloudstrytech/ui-components";
+// or
+import { default as Select } from "@cloudstrytech/ui-components/select";
+```
+
+**Basic**
+
+```jsx
+const ROLE_OPTIONS = [
+  { label: "Admin", value: "admin" },
+  { label: "Editor", value: "editor" },
+  { label: "Guest", value: "guest" },
+];
+
+function RoleField() {
+  const [role, setRole] = useState("");
+  return (
+    <Select
+      label="Role"
+      placeholder="Choose a role"
+      options={ROLE_OPTIONS}
+      value={role}
+      onChange={setRole}
+    />
+  );
+}
+```
+
+**Options — disabled entries**
+
+```jsx
+const OPTIONS = [
+  { label: "Admin", value: "admin" },
+  { label: "Editor", value: "editor" },
+  { label: "Viewer (coming soon)", value: "viewer", disabled: true },
+];
+```
+
+A disabled option renders dimmed and cannot be selected; the rest of the dropdown stays interactive. `disabled` on `Select` itself (rather than on an option) prevents the field from opening at all.
+
+```jsx
+<Select label="Role" options={ROLE_OPTIONS} value="admin" disabled />
+```
+
+**Controlled usage**
+
+`Select` is controlled-only — pass `value` + `onChange`. Unlike `Input`/`PasswordField`/`SearchField`, there is no uncontrolled `defaultValue` mode.
+
+```jsx
+const [country, setCountry] = useState("");
+
+<Select
+  label="Country"
+  placeholder="Select a country"
+  options={COUNTRY_OPTIONS}
+  value={country}
+  onChange={setCountry}
+  error={!country ? "Required" : ""}
+  required
+/>
+```
+
+**SSR**
+
+```js
+import { Select } from "@cloudstrytech/ui-components/ssr";
+```
+
+Same data-driven API as the client export; defers `@material/web` registration to the client, like every other SSR variant.
 
 ---
 
@@ -403,6 +481,7 @@ import {
   Input,
   PasswordField,
   SearchField,
+  Select,
   OtpInput,
   Footer,
   Table,
@@ -494,6 +573,7 @@ import { default as Button }          from "@cloudstrytech/ui-components/button"
 import { default as Input }           from "@cloudstrytech/ui-components/input";
 import { PasswordField }              from "@cloudstrytech/ui-components/passwordField";
 import { SearchField }                from "@cloudstrytech/ui-components/searchField";
+import { default as Select }          from "@cloudstrytech/ui-components/select";
 import { default as OtpInput }        from "@cloudstrytech/ui-components/otp";
 import { default as Footer }          from "@cloudstrytech/ui-components/footer";
 import { default as Table }           from "@cloudstrytech/ui-components/table";
@@ -562,6 +642,7 @@ cloudstry-ui-components/
 │       ├── progress/         # CircularProgress, LinearProgress
 │       ├── radio/            # Radio, RadioGroup
 │       ├── searchField/      # SearchField
+│       ├── select/           # Select
 │       ├── slider/           # Slider
 │       ├── snackbar/         # Snackbar, SnackbarProvider, useSnackbar
 │       ├── switch/           # Switch
