@@ -1,4 +1,5 @@
 import { forwardRef, useCallback, useEffect, useRef } from "react";
+import { resolveIcon } from "../../icons/index.jsx";
 import "./iconbutton.css";
 
 const VARIANT_TAGS = {
@@ -164,10 +165,11 @@ const IconButtonBase = forwardRef(function IconButtonBase(
     const Tag = VARIANT_TAGS[variant] || VARIANT_TAGS.standard;
 
     // ---- Icon content ------------------------------------------------------
-    // children takes precedence over the icon string convenience prop
+    // children > registry SVG > md-icon ligature (Material Symbols font fallback)
     let iconContent = children;
     if (iconContent == null && icon != null) {
-        iconContent = <md-icon>{icon}</md-icon>;
+        const resolved = resolveIcon(icon);
+        iconContent = resolved ?? (typeof icon === "string" ? <md-icon>{icon}</md-icon> : null);
     }
 
     // ---- Build MWC attributes ----------------------------------------------

@@ -1,4 +1,5 @@
-import { forwardRef, isValidElement, cloneElement } from "react";
+import { forwardRef, cloneElement } from "react";
+import { resolveIcon } from "../../icons/index.jsx";
 import "./fab.css";
 
 const SIZE_MAP = { sm: "small", md: "medium", lg: "large" };
@@ -112,8 +113,9 @@ const FABBase = forwardRef(function FABBase(
     // MWC FAB uses slot name="icon" — content MUST have slot="icon" to render.
     // Fallback order: icon prop → children → nothing (MWC shows empty span).
     let iconNode = null;
-    if (isValidElement(icon)) {
-        iconNode = cloneElement(icon, { slot: "icon" });
+    const resolved = resolveIcon(icon);
+    if (resolved) {
+        iconNode = cloneElement(resolved, { slot: "icon" });
     } else if (icon != null) {
         iconNode = <span slot="icon">{icon}</span>;
     } else if (children != null) {

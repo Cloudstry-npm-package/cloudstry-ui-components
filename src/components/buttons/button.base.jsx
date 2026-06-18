@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { resolveIcon } from "../../icons/index.jsx";
 import "./button.css";
 
 /**
@@ -62,8 +63,8 @@ const ButtonBase = forwardRef(function ButtonBase(
     // additional accessible label for focus-reading without duplication.
     const leadingNode = loading
         ? <span className="cst-btn__spinner" role="status" aria-label="Loading" />
-        : (startIcon ?? (icon ? <md-icon>{icon}</md-icon> : null));
-    const trailingNode = loading ? null : endIcon;
+        : (resolveIcon(startIcon) ?? (icon ? <md-icon>{icon}</md-icon> : null));
+    const trailingNode = loading ? null : resolveIcon(endIcon);
 
     const classes = [
         "cst-btn",

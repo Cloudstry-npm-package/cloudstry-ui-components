@@ -1,5 +1,6 @@
-import { forwardRef, useCallback, useEffect, useId, useRef, isValidElement, cloneElement } from "react";
+import { forwardRef, useCallback, useEffect, useId, useRef, cloneElement } from "react";
 import { useTabsContext } from "./tabs-context.js";
+import { resolveIcon } from "../../icons/index.jsx";
 
 /**
  * Cloudstry Tab — a single tab item inside <Tabs>.
@@ -77,8 +78,9 @@ const TabBase = forwardRef(function TabBase(
     // otherwise wrap in a span to add slot attribution.
     let iconNode = null;
     if (icon != null) {
-        if (isValidElement(icon)) {
-            iconNode = cloneElement(icon, { slot: "icon" });
+        const resolved = resolveIcon(icon);
+        if (resolved) {
+            iconNode = cloneElement(resolved, { slot: "icon" });
         } else {
             iconNode = <span slot="icon">{icon}</span>;
         }

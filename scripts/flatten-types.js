@@ -17,7 +17,7 @@ if (fs.existsSync(componentsDir)) {
     });
 }
 
-const topLevelTypes = ["index", "button", "input", "passwordField", "searchField", "otp", "footer", "table", "ssr"];
+const topLevelTypes = ["index", "button", "input", "passwordField", "searchField", "select", "otp", "footer", "table", "ssr"];
 
 topLevelTypes.forEach((entry) => {
     const possiblePaths = [

@@ -1,6 +1,6 @@
 {
   "name": "@cloudstrytech/ui-components",
-  "version": "1.0.19",
+  "version": "1.0.21",
   "description": "Reusable Material Web (M3) UI components for React and Next.js",
   "private": false,
   "main": "./dist/cjs/index.js",
@@ -14,6 +14,10 @@
     },
     "./styles.css": {
       "default": "./dist/esm/styles.css"
+    },
+    "./icons": {
+      "import": "./dist/esm/icons/index.js",
+      "require": "./dist/cjs/icons/index.js"
     },
     "./button": {
       "import": "./dist/esm/components/buttons/index.js",
@@ -34,6 +38,11 @@
       "import": "./dist/esm/components/searchField/index.js",
       "require": "./dist/cjs/components/searchField/index.js",
       "types": "./dist/types/searchField.d.ts"
+    },
+    "./select": {
+      "import": "./dist/esm/components/select/index.js",
+      "require": "./dist/cjs/components/select/index.js",
+      "types": "./dist/types/select.d.ts"
     },
     "./otp": {
       "import": "./dist/esm/components/otp/index.js",

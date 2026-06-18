@@ -1,0 +1,30 @@
+/* =============================================================================
+ * Cloudstry Select — delta styling only.
+ *
+ * The trigger is the TextField shell (.cst-input + --cst-input-* tokens) and
+ * the popup is Menu (.cst-menu + --cst-menu-* / --cst-menu-item-* tokens);
+ * Select adds nothing to either surface. Only the chevron and a couple of
+ * trigger affordances (pointer cursor, hidden caret) live here.
+ * ========================================================================== */
+
+.cst-select__chevron {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.15s ease;
+}
+
+.cst-select__chevron--open {
+    transform: rotate(180deg);
+}
+
+/* The trigger is a real (read-only) text field under the hood — suppress the
+   text-input affordances that don't apply to a select-like control. */
+md-outlined-text-field[role="combobox"],
+md-filled-text-field[role="combobox"] {
+    cursor: pointer;
+    caret-color: transparent;
+}
+
+.cst-select__menu {
+    box-sizing: border-box;
+}
