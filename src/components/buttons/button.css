@@ -29,6 +29,10 @@
     --cst-button-font-size: 0.875rem;             /* md size label size                  */
     --cst-button-font-weight: 500;
     --cst-button-icon-size: 18px;                 /* md size icon size                   */
+    --cst-button-min-width: 90px;
+        /* V2: floor width for short labels    */
+        --cst-button-padding-x: 8px;
+        /* V2: horizontal label padding         */
 
     /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */
     /* Driving the system primary makes every variant pick up the brand per
@@ -44,6 +48,8 @@
     --md-filled-button-container-height: var(--cst-button-height);
     --md-filled-button-label-text-size: var(--cst-button-font-size);
     --md-filled-button-label-text-weight: var(--cst-button-font-weight);
+    --md-filled-button-leading-space: var(--cst-button-padding-x);
+        --md-filled-button-trailing-space: var(--cst-button-padding-x);
 
     /* tonal */
     --md-filled-tonal-button-container-color: var(--cst-button-tonal-bg);
@@ -52,6 +58,8 @@
     --md-filled-tonal-button-container-height: var(--cst-button-height);
     --md-filled-tonal-button-label-text-size: var(--cst-button-font-size);
     --md-filled-tonal-button-label-text-weight: var(--cst-button-font-weight);
+    --md-filled-tonal-button-leading-space: var(--cst-button-padding-x);
+        --md-filled-tonal-button-trailing-space: var(--cst-button-padding-x);
 
     /* elevated */
     --md-elevated-button-label-text-color: var(--cst-button-bg);
@@ -60,6 +68,8 @@
     --md-elevated-button-container-height: var(--cst-button-height);
     --md-elevated-button-label-text-size: var(--cst-button-font-size);
     --md-elevated-button-label-text-weight: var(--cst-button-font-weight);
+    --md-elevated-button-leading-space: var(--cst-button-padding-x);
+        --md-elevated-button-trailing-space: var(--cst-button-padding-x);
 
     /* outlined — V2: border color now driven by --cst-button-outlined-border */
     --md-outlined-button-label-text-color: var(--cst-button-bg);
@@ -69,6 +79,8 @@
     --md-outlined-button-container-height: var(--cst-button-height);
     --md-outlined-button-label-text-size: var(--cst-button-font-size);
     --md-outlined-button-label-text-weight: var(--cst-button-font-weight);
+    --md-outlined-button-leading-space: var(--cst-button-padding-x);
+        --md-outlined-button-trailing-space: var(--cst-button-padding-x);
 
     /* text */
     --md-text-button-label-text-color: var(--cst-button-bg);
@@ -76,7 +88,11 @@
     --md-text-button-container-height: var(--cst-button-height);
     --md-text-button-label-text-size: var(--cst-button-font-size);
     --md-text-button-label-text-weight: var(--cst-button-font-weight);
+    --md-text-button-leading-space: var(--cst-button-padding-x);
+        --md-text-button-trailing-space: var(--cst-button-padding-x);
 
+    box-sizing: border-box;
+        min-width: var(--cst-button-min-width);
     vertical-align: middle;
 }
 

@@ -20,10 +20,21 @@
     --cst-input-error: #d32f2f;        /* error outline/label/text/icon        */
     --cst-input-label-color: #171717;  /* external <label> color               */
     --cst-input-icon-color: #5f6368;   /* slot icon + family toggle/clear btns */
-    --cst-input-radius: 4px;           /* field corner radius                  */
+    --cst-input-radius: 6px;
+        /* field corner radius                  */
     --cst-input-filled-bg: #f3f3f3;    /* filled variant container color       */
     --cst-input-gap: 6px;              /* gap between external label and field */
     --cst-input-width: 100%;           /* wrapper width                        */
+    --cst-input-top-space: 10px;
+        /* V2: vertical padding above input text */
+        --cst-input-bottom-space: 10px;
+        /* V2: vertical padding below input text */
+        --cst-input-leading-space: 6px;
+        /* V2: horizontal padding before input text */
+        --cst-input-trailing-space: 6px;
+        /* V2: horizontal padding after input text */
+        --cst-input-text-size: 14px;
+        /* V2: input text font size (also sets placeholder size, no separate MWC token) */
 
     /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */
     /* Driving the system primary brands the focus outline, caret, and focused
@@ -35,6 +46,17 @@
     --md-outlined-text-field-container-shape: var(--cst-input-radius);
     --md-filled-text-field-container-shape: var(--cst-input-radius);
 
+    /* compact height (both variants) — V2 */
+        --md-outlined-text-field-top-space: var(--cst-input-top-space);
+        --md-outlined-text-field-bottom-space: var(--cst-input-bottom-space);
+        --md-outlined-text-field-leading-space: var(--cst-input-leading-space);
+        --md-outlined-text-field-trailing-space: var(--cst-input-trailing-space);
+        --md-outlined-text-field-input-text-size: var(--cst-input-text-size);
+        --md-filled-text-field-top-space: var(--cst-input-top-space);
+        --md-filled-text-field-bottom-space: var(--cst-input-bottom-space);
+        --md-filled-text-field-leading-space: var(--cst-input-leading-space);
+        --md-filled-text-field-trailing-space: var(--cst-input-trailing-space);
+        --md-filled-text-field-input-text-size: var(--cst-input-text-size);
     /* filled container surface */
     --md-filled-text-field-container-color: var(--cst-input-filled-bg);
 
