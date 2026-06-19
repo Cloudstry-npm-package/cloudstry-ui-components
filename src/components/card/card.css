@@ -13,9 +13,15 @@ md-outlined-card.cst-card {
     --cst-card-radius: 12px;
     --cst-card-padding: 16px;
     --cst-card-width: 100%;                       /* V2: was hardcoded */
-    --cst-card-elevated-bg: #ffffff;
-    --cst-card-filled-bg: #f0f4f8;
-    --cst-card-outlined-bg: #ffffff;
+    /* --cst-card-bg: unset by default — V2 single override hook. Set this on a
+       className/style to recolor the active variant's background without
+       needing to know which of the three per-variant tokens below applies.
+       Plain `background-color` on the host has NO effect: the actual fill is
+       painted inside the element's shadow DOM, which a light-DOM CSS property
+       cannot reach. */
+    --cst-card-elevated-bg: var(--cst-card-bg, #ffffff);
+    --cst-card-filled-bg: var(--cst-card-bg, #f0f4f8);
+    --cst-card-outlined-bg: var(--cst-card-bg, #ffffff);
     --cst-card-outlined-border-color: #c9c9c9;
     --cst-card-outlined-border-width: 1px;
     --cst-card-actions-gap: 8px;

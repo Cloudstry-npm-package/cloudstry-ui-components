@@ -172,6 +172,11 @@ const IconButtonBase = forwardRef(function IconButtonBase(
         iconContent = resolved ?? (typeof icon === "string" ? <md-icon>{icon}</md-icon> : null);
     }
 
+    // V2: text-label mode (min-width + growable padding, see iconbutton.css) —
+    // only engages when raw text is passed as children; pure-icon buttons
+    // (icon prop, or an icon element as children) keep their square ~40px box.
+    const hasTextContent = typeof children === "string" && children.trim() !== "";
+
     // ---- Build MWC attributes ----------------------------------------------
     const mdAttrs = {};
     if (toggle) mdAttrs.toggle = true;
@@ -185,6 +190,7 @@ const IconButtonBase = forwardRef(function IconButtonBase(
         "cst-icon-btn",
         `cst-icon-btn--${variant}`,
         toggle ? "cst-icon-btn--toggle" : "",
+        hasTextContent ? "cst-icon-btn--text" : "",
         iconButtonClassName,
         className,
     ]
