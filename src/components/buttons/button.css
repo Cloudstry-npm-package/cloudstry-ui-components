@@ -31,7 +31,7 @@
     --cst-button-icon-size: 18px;                 /* md size icon size                   */
     --cst-button-min-width: 90px;
         /* V2: floor width for short labels    */
-        --cst-button-padding-x: 8px;
+        --cst-button-padding-x: 18px;
         /* V2: horizontal label padding         */
 
     /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */

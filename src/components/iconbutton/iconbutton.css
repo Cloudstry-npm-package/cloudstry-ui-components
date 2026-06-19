@@ -34,6 +34,8 @@
  *   --cst-icon-btn-outlined-outline-color          #c4c7c5  Outline color
  *   --cst-icon-btn-outlined-selected-container-color #00b7e9  Selected container
  *   --cst-icon-btn-outlined-selected-icon-color    #ffffff  Selected icon
+ * * Text-label mode (V2; only when text is passed as children, see .base.jsx): * --cst-icon-btn-min-width 90px Floor width * --cst-icon-btn-padding-x 8px Horizontal padding;
+ box grows past the * floor instead of clipping longer text.
  * ========================================================================== */
 
 /* ---- Standard (md-icon-button) ------------------------------------------- */
@@ -113,4 +115,40 @@ md-outlined-icon-button.cst-icon-btn {
     --md-outlined-icon-button-selected-focus-icon-color: var(--cst-icon-btn-outlined-selected-icon-color, #ffffff);
     --md-outlined-icon-button-selected-pressed-icon-color: var(--cst-icon-btn-outlined-selected-icon-color, #ffffff);
     --md-outlined-icon-button-selected-outline-color: var(--cst-icon-btn-outlined-selected-container-color, #00b7e9);
+}
+
+/* ---- Text-label mode (V2) --------------------------------------------------
+ * Engages only via .cst-icon-btn--text (set in iconbutton.base.jsx when
+ * `children` is a plain string). Pure-icon buttons are untouched: the MWC
+ * container-width/state-layer-width tokens keep their fixed ~40px default,
+ * so existing icon-only usage doesn't shift.
+ * ---------------------------------------------------------------------------*/
+md-icon-button.cst-icon-btn--text {
+    --md-icon-button-state-layer-width: auto;
+}
+
+md-filled-icon-button.cst-icon-btn--text {
+    --md-filled-icon-button-container-width: auto;
+}
+
+md-filled-tonal-icon-button.cst-icon-btn--text {
+    --md-filled-tonal-icon-button-container-width: auto;
+}
+
+md-outlined-icon-button.cst-icon-btn--text {
+    --md-outlined-icon-button-container-width: auto;
+}
+
+md-icon-button.cst-icon-btn--text,
+md-filled-icon-button.cst-icon-btn--text,
+md-filled-tonal-icon-button.cst-icon-btn--text,
+md-outlined-icon-button.cst-icon-btn--text {
+    --cst-icon-btn-min-width: 90px;
+    --cst-icon-btn-padding-x: 18px;
+    box-sizing: border-box;
+    min-width: var(--cst-icon-btn-min-width);
+    padding-inline: var(--cst-icon-btn-padding-x);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
