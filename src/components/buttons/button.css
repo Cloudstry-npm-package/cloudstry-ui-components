@@ -24,14 +24,15 @@
     --cst-button-tonal-text: #00404f;             /* tonal label                         */
     --cst-button-outlined-border: var(--cst-button-bg); /* outlined variant border color */
     --cst-button-radius: 9999px;                  /* M3 pill default; override e.g. 12px */
-    --cst-button-gap: 8px;                        /* spacing between icon and label      */
+    --cst-button-gap: 3px;
+        /* spacing between icon and label      */
     --cst-button-height: 40px;                    /* md size container height            */
     --cst-button-font-size: 0.875rem;             /* md size label size                  */
     --cst-button-font-weight: 500;
     --cst-button-icon-size: 18px;                 /* md size icon size                   */
     --cst-button-min-width: 90px;
         /* V2: floor width for short labels    */
-        --cst-button-padding-x: 18px;
+        --cst-button-padding-x: 10px;
         /* V2: horizontal label padding         */
 
     /* ---- Map Cloudstry tokens -> Material 3 tokens (implementation) ------ */
@@ -48,8 +49,17 @@
     --md-filled-button-container-height: var(--cst-button-height);
     --md-filled-button-label-text-size: var(--cst-button-font-size);
     --md-filled-button-label-text-weight: var(--cst-button-font-weight);
-    --md-filled-button-leading-space: var(--cst-button-padding-x);
-        --md-filled-button-trailing-space: var(--cst-button-padding-x);
+    /* Host-level edge padding is zeroed; --cst-button-padding-x is enforced
+                       directly on .cst-btn__content (light DOM) instead. This keeps the
+                       18px edge spacing identical with or without start/endIcon, independent
+                       of MWC's has-icon slot detection (which only triggers for its native
+                       slot="icon", never used by this component) and of-icon padding variants. */
+        --md-filled-button-leading-space: 0px;
+        --md-filled-button-trailing-space: 0px;
+        --md-filled-button-with-leading-icon-leading-space: 0px;
+        --md-filled-button-with-leading-icon-trailing-space: 0px;
+        --md-filled-button-with-trailing-icon-leading-space: 0px;
+        --md-filled-button-with-trailing-icon-trailing-space: 0px;
 
     /* tonal */
     --md-filled-tonal-button-container-color: var(--cst-button-tonal-bg);
@@ -58,8 +68,12 @@
     --md-filled-tonal-button-container-height: var(--cst-button-height);
     --md-filled-tonal-button-label-text-size: var(--cst-button-font-size);
     --md-filled-tonal-button-label-text-weight: var(--cst-button-font-weight);
-    --md-filled-tonal-button-leading-space: var(--cst-button-padding-x);
-        --md-filled-tonal-button-trailing-space: var(--cst-button-padding-x);
+    --md-filled-tonal-button-leading-space: 0px;
+        --md-filled-tonal-button-trailing-space: 0px;
+        --md-filled-tonal-button-with-leading-icon-leading-space: 0px;
+        --md-filled-tonal-button-with-leading-icon-trailing-space: 0px;
+        --md-filled-tonal-button-with-trailing-icon-leading-space: 0px;
+        --md-filled-tonal-button-with-trailing-icon-trailing-space: 0px;
 
     /* elevated */
     --md-elevated-button-label-text-color: var(--cst-button-bg);
@@ -68,8 +82,12 @@
     --md-elevated-button-container-height: var(--cst-button-height);
     --md-elevated-button-label-text-size: var(--cst-button-font-size);
     --md-elevated-button-label-text-weight: var(--cst-button-font-weight);
-    --md-elevated-button-leading-space: var(--cst-button-padding-x);
-        --md-elevated-button-trailing-space: var(--cst-button-padding-x);
+    --md-elevated-button-leading-space: 0px;
+        --md-elevated-button-trailing-space: 0px;
+        --md-elevated-button-with-leading-icon-leading-space: 0px;
+        --md-elevated-button-with-leading-icon-trailing-space: 0px;
+        --md-elevated-button-with-trailing-icon-leading-space: 0px;
+        --md-elevated-button-with-trailing-icon-trailing-space: 0px;
 
     /* outlined — V2: border color now driven by --cst-button-outlined-border */
     --md-outlined-button-label-text-color: var(--cst-button-bg);
@@ -79,8 +97,12 @@
     --md-outlined-button-container-height: var(--cst-button-height);
     --md-outlined-button-label-text-size: var(--cst-button-font-size);
     --md-outlined-button-label-text-weight: var(--cst-button-font-weight);
-    --md-outlined-button-leading-space: var(--cst-button-padding-x);
-        --md-outlined-button-trailing-space: var(--cst-button-padding-x);
+    --md-outlined-button-leading-space: 0px;
+        --md-outlined-button-trailing-space: 0px;
+        --md-outlined-button-with-leading-icon-leading-space: 0px;
+        --md-outlined-button-with-leading-icon-trailing-space: 0px;
+        --md-outlined-button-with-trailing-icon-leading-space: 0px;
+        --md-outlined-button-with-trailing-icon-trailing-space: 0px;
 
     /* text */
     --md-text-button-label-text-color: var(--cst-button-bg);
@@ -88,8 +110,12 @@
     --md-text-button-container-height: var(--cst-button-height);
     --md-text-button-label-text-size: var(--cst-button-font-size);
     --md-text-button-label-text-weight: var(--cst-button-font-weight);
-    --md-text-button-leading-space: var(--cst-button-padding-x);
-        --md-text-button-trailing-space: var(--cst-button-padding-x);
+    --md-text-button-leading-space: 0px;
+        --md-text-button-trailing-space: 0px;
+        --md-text-button-with-leading-icon-leading-space: 0px;
+        --md-text-button-with-leading-icon-trailing-space: 0px;
+        --md-text-button-with-trailing-icon-leading-space: 0px;
+        --md-text-button-with-trailing-icon-trailing-space: 0px;
 
     box-sizing: border-box;
         min-width: var(--cst-button-min-width);
@@ -102,31 +128,31 @@
     --cst-button-height: 24px;
     --cst-button-font-size: 0.75rem;
     --cst-button-icon-size: 14px;
-    --cst-button-gap: 4px;
+    --cst-button-gap: 3px;
 }
 .cst-btn--sm {
     --cst-button-height: 32px;
     --cst-button-font-size: 0.8125rem;
     --cst-button-icon-size: 16px;
-    --cst-button-gap: 6px;
+    --cst-button-gap: 4px;
 }
 .cst-btn--md {
     --cst-button-height: 40px;
     --cst-button-font-size: 0.875rem;
     --cst-button-icon-size: 18px;
-    --cst-button-gap: 8px;
+    --cst-button-gap: 6px;
 }
 .cst-btn--lg {
     --cst-button-height: 48px;
     --cst-button-font-size: 1rem;
     --cst-button-icon-size: 20px;
-    --cst-button-gap: 10px;
+    --cst-button-gap: 6px;
 }
 .cst-btn--xl {
     --cst-button-height: 56px;
     --cst-button-font-size: 1.125rem;
     --cst-button-icon-size: 22px;
-    --cst-button-gap: 12px;
+    --cst-button-gap: 6px;
 }
 
 /* ---- Responsive touch target (V2) ---------------------------------------- */
@@ -152,10 +178,20 @@
     align-items: center;
     justify-content: center;
     gap: var(--cst-button-gap);
+    height: var(--cst-button-height);
+    line-height: 1;
     min-width: 0;
+    /* Edge padding lives here (light DOM), not on the MWC host — see the
+                       --md-*-button-*-space: 0px overrides above. Same 18px from the start
+                       and end whether or not start/endIcon is present. */
+        padding-inline: var(--cst-button-padding-x);
 }
 
 .cst-btn__label {
+    display: inline-flex;
+    align-items: center;
+    height: var(--cst-button-icon-size);
+    line-height: var(--cst-button-icon-size);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
