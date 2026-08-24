@@ -28,3 +28,50 @@ md-filled-text-field[role="combobox"] {
 .cst-select__menu {
     box-sizing: border-box;
 }
+
+/* ---- Clear control (V3, issue #5) ---------------------------------------- */
+/* Trailing adornment group: the clear control sits before the chevron so the
+   chevron stays the right-most affordance at every state. */
+.cst-select__adornments {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.cst-select__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    /* The trigger sets caret-color: transparent and cursor: pointer; the clear
+       control keeps its own hit area distinct from "open the listbox". */
+    flex-shrink: 0;
+}
+
+.cst-select__clear:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.cst-select__clear:focus-visible {
+    outline: 2px solid var(--cst-input-focus, #00b7e9);
+    outline-offset: 1px;
+}
+
+.cst-select__clear svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* Multi-select: the joined labels can outrun the trigger — clip rather than
+   letting the field grow or the text collide with the adornments. */
+.cst-select__adornments + * {
+    min-width: 0;
+}

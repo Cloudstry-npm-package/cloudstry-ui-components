@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./table.css";
 
 /* ── Internal sort-indicator icons ──────────────────────── */
@@ -24,6 +24,16 @@ function SortNeutralIcon() {
         <svg width="9" height="13" viewBox="0 0 9 13" aria-hidden="true" fill="currentColor">
             <path d="M4.5 0L9 5H0L4.5 0Z" opacity="0.45" />
             <path d="M4.5 13L0 8H9L4.5 13Z" opacity="0.45" />
+        </svg>
+    );
+}
+
+/* ── Row-expansion chevron ──────────────────────────────── */
+
+function ExpandChevron() {
+    return (
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+            <path d="M8.6 16.6 13.2 12 8.6 7.4 10 6l6 6-6 6z" />
         </svg>
     );
 }
@@ -67,6 +77,13 @@ function TableBase({
     bulkActions,          // ReactNode — replaces toolbar when rows are selected
     toolbarClassName = "",
 
+    /* ---- V3: Row expansion (issue #8) ---- */
+    renderExpandedRow,      // (row, index) => ReactNode — presence enables the feature
+    expandable,             // boolean | (row, index) => boolean — which rows can expand
+    expandedKeys,           // Set<string> — controlled
+    onExpandedChange,       // (keys: Set<string>) => void
+    expandRowLabel = "Toggle row details",
+
     /* ---- Phase 3A: internal render slots (injected by Table, not for consumers) ---- */
     searchNode,     // renders between title and toolbar
     paginationNode, // renders after table container
@@ -99,7 +116,11 @@ function TableBase({
     const hasSelection = selectionMode !== "none";
     const showBulkBar = !!(bulkActions && selectedKeys && selectedKeys.size > 0);
     const hasToolbar = !!(toolbar || showBulkBar);
-    const effectiveColumnCount = columns.length + (hasSelection ? 1 : 0);
+    // Expansion is enabled purely by supplying a renderer — no separate flag to
+    // keep in sync, same way `onRowClick` alone makes rows clickable.
+    const hasExpansion = typeof renderExpandedRow === "function";
+    const effectiveColumnCount =
+        columns.length + (hasSelection ? 1 : 0) + (hasExpansion ? 1 : 0);
 
     /* ---- aria ---- */
     const resolvedAriaLabel = ariaLabel || undefined;
@@ -191,6 +212,45 @@ function TableBase({
         }
     };
 
+    /* ── Expansion helpers ───────────────────────────────── */
+
+    const canExpand = (row, rowIndex) => {
+        if (!hasExpansion) return false;
+        if (typeof expandable === "function") return !!expandable(row, rowIndex);
+        if (expandable === false) return false;
+        return true;
+    };
+
+    const isRowExpanded = (row, rowIndex) =>
+        !!expandedKeys && expandedKeys.has(String(getRowKey(row, rowIndex)));
+
+    const handleToggleExpand = (row, rowIndex) => {
+        if (!onExpandedChange) return;
+        const key = String(getRowKey(row, rowIndex));
+        const next = new Set(expandedKeys || []);
+        if (next.has(key)) next.delete(key);
+        else next.add(key);
+        onExpandedChange(next);
+    };
+
+    /* ── Interactive-cell helper (issue #9) ──────────────── */
+
+    // A cell flagged `interactive` (or `type: "actions"`) contains its own
+    // controls — a Switch, IconButtons, a link. Their clicks must not also fire
+    // the row's onClick, and Enter/Space inside them must not re-trigger the
+    // row's keyboard handler. Previously every call site wrapped such cells in
+    // a hand-written <div onClick={e => e.stopPropagation()}>.
+    const isInteractiveCol = (col) => !!col.interactive || col.type === "actions";
+
+    const interactiveCellHandlers = onRowClick
+        ? {
+              onClick: (e) => e.stopPropagation(),
+              onKeyDown: (e) => {
+                  if (e.key === "Enter" || e.key === " ") e.stopPropagation();
+              },
+          }
+        : undefined;
+
     const handleSelectAll = () => {
         if (!onSelectionChange || !selectedKeys) return;
         if (isAllSelected || isIndeterminate) {
@@ -260,6 +320,13 @@ function TableBase({
                                 </th>
                             )}
 
+                            {/* Expander header — label is for AT only */}
+                            {hasExpansion && (
+                                <th scope="col" className="cst-table-expand-col">
+                                    <span className="cst-visually-hidden">Row details</span>
+                                </th>
+                            )}
+
                             {/* Data column headers */}
                             {columns.map((col, idx) => (
                                 <th
@@ -321,14 +388,17 @@ function TableBase({
                             data.map((row, rowIndex) => {
                                 const rowKeyVal = getRowKey(row, rowIndex);
                                 const selected = isRowSelected(row, rowIndex);
+                                const expandableRow = canExpand(row, rowIndex);
+                                const expanded = expandableRow && isRowExpanded(row, rowIndex);
+                                const detailsId = `${titleId}-details-${rowKeyVal}`;
                                 const rowCls = [
                                     getBaseRowClass(row, rowIndex),
                                     selected ? "cst-table-row-selected" : "",
+                                    expanded ? "cst-table-row-expanded" : "",
                                 ].filter(Boolean).join(" ");
 
-                                return (
+                                const mainRow = (
                                     <tr
-                                        key={rowKeyVal}
                                         className={rowCls || undefined}
                                         aria-selected={hasSelection ? selected : undefined}
                                         onClick={onRowClick ? () => onRowClick(row) : undefined}
@@ -355,16 +425,65 @@ function TableBase({
                                             </td>
                                         )}
 
+                                        {/* Expander cell */}
+                                        {hasExpansion && (
+                                            <td
+                                                className="cst-table-expand-col"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {expandableRow && (
+                                                    <button
+                                                        type="button"
+                                                        className={[
+                                                            "cst-table-expand-btn",
+                                                            expanded ? "cst-table-expand-btn--open" : "",
+                                                        ].filter(Boolean).join(" ")}
+                                                        aria-expanded={expanded}
+                                                        aria-controls={detailsId}
+                                                        aria-label={expandRowLabel}
+                                                        onClick={() => handleToggleExpand(row, rowIndex)}
+                                                    >
+                                                        <ExpandChevron />
+                                                    </button>
+                                                )}
+                                            </td>
+                                        )}
+
                                         {/* Data cells */}
                                         {columns.map((col, idx) => (
                                             <td
                                                 key={col.key || idx}
-                                                className={col.align ? `cst-align-${col.align}` : undefined}
+                                                className={[
+                                                    col.align ? `cst-align-${col.align}` : "",
+                                                    isInteractiveCol(col) ? "cst-table-cell-interactive" : "",
+                                                ].filter(Boolean).join(" ") || undefined}
+                                                {...(isInteractiveCol(col) ? interactiveCellHandlers : {})}
                                             >
                                                 {renderCell(col, row, rowIndex)}
                                             </td>
                                         ))}
                                     </tr>
+                                );
+
+                                if (!hasExpansion) return <Fragment key={rowKeyVal}>{mainRow}</Fragment>;
+
+                                return (
+                                    <Fragment key={rowKeyVal}>
+                                        {mainRow}
+                                        {/* Detail row. Kept in the DOM only while open so the
+                                            expanded content is not announced to AT when collapsed. */}
+                                        {expanded && (
+                                            <tr className="cst-table-detail-row">
+                                                <td
+                                                    id={detailsId}
+                                                    colSpan={effectiveColumnCount}
+                                                    className="cst-table-detail-cell"
+                                                >
+                                                    {renderExpandedRow(row, rowIndex)}
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </Fragment>
                                 );
                             })
                         )}

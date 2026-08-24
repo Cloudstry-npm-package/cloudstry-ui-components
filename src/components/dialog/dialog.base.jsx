@@ -36,7 +36,15 @@ function useMergedRef(externalRef) {
  * to block the close (unsaved-changes guard).
  *
  * size="basic" (default) — standard dialog with max-width 560px.
+ * size="sm" | "md" | "lg" | "xl" — width scale, so ONE dialog instance can be
+ *   wider without a global --cst-dialog-width override resizing every dialog in
+ *   the app (sm 400 · md 560 · lg 720 · xl 960). "basic" and "md" are the same
+ *   width; "basic" is kept as the default name for backwards compatibility.
  * size="full-screen"     — occupies full viewport; suited for mobile workflows.
+ *
+ * width — escape hatch for an arbitrary width on one instance
+ *   ("720px", "60vw", "fit-content"). Wins over `size`. Equivalent to setting
+ *   --cst-dialog-width through `style`, which also still works.
  *
  * closeOnBackdrop=false (default) — current behavior: onCancel fires on scrim
  *   click; MWC closes unless consumer calls event.preventDefault().
@@ -52,7 +60,8 @@ const DialogBase = forwardRef(function DialogBase(
         children,
         type,                   // "alert" → role="alertdialog"
         quick = false,          // skip open/close animations
-        size = "basic",         // "basic" | "full-screen"
+        size = "basic",         // "basic" | "sm" | "md" | "lg" | "xl" | "full-screen"
+        width,                  // per-instance width; wins over `size`
         closeOnBackdrop = false, // explicit backdrop-close guarantee
         onOpen,                 // () => void — after open animation completes
         onClose,                // (returnValue: string) => void — after close animation
@@ -124,16 +133,25 @@ const DialogBase = forwardRef(function DialogBase(
 
     const classes = [
         "cst-dialog",
-        size === "full-screen" && "cst-dialog--full-screen",
+        // "basic" carries no modifier — it IS the base rule, so existing dialogs
+        // are byte-for-byte unchanged.
+        size && size !== "basic" && `cst-dialog--${size}`,
         dialogClassName,
         className,
     ].filter(Boolean).join(" ");
+
+    // `width` is the per-instance escape hatch. An explicit --cst-dialog-width
+    // in `style` still wins, matching how Card's `background` prop behaves.
+    const resolvedStyle =
+        width != null && !(style && "--cst-dialog-width" in style)
+            ? { "--cst-dialog-width": width, ...style }
+            : style;
 
     return (
         <md-dialog
             ref={callbackRef}
             className={classes}
-            style={style}
+            style={resolvedStyle}
             {...mdAttrs}
             {...rest}
         >

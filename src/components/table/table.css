@@ -616,3 +616,73 @@
         padding: 24px 24px;
     }
 }
+
+/* =============================================================================
+ * V3 — Row expansion (issue #8) + interactive cells (issue #9)
+ * ========================================================================== */
+
+/* ---- Expander column ------------------------------------------------------ */
+.cst-table-expand-col {
+    width: var(--cst-table-expand-col-width, 44px);
+    text-align: center;
+    padding-inline: 4px;
+}
+
+.cst-table-expand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--cst-table-expand-icon-color, #5f6368);
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.cst-table-expand-btn:hover {
+    background: var(--cst-table-expand-hover-bg, rgba(0, 0, 0, 0.06));
+}
+
+.cst-table-expand-btn:focus-visible {
+    outline: 2px solid var(--cst-table-focus-ring-color, #00b7e9);
+    outline-offset: 1px;
+}
+
+/* Chevron points right when collapsed, down when open. */
+.cst-table-expand-btn--open {
+    transform: rotate(90deg);
+}
+
+/* ---- Detail row ----------------------------------------------------------- */
+.cst-table-detail-row > .cst-table-detail-cell {
+    padding: var(--cst-table-detail-padding, 12px 16px 16px);
+    background: var(--cst-table-detail-bg, #fafbfc);
+    border-bottom: 1px solid var(--cst-table-border-color, #e8eaed);
+}
+
+/* Visually tie the open row to its detail panel. */
+.cst-table-row-expanded > td {
+    background: var(--cst-table-detail-bg, #fafbfc);
+}
+
+/* ---- Interactive cells (issue #9) ----------------------------------------- */
+/* col.interactive / col.type: "actions" — TableBase attaches the
+   stopPropagation handlers; this only fixes the affordance so the cell does not
+   inherit the row's pointer cursor. */
+.cst-table-cell-interactive {
+    cursor: default;
+}
+
+.cst-row-clickable .cst-table-cell-interactive {
+    cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cst-table-expand-btn {
+        transition: none;
+    }
+}

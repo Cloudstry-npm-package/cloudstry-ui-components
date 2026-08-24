@@ -1,0 +1,136 @@
+/* =============================================================================
+ * Cloudstry Tag — styling + token contract
+ *
+ * Pure CSS over a <span>; no Material Web element and no --md-* mapping, so the
+ * whole surface is Cloudstry-owned. Same approach as Divider.
+ *
+ * Public override surface -> the --cst-tag-* custom properties below. Each
+ * variant sets its own --cst-tag-bg / --cst-tag-color / --cst-tag-border, so a
+ * consumer can retheme one variant without touching the others:
+ *
+ *   .my-status { --cst-tag-bg: #ede9fe; --cst-tag-color: #5b21b6; }
+ * ========================================================================== */
+
+.cst-tag {
+    /* ---- Public Cloudstry token contract (override these) ---------------- */
+    --cst-tag-bg: #f1f3f4;
+    --cst-tag-color: #3c4043;
+    --cst-tag-border: transparent;
+    --cst-tag-radius: 9999px;
+    --cst-tag-height: 24px;
+    --cst-tag-font-size: 0.75rem;
+    --cst-tag-font-weight: 600;
+    --cst-tag-padding-x: 10px;
+    --cst-tag-gap: 6px;
+    --cst-tag-dot-size: 6px;
+    --cst-tag-icon-size: 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--cst-tag-gap);
+    box-sizing: border-box;
+    min-height: var(--cst-tag-height);
+    padding-inline: var(--cst-tag-padding-x);
+    border: 1px solid var(--cst-tag-border);
+    border-radius: var(--cst-tag-radius);
+    background: var(--cst-tag-bg);
+    color: var(--cst-tag-color);
+    font-size: var(--cst-tag-font-size);
+    font-weight: var(--cst-tag-font-weight);
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: middle;
+    /* Read-only by definition — never show a text caret or selection handle. */
+    user-select: none;
+}
+
+/* ---- Size scale ---------------------------------------------------------- */
+.cst-tag--sm {
+    --cst-tag-height: 20px;
+    --cst-tag-font-size: 0.6875rem;
+    --cst-tag-padding-x: 8px;
+    --cst-tag-gap: 4px;
+    --cst-tag-dot-size: 5px;
+    --cst-tag-icon-size: 12px;
+}
+
+.cst-tag--md {
+    --cst-tag-height: 24px;
+    --cst-tag-font-size: 0.75rem;
+    --cst-tag-padding-x: 10px;
+}
+
+/* ---- Variants ------------------------------------------------------------ */
+.cst-tag--neutral {
+    --cst-tag-bg: #f1f3f4;
+    --cst-tag-color: #3c4043;
+}
+
+.cst-tag--brand {
+    --cst-tag-bg: #e0f6fd;
+    --cst-tag-color: #00506a;
+}
+
+.cst-tag--info {
+    --cst-tag-bg: #e8f0fe;
+    --cst-tag-color: #1a55b3;
+}
+
+.cst-tag--success {
+    --cst-tag-bg: #e6f4ea;
+    --cst-tag-color: #137333;
+}
+
+.cst-tag--warning {
+    --cst-tag-bg: #fef7e0;
+    --cst-tag-color: #a35200;
+}
+
+.cst-tag--error {
+    --cst-tag-bg: #fce8e6;
+    --cst-tag-color: #b3261e;
+}
+
+/* ---- Leading status dot -------------------------------------------------- */
+.cst-tag__dot {
+    flex: 0 0 auto;
+    width: var(--cst-tag-dot-size);
+    height: var(--cst-tag-dot-size);
+    border-radius: 50%;
+    /* Inherits the variant's text colour so the dot always tracks the label. */
+    background: currentColor;
+}
+
+/* ---- Leading icon -------------------------------------------------------- */
+.cst-tag__icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--cst-tag-icon-size);
+    height: var(--cst-tag-icon-size);
+}
+
+.cst-tag__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.cst-tag__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ---- Outlined treatment (opt-in via token override) ---------------------- */
+/* Consumers wanting an outline-only tag set the three colour tokens:
+     <Tag style={{ "--cst-tag-bg": "transparent",
+                   "--cst-tag-border": "currentColor" }} /> */
+
+@media (forced-colors: active) {
+    .cst-tag {
+        border-color: CanvasText;
+    }
+}

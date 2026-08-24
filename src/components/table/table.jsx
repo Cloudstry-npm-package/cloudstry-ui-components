@@ -223,12 +223,22 @@ export default function Table({
     /* ── Phase 3A: custom processing ── */
     searchFn,
     filterFn,
+
+    /* ── V3: row expansion (issue #8) ── */
+    renderExpandedRow,
+    expandable,
+    expandedKeys: expandedKeysProp,
+    onExpandedChange,
+    expandRowLabel,
 }) {
     /* ── Control detection ── */
     const isServerSide       = totalCount !== undefined;
     const isSearchControlled = searchQueryProp !== undefined;
     const isPageControlled   = currentPageProp !== undefined;
     const isFiltersControlled = filtersProp !== undefined;
+    // Expansion follows the same controlled/uncontrolled split as sort: pass
+    // expandedKeys to own it, omit it and the Table tracks its own open rows.
+    const isExpandedControlled = expandedKeysProp !== undefined;
     // Sort is controlled when sortByProp is provided explicitly (v1 pattern or v2 controlled mode).
     // When sortable=true but sortByProp is absent, Table manages sort state internally.
     const isSortControlled   = sortByProp !== undefined;
@@ -239,6 +249,7 @@ export default function Table({
     const [internalPage,     setInternalPage]     = useState(1);
     const [internalPageSize, setInternalPageSize] = useState(pageSizeProp);
     const [internalFilters,  setInternalFilters]  = useState([]);
+    const [internalExpanded, setInternalExpanded] = useState(() => new Set());
 
     /* ── Effective values ── */
     const effectiveSearch   = isSearchControlled  ? searchQueryProp : internalSearch;
@@ -247,6 +258,7 @@ export default function Table({
     const effectivePageSize = internalPageSize;
     // When sortByProp is provided use it; otherwise use internalSortBy (null when sortable=false, state when sortable=true)
     const effectiveSortBy   = isSortControlled ? sortByProp : internalSortBy;
+    const effectiveExpanded = isExpandedControlled ? expandedKeysProp : internalExpanded;
 
     /* ── Effective columns: apply component-level sortable default ── */
     const effectiveColumns = useMemo(() => {
@@ -297,6 +309,14 @@ export default function Table({
     const handleSortChange = (sort) => {
         if (isSortControlled) onSortChange?.(sort);
         else setInternalSortBy(sort);
+    };
+
+    const handleExpandedChange = (keys) => {
+        if (isExpandedControlled) onExpandedChange?.(keys);
+        else {
+            setInternalExpanded(keys);
+            onExpandedChange?.(keys);
+        }
     };
 
     const handlePageChange = (p) => {
@@ -375,6 +395,11 @@ export default function Table({
             selectionMode={selectionMode}
             sortBy={effectiveSortBy}
             onSortChange={handleSortChange}
+            renderExpandedRow={renderExpandedRow}
+            expandable={expandable}
+            expandedKeys={effectiveExpanded}
+            onExpandedChange={handleExpandedChange}
+            expandRowLabel={expandRowLabel}
             searchNode={searchNode}
             paginationNode={paginationNode}
         />

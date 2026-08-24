@@ -57,6 +57,20 @@ md-dialog.cst-dialog {
     }
 }
 
+/* ---- Width scale (V3, issue #10) ------------------------------------------ */
+/* Each modifier sets --cst-dialog-width on the INSTANCE, so one dialog can be
+   wider without a global :root override resizing every dialog in the app.
+   These only set the token — max-width above still resolves through it, and a
+   per-instance --cst-dialog-max-width continues to take precedence.
+   "basic" deliberately has no class: it is the unmodified base rule (560px). */
+md-dialog.cst-dialog--sm { --cst-dialog-width: 400px; }
+md-dialog.cst-dialog--md { --cst-dialog-width: 560px; }
+md-dialog.cst-dialog--lg { --cst-dialog-width: 720px; }
+md-dialog.cst-dialog--xl { --cst-dialog-width: 960px; }
+
+/* The mobile clamp below (≤599px) already caps every size at the viewport
+   width, so lg/xl degrade gracefully on small screens with no extra rules. */
+
 /* ---- Full-screen size variant --------------------------------------------- */
 /* Applied via size="full-screen" prop. Designed for mobile/compact workflows.
    Uses 0 border-radius by default; override via --cst-dialog-shape on instance. */
