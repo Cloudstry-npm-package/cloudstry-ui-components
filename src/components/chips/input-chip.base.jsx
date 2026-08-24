@@ -60,11 +60,27 @@ const InputChipBase = forwardRef(function InputChipBase(
     const onRemoveRef = useRef(onRemove);
     onRemoveRef.current = onRemove;
 
-    // MWC fires a `remove` event when the user clicks the trailing remove button.
+    // MWC fires a cancelable `remove` event when the user clicks the trailing
+    // remove button and then, unless the event is prevented, removes ITSELF from
+    // the DOM:
+    //
+    //   const preventDefault = !this.dispatchEvent(new Event('remove', {cancelable: true}));
+    //   if (preventDefault) return;
+    //   this.remove();                     // chips/internal/trailing-icons.js
+    //
+    // React owns this node, so letting MWC detach it desynchronises the virtual
+    // DOM: the consumer's onRemove updates state, React reconciles, and tears
+    // down with "NotFoundError: Failed to execute 'removeChild' on 'Node'" —
+    // which unmounts the whole tree. Preventing the default keeps React the sole
+    // owner of the DOM; the chip disappears because the consumer drops it from
+    // the list, which is exactly what the documented onRemove pattern does.
     useEffect(() => {
         const el = innerRef.current;
         if (!el) return;
-        const handler = () => onRemoveRef.current?.();
+        const handler = (event) => {
+            event.preventDefault();
+            onRemoveRef.current?.();
+        };
         el.addEventListener("remove", handler);
         return () => el.removeEventListener("remove", handler);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps

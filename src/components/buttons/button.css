@@ -29,6 +29,14 @@
     --cst-button-height: 40px;                    /* md size container height            */
     --cst-button-font-size: 0.875rem;             /* md size label size                  */
     --cst-button-font-weight: 500;
+    /* V3: label line-height MUST be set per size tier. Material Web derives the
+       host's own vertical padding from it:
+         padding-block: calc((container-height - max(line-height, icon-size)) / 2)
+       Leaving it at Material's 1.25rem default made every non-md tier budget
+       padding for a 20px label, so the rendered button was taller than
+       --cst-button-height promised. See .cst-btn__content below — the two must
+       agree, and both now resolve from max(line-height, icon-size). */
+    --cst-button-line-height: 20px;               /* md size label line height           */
     --cst-button-icon-size: 18px;                 /* md size icon size                   */
     --cst-button-min-width: 90px;
         /* V2: floor width for short labels    */
@@ -49,6 +57,8 @@
     --md-filled-button-container-height: var(--cst-button-height);
     --md-filled-button-label-text-size: var(--cst-button-font-size);
     --md-filled-button-label-text-weight: var(--cst-button-font-weight);
+    --md-filled-button-label-text-line-height: var(--cst-button-line-height);
+    --md-filled-button-icon-size: var(--cst-button-icon-size);
     /* Host-level edge padding is zeroed; --cst-button-padding-x is enforced
                        directly on .cst-btn__content (light DOM) instead. This keeps the
                        18px edge spacing identical with or without start/endIcon, independent
@@ -68,6 +78,8 @@
     --md-filled-tonal-button-container-height: var(--cst-button-height);
     --md-filled-tonal-button-label-text-size: var(--cst-button-font-size);
     --md-filled-tonal-button-label-text-weight: var(--cst-button-font-weight);
+    --md-filled-tonal-button-label-text-line-height: var(--cst-button-line-height);
+    --md-filled-tonal-button-icon-size: var(--cst-button-icon-size);
     --md-filled-tonal-button-leading-space: 0px;
         --md-filled-tonal-button-trailing-space: 0px;
         --md-filled-tonal-button-with-leading-icon-leading-space: 0px;
@@ -82,6 +94,8 @@
     --md-elevated-button-container-height: var(--cst-button-height);
     --md-elevated-button-label-text-size: var(--cst-button-font-size);
     --md-elevated-button-label-text-weight: var(--cst-button-font-weight);
+    --md-elevated-button-label-text-line-height: var(--cst-button-line-height);
+    --md-elevated-button-icon-size: var(--cst-button-icon-size);
     --md-elevated-button-leading-space: 0px;
         --md-elevated-button-trailing-space: 0px;
         --md-elevated-button-with-leading-icon-leading-space: 0px;
@@ -97,6 +111,8 @@
     --md-outlined-button-container-height: var(--cst-button-height);
     --md-outlined-button-label-text-size: var(--cst-button-font-size);
     --md-outlined-button-label-text-weight: var(--cst-button-font-weight);
+    --md-outlined-button-label-text-line-height: var(--cst-button-line-height);
+    --md-outlined-button-icon-size: var(--cst-button-icon-size);
     --md-outlined-button-leading-space: 0px;
         --md-outlined-button-trailing-space: 0px;
         --md-outlined-button-with-leading-icon-leading-space: 0px;
@@ -110,6 +126,8 @@
     --md-text-button-container-height: var(--cst-button-height);
     --md-text-button-label-text-size: var(--cst-button-font-size);
     --md-text-button-label-text-weight: var(--cst-button-font-weight);
+    --md-text-button-label-text-line-height: var(--cst-button-line-height);
+    --md-text-button-icon-size: var(--cst-button-icon-size);
     --md-text-button-leading-space: 0px;
         --md-text-button-trailing-space: 0px;
         --md-text-button-with-leading-icon-leading-space: 0px;
@@ -120,37 +138,52 @@
     box-sizing: border-box;
         min-width: var(--cst-button-min-width);
     vertical-align: middle;
+    /* MWC's host is inline-flex with no explicit width, but a flex/grid parent's
+       default stretch alignment still stretches it cross-axis — guard against
+       that so the button stays sized to its content unless fullWidth is set. */
+    align-self: flex-start;
+    justify-self: start;
 }
 
 /* ---- Size system (Cloudstry-owned; NOT Material 3 Expressive XS–XL) ------ */
 /* V2: xs (24px) and xl (56px) extend the scale on both ends.                 */
+/* V3: each tier sets line-height alongside font-size and icon-size. All three
+   are required — the rendered height is
+     max(line-height, icon-size) + 2 × (height - max(line-height, icon-size)) / 2
+   which collapses to exactly --cst-button-height only when every tier declares
+   its own line-height. Verified by code_test/tests/button-size-measure.spec.js. */
 .cst-btn--xs {
     --cst-button-height: 24px;
     --cst-button-font-size: 0.75rem;
+    --cst-button-line-height: 16px;
     --cst-button-icon-size: 14px;
     --cst-button-gap: 3px;
 }
 .cst-btn--sm {
     --cst-button-height: 32px;
     --cst-button-font-size: 0.8125rem;
+    --cst-button-line-height: 18px;
     --cst-button-icon-size: 16px;
     --cst-button-gap: 4px;
 }
 .cst-btn--md {
     --cst-button-height: 40px;
     --cst-button-font-size: 0.875rem;
+    --cst-button-line-height: 20px;
     --cst-button-icon-size: 18px;
     --cst-button-gap: 6px;
 }
 .cst-btn--lg {
     --cst-button-height: 48px;
     --cst-button-font-size: 1rem;
+    --cst-button-line-height: 24px;
     --cst-button-icon-size: 20px;
     --cst-button-gap: 6px;
 }
 .cst-btn--xl {
     --cst-button-height: 56px;
     --cst-button-font-size: 1.125rem;
+    --cst-button-line-height: 28px;
     --cst-button-icon-size: 22px;
     --cst-button-gap: 6px;
 }
@@ -174,12 +207,24 @@
 
 /* ---- Content layout (light-DOM, slotted into the element's label) -------- */
 .cst-btn__content {
-    display: inline-flex;
+    /* V3: block-level `flex`, NOT `inline-flex`. As an inline box this span sits
+       on a line box inside the element's shadow `.label`, and its baseline is
+       taken from its first flex item. With a leading icon that item has no text,
+       so the baseline dropped and the line box grew ~3px taller than the span —
+       visible only on the xs tier, where 3px is the whole tolerance. Block-level
+       removes the line box (and the font strut) from the height entirely. */
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--cst-button-gap);
-    height: var(--cst-button-height);
-    line-height: 1;
+    /* V3: this box sits INSIDE the host's own padding-block, so it must be the
+       height of the host's content box — max(line-height, icon-size) — not the
+       full container height. Setting it to var(--cst-button-height) made the
+       rendered button (height + 2 × padding) overshoot at every size. This
+       mirrors Material Web's own max() so the two can never disagree. */
+    height: max(var(--cst-button-line-height), var(--cst-button-icon-size));
+    line-height: var(--cst-button-line-height);
+    box-sizing: border-box;
     min-width: 0;
     /* Edge padding lives here (light DOM), not on the MWC host — see the
                        --md-*-button-*-space: 0px overrides above. Same 18px from the start
@@ -190,8 +235,11 @@
 .cst-btn__label {
     display: inline-flex;
     align-items: center;
-    height: var(--cst-button-icon-size);
-    line-height: var(--cst-button-icon-size);
+    /* V3: the label owns the line-height token (was pinned to icon-size, which
+       clipped descenders on the larger tiers and fought the host's padding math).
+       Height is left to the flex line so an icon-less button is still exactly
+       max(line-height, icon-size) tall. */
+    line-height: var(--cst-button-line-height);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

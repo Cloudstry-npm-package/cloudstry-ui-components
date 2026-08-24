@@ -1,6 +1,19 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { resolveIcon } from "../../icons/index.jsx";
 import "./button.css";
+
+function useMergedRef(externalRef) {
+    const innerRef = useRef(null);
+    const callbackRef = useCallback(
+        (node) => {
+            innerRef.current = node;
+            if (typeof externalRef === "function") externalRef(node);
+            else if (externalRef) externalRef.current = node;
+        },
+        [externalRef]
+    );
+    return [innerRef, callbackRef];
+}
 
 /**
  * Cloudstry Button — presentational layer.
@@ -21,6 +34,19 @@ import "./button.css";
  *   - `--cst-button-outlined-border` token (see button.css)
  *   - `pointer: coarse` touch-target fix for sm (see button.css)
  *   - `xs` and `xl` added to the size scale
+ *
+ * V3 additions:
+ *   - Per-size line-height token so the rendered height matches the size token
+ *     (see button.css — this is the whole of the size-scale height fix)
+ *   - `type` now follows native <button> semantics: a button inside a <form>
+ *     defaults to "submit", one outside a form defaults to "button". Passing
+ *     `type` explicitly always wins.
+ *
+ * @typedef {Object} ButtonProps
+ * @property {"button"|"submit"|"reset"} [type] Explicit type. When omitted the
+ *   button resolves to "submit" inside a <form> and "button" outside one,
+ *   matching a native <button>. Pass `type="button"` on a non-submitting
+ *   control that lives inside a form (e.g. a "Cancel" or toolbar button).
  */
 
 const VARIANT_TAGS = {
@@ -43,7 +69,7 @@ const ButtonBase = forwardRef(function ButtonBase(
         loading = false,        // Cloudstry composition (not an MWC feature)
         fullWidth = false,
         disabled = false,
-        type = "button",        // intentionally "button" (not the element's "submit")
+        type,                   // omitted ⇒ resolved from form membership (see below)
         // Link button props — MWC renders <a> internally when href is set
         href,                   // navigation target; renders button as anchor link
         target,                 // anchor target, e.g. "_blank" (only used with href)
@@ -57,6 +83,33 @@ const ButtonBase = forwardRef(function ButtonBase(
 ) {
     const Tag = VARIANT_TAGS[variant] || VARIANT_TAGS.filled;
     const content = children ?? label;
+
+    const [innerRef, callbackRef] = useMergedRef(ref);
+
+    // Native <button> semantics: inside a <form> the default type is "submit",
+    // outside one it is "button". Form membership can only be known once the
+    // element is in the document, so it is detected on mount. The first paint
+    // uses the safe "button" value; if the button turns out to be inside a form
+    // it flips to "submit" before any interaction can occur.
+    //
+    // An explicit `type` prop always wins and skips detection entirely — that is
+    // the escape hatch for non-submitting controls inside a form (Cancel, etc.).
+    const [inForm, setInForm] = useState(false);
+    useEffect(() => {
+        if (type !== undefined) return;
+        const el = innerRef.current;
+        if (!el || typeof el.closest !== "function") return;
+        setInForm(!!el.closest("form"));
+    }, [type]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // A link button is an <a> under the hood and has no form behaviour at all.
+    const resolvedType = href
+        ? undefined
+        : type !== undefined
+            ? type
+            : inForm
+                ? "submit"
+                : "button";
 
     // V2: spinner uses role="status" + aria-label so it is announced by AT.
     // The visually-hidden "Loading" text in the content area provides an
@@ -103,10 +156,10 @@ const ButtonBase = forwardRef(function ButtonBase(
 
     return (
         <Tag
-            ref={ref}
+            ref={callbackRef}
             {...rest}
             className={classes}
-            type={type}
+            type={resolvedType}
             disabled={disabled}
             style={style}
             aria-busy={loading || undefined}

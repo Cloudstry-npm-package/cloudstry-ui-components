@@ -19,6 +19,9 @@ export function TableSSR({ columns = [], ...rest }) {
         filters, onFiltersChange,
         totalCount,
         searchFn, filterFn,
+        // V3 row expansion — the disclosure button is inert without hydration,
+        // so it is stripped rather than rendered dead (same rule as onRowClick).
+        renderExpandedRow, expandable, expandedKeys, onExpandedChange, expandRowLabel,
         ...safeRest
     } = rest;
 

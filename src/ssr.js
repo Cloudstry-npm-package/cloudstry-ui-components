@@ -7,6 +7,7 @@ export { OtpInputSSR as OtpInput } from "./components/otp";
 export { FooterSSR as Footer } from "./components/footer";
 export { TableSSR as Table } from "./components/table";
 export { CardSSR as Card } from "./components/card";
+export { ComboboxSSR as Combobox } from "./components/combobox";
 export { BadgeSSR as Badge } from "./components/badge";
 export { CheckboxSSR as Checkbox, CheckboxGroupSSR as CheckboxGroup } from "./components/checkbox";
 export { AssistChipSSR as AssistChip, FilterChipSSR as FilterChip, InputChipSSR as InputChip, SuggestionChipSSR as SuggestionChip, ChipSetSSR as ChipSet } from "./components/chips";
@@ -21,5 +22,6 @@ export { RadioSSR as Radio, RadioGroupSSR as RadioGroup } from "./components/rad
 export { SliderSSR as Slider } from "./components/slider";
 export { SnackbarSSR as Snackbar, SnackbarProviderSSR as SnackbarProvider } from "./components/snackbar";
 export { SwitchSSR as Switch } from "./components/switch";
+export { TagSSR as Tag } from "./components/tag";
 export { TabsSSR as Tabs, TabSSR as Tab, TabPanelSSR as TabPanel } from "./components/tabs";
 export { TooltipSSR as Tooltip } from "./components/tooltip";

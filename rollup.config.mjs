@@ -19,6 +19,7 @@ const CLIENT_ENTRY_SUFFIXES = [
     "components/otp/otp.jsx",
     "components/table/table.jsx",  // Phase 3A: Table gains "use client" + internal state
     "components/card/card.jsx",
+    "components/combobox/combobox.jsx",
     "components/badge/badge.jsx",
     "components/checkbox/checkbox.jsx",
     "components/chips/chips.jsx",
@@ -56,6 +57,7 @@ export default defineConfig({
         footer: "src/components/footer/index.js",
         table: "src/components/table/index.js",
         card: "src/components/card/index.js",
+        combobox: "src/components/combobox/index.js",
         badge: "src/components/badge/index.js",
         checkbox: "src/components/checkbox/index.js",
         chips: "src/components/chips/index.js",
@@ -70,6 +72,7 @@ export default defineConfig({
         slider: "src/components/slider/index.js",
         snackbar: "src/components/snackbar/index.js",
         switch: "src/components/switch/index.js",
+        tag: "src/components/tag/index.js",
         tabs: "src/components/tabs/index.js",
         tooltip: "src/components/tooltip/index.js",
         ssr: "src/ssr.js"

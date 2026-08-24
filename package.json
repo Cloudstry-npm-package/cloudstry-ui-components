@@ -1,6 +1,6 @@
 {
   "name": "@cloudstrytech/ui-components",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "Reusable Material Web (M3) UI components for React and Next.js",
   "private": false,
   "main": "./dist/cjs/index.js",
@@ -16,132 +16,142 @@
       "default": "./dist/esm/styles.css"
     },
     "./icons": {
-      "import": "./dist/esm/icons/index.js",
-      "require": "./dist/cjs/icons/index.js"
+      "import": "./dist/esm/icons.js",
+      "require": "./dist/cjs/icons.js"
     },
     "./button": {
-      "import": "./dist/esm/components/buttons/index.js",
-      "require": "./dist/cjs/components/buttons/index.js",
-      "types": "./dist/types/button.d.ts"
+      "import": "./dist/esm/button.js",
+      "require": "./dist/cjs/button.js",
+      "types": "./dist/types/buttons.d.ts"
     },
     "./input": {
-      "import": "./dist/esm/components/input/index.js",
-      "require": "./dist/cjs/components/input/index.js",
+      "import": "./dist/esm/input.js",
+      "require": "./dist/cjs/input.js",
       "types": "./dist/types/input.d.ts"
     },
     "./passwordField": {
-      "import": "./dist/esm/components/passwordField/index.js",
-      "require": "./dist/cjs/components/passwordField/index.js",
+      "import": "./dist/esm/passwordField.js",
+      "require": "./dist/cjs/passwordField.js",
       "types": "./dist/types/passwordField.d.ts"
     },
     "./searchField": {
-      "import": "./dist/esm/components/searchField/index.js",
-      "require": "./dist/cjs/components/searchField/index.js",
+      "import": "./dist/esm/searchField.js",
+      "require": "./dist/cjs/searchField.js",
       "types": "./dist/types/searchField.d.ts"
     },
     "./select": {
-      "import": "./dist/esm/components/select/index.js",
-      "require": "./dist/cjs/components/select/index.js",
+      "import": "./dist/esm/select.js",
+      "require": "./dist/cjs/select.js",
       "types": "./dist/types/select.d.ts"
     },
     "./otp": {
-      "import": "./dist/esm/components/otp/index.js",
-      "require": "./dist/cjs/components/otp/index.js",
+      "import": "./dist/esm/otp.js",
+      "require": "./dist/cjs/otp.js",
       "types": "./dist/types/otp.d.ts"
     },
     "./footer": {
-      "import": "./dist/esm/components/footer/index.js",
-      "require": "./dist/cjs/components/footer/index.js",
+      "import": "./dist/esm/footer.js",
+      "require": "./dist/cjs/footer.js",
       "types": "./dist/types/footer.d.ts"
     },
     "./table": {
-      "import": "./dist/esm/components/table/index.js",
-      "require": "./dist/cjs/components/table/index.js",
+      "import": "./dist/esm/table.js",
+      "require": "./dist/cjs/table.js",
       "types": "./dist/types/table.d.ts"
     },
     "./card": {
-      "import": "./dist/esm/components/card/index.js",
-      "require": "./dist/cjs/components/card/index.js",
+      "import": "./dist/esm/card.js",
+      "require": "./dist/cjs/card.js",
       "types": "./dist/types/card.d.ts"
     },
+    "./combobox": {
+      "import": "./dist/esm/combobox.js",
+      "require": "./dist/cjs/combobox.js",
+      "types": "./dist/types/combobox.d.ts"
+    },
     "./badge": {
-      "import": "./dist/esm/components/badge/index.js",
-      "require": "./dist/cjs/components/badge/index.js",
+      "import": "./dist/esm/badge.js",
+      "require": "./dist/cjs/badge.js",
       "types": "./dist/types/badge.d.ts"
     },
     "./checkbox": {
-      "import": "./dist/esm/components/checkbox/index.js",
-      "require": "./dist/cjs/components/checkbox/index.js",
+      "import": "./dist/esm/checkbox.js",
+      "require": "./dist/cjs/checkbox.js",
       "types": "./dist/types/checkbox.d.ts"
     },
     "./chips": {
-      "import": "./dist/esm/components/chips/index.js",
-      "require": "./dist/cjs/components/chips/index.js",
+      "import": "./dist/esm/chips.js",
+      "require": "./dist/cjs/chips.js",
       "types": "./dist/types/chips.d.ts"
     },
     "./dialog": {
-      "import": "./dist/esm/components/dialog/index.js",
-      "require": "./dist/cjs/components/dialog/index.js",
+      "import": "./dist/esm/dialog.js",
+      "require": "./dist/cjs/dialog.js",
       "types": "./dist/types/dialog.d.ts"
     },
     "./divider": {
-      "import": "./dist/esm/components/divider/index.js",
-      "require": "./dist/cjs/components/divider/index.js",
+      "import": "./dist/esm/divider.js",
+      "require": "./dist/cjs/divider.js",
       "types": "./dist/types/divider.d.ts"
     },
     "./fab": {
-      "import": "./dist/esm/components/fab/index.js",
-      "require": "./dist/cjs/components/fab/index.js",
+      "import": "./dist/esm/fab.js",
+      "require": "./dist/cjs/fab.js",
       "types": "./dist/types/fab.d.ts"
     },
     "./iconbutton": {
-      "import": "./dist/esm/components/iconbutton/index.js",
-      "require": "./dist/cjs/components/iconbutton/index.js",
+      "import": "./dist/esm/iconbutton.js",
+      "require": "./dist/cjs/iconbutton.js",
       "types": "./dist/types/iconbutton.d.ts"
     },
     "./list": {
-      "import": "./dist/esm/components/list/index.js",
-      "require": "./dist/cjs/components/list/index.js",
+      "import": "./dist/esm/list.js",
+      "require": "./dist/cjs/list.js",
       "types": "./dist/types/list.d.ts"
     },
     "./menu": {
-      "import": "./dist/esm/components/menu/index.js",
-      "require": "./dist/cjs/components/menu/index.js",
+      "import": "./dist/esm/menu.js",
+      "require": "./dist/cjs/menu.js",
       "types": "./dist/types/menu.d.ts"
     },
     "./progress": {
-      "import": "./dist/esm/components/progress/index.js",
-      "require": "./dist/cjs/components/progress/index.js",
+      "import": "./dist/esm/progress.js",
+      "require": "./dist/cjs/progress.js",
       "types": "./dist/types/progress.d.ts"
     },
     "./radio": {
-      "import": "./dist/esm/components/radio/index.js",
-      "require": "./dist/cjs/components/radio/index.js",
+      "import": "./dist/esm/radio.js",
+      "require": "./dist/cjs/radio.js",
       "types": "./dist/types/radio.d.ts"
     },
     "./slider": {
-      "import": "./dist/esm/components/slider/index.js",
-      "require": "./dist/cjs/components/slider/index.js",
+      "import": "./dist/esm/slider.js",
+      "require": "./dist/cjs/slider.js",
       "types": "./dist/types/slider.d.ts"
     },
     "./snackbar": {
-      "import": "./dist/esm/components/snackbar/index.js",
-      "require": "./dist/cjs/components/snackbar/index.js",
+      "import": "./dist/esm/snackbar.js",
+      "require": "./dist/cjs/snackbar.js",
       "types": "./dist/types/snackbar.d.ts"
     },
     "./switch": {
-      "import": "./dist/esm/components/switch/index.js",
-      "require": "./dist/cjs/components/switch/index.js",
+      "import": "./dist/esm/switch.js",
+      "require": "./dist/cjs/switch.js",
       "types": "./dist/types/switch.d.ts"
     },
+    "./tag": {
+      "import": "./dist/esm/tag.js",
+      "require": "./dist/cjs/tag.js",
+      "types": "./dist/types/tag.d.ts"
+    },
     "./tabs": {
-      "import": "./dist/esm/components/tabs/index.js",
-      "require": "./dist/cjs/components/tabs/index.js",
+      "import": "./dist/esm/tabs.js",
+      "require": "./dist/cjs/tabs.js",
       "types": "./dist/types/tabs.d.ts"
     },
     "./tooltip": {
-      "import": "./dist/esm/components/tooltip/index.js",
-      "require": "./dist/cjs/components/tooltip/index.js",
+      "import": "./dist/esm/tooltip.js",
+      "require": "./dist/cjs/tooltip.js",
       "types": "./dist/types/tooltip.d.ts"
     },
     "./ssr": {

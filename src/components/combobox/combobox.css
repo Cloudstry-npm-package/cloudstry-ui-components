@@ -1,0 +1,154 @@
+/* =============================================================================
+ * Cloudstry Combobox — styling + token contract
+ *
+ * The field itself is the TextField shell (.cst-input + --cst-input-* tokens)
+ * and multi-select chips are the chip surface (--cst-chip-*); Combobox adds
+ * only the popup listbox and the trailing adornments.
+ *
+ * Public override surface -> the --cst-combobox-* custom properties below.
+ * ========================================================================== */
+
+.cst-combobox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--cst-combobox-chips-gap, 8px);
+    width: var(--cst-combobox-width, 100%);
+}
+
+/* ---- Trailing adornments (clear + chevron) ------------------------------- */
+.cst-combobox__adornments {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.cst-combobox__chevron {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.15s ease;
+}
+
+.cst-combobox__chevron--open {
+    transform: rotate(180deg);
+}
+
+.cst-combobox__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.cst-combobox__clear:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.cst-combobox__clear:focus-visible {
+    outline: 2px solid var(--cst-input-focus, #00b7e9);
+    outline-offset: 1px;
+}
+
+.cst-combobox__clear svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* ---- Popup listbox ------------------------------------------------------- */
+/* Portalled to <body> and positioned by @floating-ui, so it escapes any
+   overflow/stacking context the field happens to live in. Width and max-height
+   are written by the `size` middleware at runtime. */
+.cst-combobox__popup {
+    z-index: var(--cst-combobox-z-index, 1300);
+    background: var(--cst-combobox-bg, #ffffff);
+    border-radius: var(--cst-combobox-shape, 8px);
+    box-shadow: var(--cst-combobox-shadow, 0 2px 6px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.12));
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.cst-combobox__list {
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    max-height: inherit;
+    overflow-y: auto;
+    /* The popup's own max-height is set inline by the size middleware; the list
+       is what actually scrolls. */
+    max-block-size: 100%;
+}
+
+.cst-combobox__option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--cst-combobox-option-height, 40px);
+    padding: 6px var(--cst-combobox-option-padding-x, 12px);
+    font-size: var(--cst-combobox-option-font-size, 0.875rem);
+    color: var(--cst-combobox-option-color, #1d1b20);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Hover and keyboard highlight are the SAME visual state — the highlight is
+   driven by aria-activedescendant, never by DOM focus. */
+.cst-combobox__option--active {
+    background: var(--cst-combobox-option-active-bg, rgba(0, 183, 233, 0.10));
+}
+
+.cst-combobox__option--selected {
+    font-weight: 600;
+    color: var(--cst-combobox-option-selected-color, #00404f);
+}
+
+.cst-combobox__option--disabled {
+    opacity: 0.38;
+    cursor: default;
+}
+
+.cst-combobox__option-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cst-combobox__check {
+    flex: 0 0 auto;
+    width: 16px;
+    text-align: center;
+    color: var(--cst-combobox-check-color, #00b7e9);
+    font-weight: 700;
+}
+
+.cst-combobox__create {
+    color: var(--cst-combobox-create-color, #00b7e9);
+    font-weight: 600;
+}
+
+.cst-combobox__status {
+    padding: 12px var(--cst-combobox-option-padding-x, 12px);
+    font-size: var(--cst-combobox-option-font-size, 0.875rem);
+    color: var(--cst-combobox-status-color, #5f6368);
+}
+
+/* ---- Selected chips (multiple) ------------------------------------------- */
+.cst-combobox__chips {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cst-combobox__chevron {
+        transition: none;
+    }
+}

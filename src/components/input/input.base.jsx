@@ -30,6 +30,16 @@ import "./input.css";
  * @property {string} [value]            Controlled value (omit for uncontrolled).
  * @property {string} [defaultValue]     Initial value for uncontrolled mode.
  * @property {(value: string) => void} [onChange] Value-first change handler.
+ * @property {(value: string, event: KeyboardEvent) => void} [onEnter] Fires when
+ *   Enter is pressed in the field. Parity with `OtpInput.onEnter` /
+ *   `SearchField.onSearch`. A consumer-supplied `onKeyDown` still runs — this
+ *   composes with it rather than replacing it. Not fired on a multiline field,
+ *   where Enter inserts a newline.
+ * @property {boolean} [submitOnEnter]   Set `false` to opt out of implicit form
+ *   submission. By default, pressing Enter in a field inside a `<form>` submits
+ *   it, the way a native `<input>` does — see the note in `handleKeyDown` for
+ *   why that needs code rather than coming for free. Calling `preventDefault()`
+ *   from `onEnter`/`onKeyDown` suppresses it for a single keystroke.
  * @property {string} [label]            Field label.
  * @property {boolean} [floatingLabel]   Opt into the M3 floating label (default external).
  * @property {string} [placeholder]
@@ -91,6 +101,8 @@ const InputBase = forwardRef(function InputBase(
         value,
         defaultValue,
         onChange = () => { },
+        onEnter,
+        submitOnEnter,          // set false to opt out of implicit form submission
         label = "",
         floatingLabel = false,
         placeholder = "",
@@ -179,6 +191,41 @@ const InputBase = forwardRef(function InputBase(
         onChange(next);
     };
 
+    // Enter-to-submit convenience. Composed with (never replacing) a
+    // consumer-supplied onKeyDown, which is why onKeyDown is pulled out of
+    // `rest` here instead of being spread straight onto the element.
+    const { onKeyDown: consumerKeyDown, ...restProps } = rest;
+    const handleKeyDown = (event) => {
+        // On a textarea Enter inserts a newline; firing onEnter (or submitting)
+        // there would make the field impossible to use for multi-line input.
+        if (event.key !== "Enter" || resolvedType === "textarea") {
+            consumerKeyDown?.(event);
+            return;
+        }
+
+        onEnter?.(event.target.value, event);
+        consumerKeyDown?.(event);
+
+        // Implicit form submission.
+        //
+        // A native <input> in a <form> submits on Enter for free. This field is
+        // an <input> inside the Material Web element's SHADOW root, so it is not
+        // one of the form's own controls — and the submit Button is a
+        // form-associated custom element, which the browser's implicit-submission
+        // algorithm does not accept as a "default button" either. Between them,
+        // Enter did nothing at all. Reproduce the native behaviour explicitly.
+        //
+        // Respects preventDefault, so a consumer handler (or a composed control
+        // like Combobox/Select, which use Enter to commit a highlighted option)
+        // can suppress it.
+        if (event.defaultPrevented || submitOnEnter === false) return;
+        const form = event.currentTarget?.closest?.("form");
+        if (form && typeof form.requestSubmit === "function") {
+            event.preventDefault();
+            form.requestSubmit();
+        }
+    };
+
     const isDev =
         typeof process !== "undefined" &&
         process.env &&
@@ -219,10 +266,11 @@ const InputBase = forwardRef(function InputBase(
 
             <Tag
                 ref={ref}
-                {...rest}
+                {...restProps}
                 {...fieldProps}
                 className={fieldClassName || undefined}
                 onInput={handleInput}
+                onKeyDown={handleKeyDown}
             >
                 {startIcon && (
                     <span slot="leading-icon" className="cst-input__icon cst-input__icon--start">

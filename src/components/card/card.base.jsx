@@ -33,6 +33,21 @@ const VARIANT_TAGS = {
  *
  * Horizontal layout (media left, content right at ≥600px):
  *   <Card horizontal media={<img ... />} header={...}>...</Card>
+ *
+ * Recolour a single card:
+ *   <Card background="#e8f4ff">...</Card>
+ *
+ * WHY A PROP AND NOT `style={{ backgroundColor }}`: the fill is painted inside
+ * the element's shadow DOM, so a light-DOM `background-color` (via `style` or a
+ * `className` rule) silently does nothing. The `background` prop below writes
+ * the one custom property that does reach it (`--cst-card-bg`), which the
+ * variant-specific --md-*-card-container-color tokens all resolve from. Passing
+ * `--cst-card-bg` yourself through `style` still works and takes precedence.
+ *
+ * @typedef {Object} CardProps
+ * @property {string} [background] Any CSS colour. Sets --cst-card-bg on the host,
+ *   recolouring whichever variant is active without needing to know which of the
+ *   three per-variant tokens applies. Alias: `bg`.
  */
 const CardBase = forwardRef(function CardBase(
     {
@@ -50,6 +65,8 @@ const CardBase = forwardRef(function CardBase(
         // V2 layout / state props
         loading = false,        // Renders animated skeleton placeholder when true
         horizontal = false,     // At ≥600px: media left, content right (opt-in)
+        background,             // Any CSS color -> --cst-card-bg (see note above)
+        bg,                     // Alias for `background`
         // a11y
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledBy,
@@ -62,6 +79,15 @@ const CardBase = forwardRef(function CardBase(
 ) {
     const Tag = VARIANT_TAGS[variant] || VARIANT_TAGS.elevated;
     const isInteractive = !!(onClick || href);
+
+    // Resolve `background`/`bg` into the one custom property that crosses the
+    // shadow boundary. A --cst-card-bg passed explicitly through `style` wins,
+    // so the escape hatch keeps working exactly as documented in card.css.
+    const resolvedBackground = background ?? bg;
+    const resolvedStyle =
+        resolvedBackground != null && !(style && "--cst-card-bg" in style)
+            ? { "--cst-card-bg": resolvedBackground, ...style }
+            : style;
 
     const classes = [
         "cst-card",
@@ -138,7 +164,7 @@ const CardBase = forwardRef(function CardBase(
                 aria-labelledby={ariaLabelledBy}
                 aria-busy={loading || undefined}
             >
-                <Tag ref={ref} className={classes} style={style} {...rest}>
+                <Tag ref={ref} className={classes} style={resolvedStyle} {...rest}>
                     {inner}
                 </Tag>
             </a>
@@ -158,7 +184,7 @@ const CardBase = forwardRef(function CardBase(
         <Tag
             ref={ref}
             className={classes}
-            style={style}
+            style={resolvedStyle}
             aria-busy={loading || undefined}
             {...(onClick
                 ? {

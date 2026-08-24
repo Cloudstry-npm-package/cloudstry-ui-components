@@ -24,6 +24,8 @@ const MenuItemBase = forwardRef(function MenuItemBase(
         target,
         disabled = false,
         keepOpen = false,
+        type,
+        selected,
         onClick,
         className = "",
         style,
@@ -41,7 +43,26 @@ const MenuItemBase = forwardRef(function MenuItemBase(
         el.keepOpen = keepOpen;
     }, [keepOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const mwcType = href ? "link" : "menuitem";
+    // `selected` is a Lit `@property({ type: Boolean })`. Spreading it from React
+    // onto a custom element writes the ATTRIBUTE `selected="false"`, and Lit's
+    // boolean converter treats any present attribute as true — so an unselected
+    // item would render selected. Set it as a DOM property instead (the same
+    // pattern Checkbox/Switch/FilterChip use).
+    useEffect(() => {
+        const el = innerRef.current;
+        if (!el || selected === undefined) return;
+        el.selected = !!selected;
+    }, [selected]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // type="option" makes MWC report role="option" (see menuItemController.role).
+    // Explicit `type` wins; otherwise fall back to the href-derived default.
+    const mwcType = type ?? (href ? "link" : "menuitem");
+
+    // MWC renders `aria-selected` from `this.ariaSelected`, NOT from `selected`
+    // (selected only drives the visual state class), so an option's selected
+    // state has to be published to AT separately.
+    const ariaSelected =
+        mwcType === "option" && selected !== undefined ? String(!!selected) : undefined;
 
     const startNode =
         start != null
@@ -74,6 +95,7 @@ const MenuItemBase = forwardRef(function MenuItemBase(
             style={style}
             type={mwcType}
             onClick={onClick}
+            {...(ariaSelected ? { "aria-selected": ariaSelected } : {})}
             {...(disabled ? { disabled: true } : {})}
             {...(href ? { href } : {})}
             {...(target ? { target } : {})}
