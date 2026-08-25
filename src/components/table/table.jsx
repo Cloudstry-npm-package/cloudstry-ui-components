@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo } from "react";
+import Input from "../input/input.jsx";
 import TableBase from "./table.base.jsx";
 import { useTableData } from "./useTableData.js";
 
@@ -26,32 +27,36 @@ function ClearIcon() {
 
 /* ── Search input ─────────────────────────────────────────── */
 
+// Built on the library's own Input — the same element Select's trigger is
+// built on (see select.jsx / select.base.jsx) — instead of a hand-rolled
+// <input>. This is what makes the search box's height, padding, radius and
+// focus ring match Input/Select automatically: they share the literal same
+// underlying md-outlined-text-field and --cst-input-* token contract, so
+// there is no separate set of CSS values to keep in sync by hand.
 function TableSearchInput({ value, onChange, placeholder }) {
     return (
         <div className="cst-table-search">
-            <div className="cst-table-search-inner">
-                <span className="cst-table-search-icon">
-                    <SearchIcon />
-                </span>
-                <input
-                    type="search"
-                    className="cst-table-search-input"
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    placeholder={placeholder || "Search…"}
-                    aria-label="Search table"
-                />
-                {value && (
-                    <button
-                        type="button"
-                        className="cst-table-search-clear"
-                        onClick={() => onChange("")}
-                        aria-label="Clear search"
-                    >
-                        <ClearIcon />
-                    </button>
-                )}
-            </div>
+            <Input
+                type="search"
+                className="cst-table-search-field"
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder || "Search…"}
+                aria-label="Search table"
+                startIcon={<SearchIcon />}
+                endIcon={
+                    value ? (
+                        <button
+                            type="button"
+                            className="cst-table-search-clear"
+                            onClick={() => onChange("")}
+                            aria-label="Clear search"
+                        >
+                            <ClearIcon />
+                        </button>
+                    ) : null
+                }
+            />
         </div>
     );
 }

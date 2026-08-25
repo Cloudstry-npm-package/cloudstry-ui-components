@@ -346,11 +346,10 @@
 
 /* ---- Phase 3A token additions ---- */
 .cst-table-wrapper {
-    --cst-table-search-border:              #d1d5db;
+    /* Search styling itself now comes entirely from Input's own --cst-input-*
+       tokens (see table.jsx's TableSearchInput) — --cst-table-search-focus-border
+       is kept only because pagination's focus-visible ring below still reads it. */
     --cst-table-search-focus-border:        var(--cst-table-header-bg);
-    --cst-table-search-bg:                  #ffffff;
-    --cst-table-search-icon-color:          #9ca3af;
-    --cst-table-search-placeholder-color:   #9ca3af;
 
     --cst-table-pagination-border-color:    var(--cst-table-border-color);
     --cst-table-pagination-btn-bg:          #ffffff;
@@ -362,61 +361,24 @@
     --cst-table-pagination-info-color:      #6b7280;
 }
 
-/* ---- Search ---- */
+/* ---- Search ----
+   The field itself (border, height, padding, radius, focus ring) is Input's
+   own styling — see input.css's --cst-input-* tokens — not defined here.
+   Only the table-specific layout (outer spacing, width cap, the clear
+   button riding in Input's trailing-icon slot) lives in this file. */
 .cst-table-search {
     margin-bottom: 10px;
 }
 
-.cst-table-search-inner {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
+/* Passed as Input's `className`, so it lands on Input's own wrapper
+   (.cst-input) alongside its default classes — this just caps how wide the
+   field gets, matching the compact search box the table previously had. */
+.cst-table-search-field {
     max-width: 320px;
 }
 
-.cst-table-search-icon {
-    position: absolute;
-    left: 10px;
-    display: flex;
-    align-items: center;
-    color: var(--cst-table-search-icon-color);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.cst-table-search-input {
-    width: 100%;
-    padding: 7px 32px 7px 34px;
-    border: 1.5px solid var(--cst-table-search-border);
-    border-radius: 8px;
-    font-size: 13.5px;
-    font-family: inherit;
-    background: var(--cst-table-search-bg);
-    color: inherit;
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-/* Remove native browser clear button — we provide our own */
-.cst-table-search-input::-webkit-search-cancel-button { display: none; }
-.cst-table-search-input::-webkit-search-decoration    { display: none; }
-
-.cst-table-search-input::placeholder {
-    color: var(--cst-table-search-placeholder-color);
-}
-
-.cst-table-search-input:focus {
-    border-color: var(--cst-table-search-focus-border);
-    box-shadow: 0 0 0 3px rgba(73, 211, 238, 0.18);
-}
-
 .cst-table-search-clear {
-    position: absolute;
-    right: 8px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 20px;
@@ -566,7 +528,7 @@
     }
 
     /* Search: full width on mobile */
-    .cst-table-search-inner {
+    .cst-table-search-field {
         max-width: 100%;
     }
 
@@ -605,7 +567,7 @@
     }
 
     /* Search: slightly wider on tablet */
-    .cst-table-search-inner {
+    .cst-table-search-field {
         max-width: 100%;
     }
 }
